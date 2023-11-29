@@ -1,8 +1,9 @@
 import express from 'express';
+import validator from 'validator';
 import { createBuyer, listBuyers, listOneBuyer, deleteOneBuyer, updateBuyer } from "../services/buyer.js";
+import { isPasswordSecure } from "../shared/shared.js";
 
 const router = express.Router();
-
 
 router.post('/', validateBuyer, async (req, res) => {
     const user = req.body.user;
@@ -62,11 +63,24 @@ router.delete('/:Id', async (req, res) => {
 });
 
 function validateBuyer(req, res, next) {
-    if (req.body.user.username && req.body.user.password) {
-        next();
+    const user = req.body.user;
+    if (user.firstName && user.lastName && user.address) {
+        if(isPasswordSecure(user.password)){
+            if(user.username){
+                if(validator.isEmail(user.email)){
+                    console.log('ja')
+                    next();
+                }else{
+                    res.status(403).send('Invalid Email')
+                }
+            }else{
+                res.status(409).send('Username already taken')
+            }
+        }else{
+            res.status(403).send('Password is not secure')
+        }
     } else {
-        res.status(400);
-        res.send('Body invalid');
+        res.status(400).send('User Data incomplete');
     }
 }
 

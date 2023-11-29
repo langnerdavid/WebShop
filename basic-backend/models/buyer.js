@@ -6,6 +6,10 @@ export function createBuyerLog(user){
     const buyer = {
         username: user.username,
         password: user.password,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
 
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp
