@@ -38,7 +38,7 @@ router.get('/:Id', async (req, res) => {
     }
 });
 
-router.patch('/:Id',validateBuyer, async (req, res) => {
+router.patch('/:Id',authorizeBuyer, async (req, res) => {
     const buyerId = req.params.Id;
     const user = req.body.user;
 
@@ -51,7 +51,7 @@ router.patch('/:Id',validateBuyer, async (req, res) => {
     }
 });
 
-router.delete('/:Id', async (req, res) => {
+router.delete('/:Id', authorizeBuyer, async (req, res) => {
     const buyerId = req.params.Id;
     try {
         const data = await deleteOneBuyer(buyerId);
@@ -82,6 +82,29 @@ function validateBuyer(req, res, next) {
     } else {
         res.status(400).send('User Data incomplete');
     }
+}
+
+async function authorizeBuyer(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send('Authorization Header missing.');
+    }
+    const b64auth = authHeader.split(' ')[1];
+    let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
+    const [user] = await listOneBuyer(req.params.Id);
+    console.log(user.username);
+    console.log(username, password);
+    if(username === user.username){
+        if(password === user.password){
+            console.log('authorized')
+            next();
+        }else{
+            res.status(401).send('Wrong Password');
+        }
+    }else{
+        res.status(404).send('Wrong username');
+    }
+
 }
 
 export { router as buyerController };
