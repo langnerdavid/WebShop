@@ -6,7 +6,7 @@ import {apiRouter} from "./api.js";
 const app = express();
 
 app.use('/api', apiRouter);
-
+app.use(express.json());
 app.use(express.static(process.env.FRONTEND_DIST_PATH));
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, process.env.FRONTEND_DIST_PATH, 'index.html'))
