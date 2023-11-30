@@ -54,6 +54,14 @@
         "description": "Find out more",
         "url": "http://swagger.io"
       }
+    },
+    {
+      "name": "cart",
+      "description": "Everything about shopping carts",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
     }
   ],
   "paths": {
@@ -592,6 +600,127 @@
           },
           "200": {
             "description": "Order returned"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+
+    "/cart": {
+      "post": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Create a new Shopping-Cart",
+        "operationId": "createCart",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Pet"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "201": {
+            "description": "Cart created"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/cart/{cartID}": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Get Shopping-Cart by cartID",
+        "operationId": "getCartByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Pet"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Cart not found"
+          },
+          "200": {
+            "description": "Cart returned"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Update Shopping-Cart",
+        "operationId": "updateCartByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Pet"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "404": {
+            "description": "Cart not found"
+          },
+          "200": {
+            "description": "Cart updated"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Delete Shopping-Cart",
+        "operationId": "deleteCart",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Pet"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "200": {
+            "description": "Cart deleted"
           }
         },
         "security": [
