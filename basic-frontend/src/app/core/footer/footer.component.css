@@ -3,4 +3,6 @@
   line-height: 56px;
   text-align: center;
   color: #999999;
+  width: 100%;
+  box-sizing: border-box;
 }

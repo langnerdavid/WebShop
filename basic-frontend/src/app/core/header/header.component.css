@@ -1,19 +1,36 @@
 .header {
+  width: 100%;
   background-color: #000000;
   padding: 0 24px;
   height: 56px;
 }
 
-.header-nav {
-  color: #fff;
-  display: inline-block;
-  line-height: 56px;
+.p-d-flex {
+  display: flex;
 }
 
-.left {
-  float: left;
+.p-jc-between {
+  justify-content: space-between;
 }
 
-.right {
-  float: right;
+.p-ai-center {
+  align-items: center;
+}
+
+.p-input-icon-left {
+  position: relative;
+  flex-grow: 1;
+  margin: 0 1rem;
+  max-width: 50%; /* Begrenzt die Größe der Suchleiste */
+}
+
+.p-input-icon-left input {
+  width: 100%;
+  padding-left: 2rem;
+}
+
+.p-input-icon-left i {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.25rem;
 }

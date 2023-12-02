@@ -1,8 +1,13 @@
-<div class="header">
-  <div class="header-nav left">
-    Links
-  </div>
-  <div class="header-nav right">
-    Rechts
+<div class="p-d-flex p-jc-between p-ai-center header">
+  <!-- Suchleiste -->
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input pInputText type="text" placeholder="Suche" [(ngModel)]="searchText" />
+  </span>
+
+  <!-- Profillogo und Warenkorblogo -->
+  <div class="p-d-flex p-ai-center">
+    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" (click)="onProfileClick()"></button>
+    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'" (click)="onCartClick()"></button>
   </div>
 </div>

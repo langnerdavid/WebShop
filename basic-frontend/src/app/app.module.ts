@@ -8,6 +8,9 @@ import {HeaderComponent} from './core/header/header.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {FormsModule} from "@angular/forms";
 
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MenubarModule } from 'primeng/menubar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +21,10 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    InputTextModule,
+    ButtonModule,
+    MenubarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

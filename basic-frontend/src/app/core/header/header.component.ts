@@ -6,4 +6,15 @@ import {Component} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  searchText: string | undefined;
+
+  onProfileClick() {
+    console.log('Profil-Button geklickt');
+    // Fügen Sie hier Ihre Logik für Profil-Button hinzu
+  }
+
+  onCartClick() {
+    console.log('Warenkorb-Button geklickt');
+    // Fügen Sie hier Ihre Logik für Warenkorb-Button hinzu
+  }
 }
