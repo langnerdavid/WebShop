@@ -10,11 +10,20 @@ export class HeaderComponent {
 
   onProfileClick() {
     console.log('Profil-Button geklickt');
-    // Fügen Sie hier Ihre Logik für Profil-Button hinzu
+    //TODO
+    // weiterleiten auf Profilseite
   }
 
   onCartClick() {
     console.log('Warenkorb-Button geklickt');
-    // Fügen Sie hier Ihre Logik für Warenkorb-Button hinzu
+    //TODO
+    // weiterleiten zum Warenkorb
+  }
+
+  onSearch(){
+    //TODO
+    // SuchLogik -> beim drücken des Icons soll Suche abgeschlossen werden
+    // mit BE/DB diie Artikel anzeigen
+    console.log('Suche nach:', this.searchText);
   }
 }
