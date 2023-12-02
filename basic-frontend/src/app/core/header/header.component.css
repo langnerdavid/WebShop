@@ -21,7 +21,7 @@
   position: relative;
   flex-grow: 1;
   margin: 0 1rem;
-  max-width: 50%; /* Begrenzt die Größe der Suchleiste */
+  max-width: 50%;
 }
 
 .p-input-icon-left input {
