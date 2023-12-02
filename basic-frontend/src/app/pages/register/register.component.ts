@@ -24,9 +24,10 @@ export class RegisterComponent {
       return;
     }
 
-    //Registrierungslogik
-    //Werte noch in DB eintragen
-    //überprüfen ob username schon exisitert
+    //TODO:
+    // Registrierungslogik
+    // Werte noch in DB eintragen
+    // überprüfen ob username schon exisitert
     console.log('Registrierungsdaten:', this.userData);
   }
 }
