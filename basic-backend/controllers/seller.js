@@ -1,17 +1,33 @@
 import express from 'express';
 import validator from 'validator';
-import { createBuyer, listBuyers, listOneBuyer, deleteOneBuyer, updateBuyer } from "../services/buyer.js";
+import {
+    createSeller,
+    deleteOneSeller,
+    listOneSeller,
+    listOneSellerByUsername,
+    listSellers,
+    updateSeller
+} from "../services/seller.js";
 import { isPasswordSecure } from "../shared/shared.js";
+import {listOneSellerByUsernameLog} from "../models/seller.js";
 
 const router = express.Router();
-
-router.post('/', validateBuyer, async (req, res) => {
+router.post('/', validateSeller, async (req, res) => {
     const user = req.body.user;
-
     try {
-        const data = await createBuyer(user);
-        res.json(data);
-    } catch (e) {
+        const existingSeller = await listOneSellerByUsername(user.username);
+        if (existingSeller.length !== 0) {
+            res.status(400).json('Username is already taken');
+        } else {
+            try {
+                const data = await createSeller(user);
+                res.json(data);
+            } catch (e) {
+                console.error(e);
+                res.send(500);
+            }
+        }
+    }catch (e) {
         console.error(e);
         res.send(500);
     }
@@ -19,7 +35,7 @@ router.post('/', validateBuyer, async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const data = await listBuyers();
+        const data = await listSellers();
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -28,9 +44,9 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:Id', async (req, res) => {
-    const buyerId = req.params.Id;
+    const sellerId = req.params.Id;
     try {
-        const data = await listOneBuyer(buyerId);
+        const data = await listOneSeller(sellerId);
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -38,12 +54,12 @@ router.get('/:Id', async (req, res) => {
     }
 });
 
-router.patch('/:Id',authorizeBuyer, async (req, res) => {
-    const buyerId = req.params.Id;
+router.patch('/:Id',authorizeSeller, async (req, res) => {
+    const sellerId = req.params.Id;
     const user = req.body.user;
 
     try {
-        const data = await updateBuyer(user, buyerId);
+        const data = await updateSeller(user, sellerId);
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -51,10 +67,10 @@ router.patch('/:Id',authorizeBuyer, async (req, res) => {
     }
 });
 
-router.delete('/:Id', authorizeBuyer, async (req, res) => {
-    const buyerId = req.params.Id;
+router.delete('/:Id', authorizeSeller, async (req, res) => {
+    const sellerId = req.params.Id;
     try {
-        const data = await deleteOneBuyer(buyerId);
+        const data = await deleteOneSeller(sellerId);
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -62,7 +78,7 @@ router.delete('/:Id', authorizeBuyer, async (req, res) => {
     }
 });
 
-function validateBuyer(req, res, next) {
+function validateSeller(req, res, next) {
     const user = req.body.user;
     if (user.firstName && user.lastName && user.address) {
         if(isPasswordSecure(user.password)){
@@ -84,16 +100,14 @@ function validateBuyer(req, res, next) {
     }
 }
 
-async function authorizeBuyer(req, res, next) {
+async function authorizeSeller(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(401).send('Authorization Header missing.');
     }
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
-    const [user] = await listOneBuyer(req.params.Id);
-    console.log(user.username);
-    console.log(username, password);
+    const [user] = await listOneSeller(req.params.Id);
     if(username === user?.username){
         if(password === user?.password){
             console.log('authorized')
@@ -107,4 +121,4 @@ async function authorizeBuyer(req, res, next) {
 
 }
 
-export { router as buyerController };
+export { router as sellerController };

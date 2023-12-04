@@ -1,44 +1,41 @@
-import { buyerDb } from "./databases.js";
+import { orderDb } from "./databases.js";
 
 
-export function createBuyerLog(user){
+export function createOrderLog(orderReq){
     const currentTimestamp = new Date().toISOString();
-    const buyer = {
-        username: user.username,
-        password: user.password,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        address: user.address,
+    const order = {
+        articles: orderReq.articles,
+        buyer: orderReq.buyer,
+        totalAmount: orderReq.totalAmount,
+        status: orderReq.status,
 
-        createdAt: currentTimestamp,
-        updatedAt: currentTimestamp
+        orderDate: currentTimestamp,
     };
-    return buyerDb.insertAsync(buyer);
+    return orderDb.insertAsync(order);
 }
 
-export function updateBuyerLog(user, buyerId) {
+export function updateOrderLog(user, orderId) {
     return new Promise((resolve, reject) => {
         const currentTimestamp = new Date().toISOString();
 
-        listOneBuyerLog(buyerId, (err, oldUser) => {
+        listOneOrderLog(orderId, (err, oldUser) => {
             if (err) {
                 console.error(err);
                 reject(err);
             } else {
-                const buyer = {
+                const Order = {
                     username: user.username || oldUser.username,
                     password: user.password || oldUser.password,
                     createdAt: oldUser.createdAt,
                     updatedAt: currentTimestamp,
                 };
 
-                buyerDb.update({ _id: buyerId }, { $set: buyer }, {}, (err, numReplaced) => {
+                orderDb.update({ _id: orderId }, { $set: Order }, {}, (err, numReplaced) => {
                     if (err) {
                         console.error(err);
                         reject(err);
                     } else {
-                        resolve(buyer);
+                        resolve(Order);
                     }
                 });
             }});
@@ -46,19 +43,16 @@ export function updateBuyerLog(user, buyerId) {
 }
 
 
-export function listBuyersLog(callback) {
-    buyerDb.find({}, callback);
+export function listOrdersLog(callback) {
+    orderDb.find({}, callback);
 }
 
-export function listOneBuyerLog(buyerId, callback) {
-    buyerDb.find({_id : buyerId}, callback);
-}
-export function listOneBuyerByUsernameLog(username, callback) {
-    buyerDb.find({username : username}, callback);
+export function listOneOrderLog(orderId, callback) {
+    orderDb.find({_id : orderId}, callback);
 }
 
-export function deleteOneBuyerLog(buyerId, callback) {
-    buyerDb.remove({_id : buyerId}, callback);
+export function deleteOneOrderLog(orderId, callback) {
+    orderDb.remove({_id : orderId}, callback);
 }
 /*export function createEchoLog(message) {
     const currentTimestamp = new Date().toISOString();
