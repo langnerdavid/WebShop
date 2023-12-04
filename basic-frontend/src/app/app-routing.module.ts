@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
 
-import { RegisterComponent } from './pages/register/register.component';
-import { SigninComponent } from './pages/signin/signin.component';
 
 const routes: Routes = [
   {
@@ -11,17 +9,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule)
   },
   {
-    path: 'register',
-    component: RegisterComponent
-  },
-  {
-    path: 'signin',
-    component: SigninComponent
-  },
-  {
     path: '404',
     component: PageNotFoundComponent
   },
+  { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
+  { path: 'signin', loadChildren: () => import('./pages/signin/signin.module').then(m => m.SigninModule) },
   {
     path: '**',
     redirectTo: '404'
