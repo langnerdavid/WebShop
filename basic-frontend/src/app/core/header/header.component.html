@@ -1,7 +1,7 @@
 <div class="p-d-flex p-jc-between p-ai-center header">
 
   <div class="p-d-flex p-ai-center">
-    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'" (click)="onCartClick()"></button>
+    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-home'" routerLink="/"></button>
   </div>
 
   <span class="p-input-icon-left search-bar">
@@ -10,7 +10,10 @@
   </span>
 
   <div class="p-d-flex p-ai-center">
-    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" (click)="onProfileClick()"></button>
+    <!-- TODO: routerLink zu Warenkorb Seite -->
+    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'"></button>
+    <!-- TODO: routerLink zu Profil Seite -->
+    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" ></button>
   </div>
 
 </div>
