@@ -6,7 +6,7 @@
 
   <span class="p-input-icon-left search-bar">
     <input pInputText type="text" placeholder="Suche" [(ngModel)]="searchText" (keydown.enter)="onSearch()">
-    <i class="pi pi-search" (click)="onSearch()" tabindex="0"></i>
+    <i class="pi pi-search" (keyup.enter)="onSearch()" (click)="onSearch()" tabindex="0"></i>
   </span>
 
   <div class="p-d-flex p-ai-center">
