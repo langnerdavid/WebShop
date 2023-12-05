@@ -14,6 +14,8 @@ const routes: Routes = [
   },
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
   { path: 'signin', loadChildren: () => import('./pages/signin/signin.module').then(m => m.SigninModule) },
+  { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule) },
+  { path: 'basket', loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketModule) },
   {
     path: '**',
     redirectTo: '404'
