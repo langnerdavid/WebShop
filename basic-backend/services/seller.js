@@ -1,6 +1,6 @@
 import {
     createSellerLog,
-    deleteOneSellerLog, listOneSellerByUsernameLog,
+    deleteOneSellerLog,
     listOneSellerLog,
     listSellersLog,
     updateSellerLog
@@ -37,18 +37,6 @@ export function listSellers() {
 export function listOneSeller(sellerId) {
     return new Promise((resolve, reject) => {
         listOneSellerLog(sellerId, (err, documents) => {
-            if (err) {
-                console.error(err);
-                reject(err);
-            } else {
-                resolve(documents);
-            }
-        });
-    });
-}
-export function listOneSellerByUsername(username) {
-    return new Promise((resolve, reject) => {
-        listOneSellerByUsernameLog(username, (err, documents) => {
             if (err) {
                 console.error(err);
                 reject(err);

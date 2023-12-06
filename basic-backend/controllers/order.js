@@ -2,7 +2,7 @@ import express from 'express';
 import validator from 'validator';
 import {createOrder, deleteOneOrder, listOneOrder, listOrders, updateOrder} from "../services/order.js";
 import { isPasswordSecure } from "../shared/shared.js";
-import {listOneBuyer, listOneBuyerByUsername} from "../services/buyer.js";
+import {listOneBuyer} from "../services/buyer.js";
 
 const router = express.Router();
 

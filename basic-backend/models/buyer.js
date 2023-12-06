@@ -53,9 +53,6 @@ export function listBuyersLog(callback) {
 export function listOneBuyerLog(buyerId, callback) {
     buyerDb.find({_id : buyerId}, callback);
 }
-export function listOneBuyerByUsernameLog(username, callback) {
-    buyerDb.find({username : username}, callback);
-}
 
 export function deleteOneBuyerLog(buyerId, callback) {
     buyerDb.remove({_id : buyerId}, callback);

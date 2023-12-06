@@ -55,10 +55,6 @@ export function listSellersLog(callback) {
 export function listOneSellerLog(sellerId, callback) {
     sellerDb.find({_id : sellerId}, callback);
 }
-export function listOneSellerByUsernameLog(username, callback) {
-    sellerDb.find({username : username}, callback);
-}
-
 export function deleteOneSellerLog(sellerId, callback) {
     sellerDb.remove({_id : sellerId}, callback);
 }

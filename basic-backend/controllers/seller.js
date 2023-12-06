@@ -4,21 +4,21 @@ import {
     createSeller,
     deleteOneSeller,
     listOneSeller,
-    listOneSellerByUsername,
     listSellers,
     updateSeller
 } from "../services/seller.js";
 import { isPasswordSecure } from "../shared/shared.js";
-import {listOneSellerByUsernameLog} from "../models/seller.js";
+import {listOneSellerLog} from "../models/seller.js";
 
 const router = express.Router();
 router.post('/', validateSeller, async (req, res) => {
     const user = req.body.user;
     try {
-        const existingSeller = await listOneSellerByUsername(user.username);
+        //If loop is needed if there is a unique attribute of the seller, which can be set with the post request
+        /*const existingSeller = await listOneSellerByUsername(user.username);
         if (existingSeller.length !== 0) {
             res.status(400).json('Username is already taken');
-        } else {
+        } else { */
             try {
                 const data = await createSeller(user);
                 res.json(data);
@@ -26,7 +26,7 @@ router.post('/', validateSeller, async (req, res) => {
                 console.error(e);
                 res.send(500);
             }
-        }
+        //}
     }catch (e) {
         console.error(e);
         res.send(500);
