@@ -68,7 +68,6 @@ function validateBuyer(req, res, next) {
         if(isPasswordSecure(user.password)){
             if(user.username){
                 if(validator.isEmail(user.email)){
-                    console.log('ja')
                     next();
                 }else{
                     res.status(403).send('Invalid Email')

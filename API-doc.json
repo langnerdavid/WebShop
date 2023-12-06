@@ -1,0 +1,1323 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WebShop24",
+    "description": "This is the best WebShop you can find.\n",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "buyer",
+      "description": "Everything about buyers",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "seller",
+      "description": "Everything about sellers",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "article",
+      "description": "Everything about articles",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "order",
+      "description": "Everything about orders",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "cart",
+      "description": "Everything about shopping carts",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "paths": {
+    "/buyer": {
+      "post": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Create a new buyer (registration)",
+        "operationId": "createBuyer",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "409": {
+            "description": "Username already taken"
+          },
+          "201": {
+            "description": "Buyer created",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Get all buyers",
+        "operationId": "getBuyers",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "Buyers returned",
+            "content": {
+              "application/json": {
+                "example": [{
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12"
+                },
+                  {
+                    "_id": "cWGtlAnhcsVViidk",
+                    "username": "Zascosium2",
+                    "password": "Test123#",
+                    "firstName": "Tarek",
+                    "lastName": "Bürner",
+                    "email": "test@test.de",
+                    "address": "Leiser Weg 12"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buyer/{buyerID}": {
+      "get": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Get Buyer by BuyerID",
+        "operationId": "getBuyerByID",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Buyer not found"
+          },
+          "200": {
+            "description": "Buyer returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Update Buyer",
+        "operationId": "updateBuyerByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BuyerPatch"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "404": {
+            "description": "Buyer not found"
+          },
+          "409": {
+            "description": "Username already taken"
+          },
+          "200": {
+            "description": "Buyer updated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Delete Buyer",
+        "operationId": "deleteBuyer",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "200": {
+            "description": "Buyer deleted"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/seller": {
+      "post": {
+        "tags": [
+          "seller"
+        ],
+        "summary": "Create a new seller (registration)",
+        "operationId": "createSeller",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Seller"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "409": {
+            "description": "Username already taken"
+          },
+          "201": {
+            "description": "Seller created",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12",
+                  "profilePicture": "/basic-frontend/src/app/assets/Test.png"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "seller"
+        ],
+        "summary": "Get all sellers",
+        "operationId": "getSellers",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "Sellers returned",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "cWGtlAnhcsVViidg",
+                    "username": "Zascosium",
+                    "password": "Test123#",
+                    "firstName": "Tarek",
+                    "lastName": "Bürner",
+                    "email": "test@test.de",
+                    "address": "Leiser Weg 12",
+                    "profilePicture": "/basic-frontend/src/app/assets/Test.png"
+                  },
+                  {
+                    "_id": "cWGtlAnhcsVViidk",
+                    "username": "Zascosium2",
+                    "password": "Test123#",
+                    "firstName": "Tarek",
+                    "lastName": "Bürner",
+                    "email": "test@test.de",
+                    "address": "Leiser Weg 12",
+                    "profilePicture": "/basic-frontend/src/app/assets/Test.png"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seller/{sellerId}": {
+      "get": {
+        "tags": [
+          "seller"
+        ],
+        "summary": "Get Seller by SellerID",
+        "operationId": "getSellerByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Seller not found"
+          },
+          "200": {
+            "description": "Seller returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12",
+                  "profilePicture": "/basic-frontend/src/app/assets/Test.png"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "seller"
+        ],
+        "summary": "Update Seller",
+        "operationId": "updateSellerByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/SellerPatch"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "404": {
+            "description": "Seller not found"
+          },
+          "409": {
+            "description": "Username already taken"
+          },
+          "200": {
+            "description": "Seller updated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "username": "Zascosium",
+                  "password": "Test123#",
+                  "firstName": "Tarek",
+                  "lastName": "Bürner",
+                  "email": "test@test.de",
+                  "address": "Leiser Weg 12",
+                  "profilePicture": "/basic-frontend/src/app/assets/Test.png"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "seller"
+        ],
+        "summary": "Delete Seller",
+        "operationId": "deleteSeller",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "200": {
+            "description": "Seller deleted"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/article": {
+      "post": {
+        "tags": [
+          "article"
+        ],
+        "summary": "Create a new article",
+        "operationId": "createArticle",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Article"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "201": {
+            "description": "Article created",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "title": "Xiaomi 13T Pro",
+                  "description": "A really amazing Smartphone",
+                  "price": 790.01,
+                  "stockQuantity": 1000,
+                  "available": true,
+                  "brand": "Xiaomi",
+                  "seller": "cWGtlAnhcsVViidg",
+                  "searchingKeywords": ["Smartphone", "Xiaomi", "keyword3"],
+                  "profilePicture": ["/basic-frontend/src/app/assets/Test.png"]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "article"
+        ],
+        "summary": "Get all articles",
+        "operationId": "getArticles",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "Articles returned",
+            "content": {
+              "application/json": {
+                "example": [{
+                  "_id": "cWGtlAnhcsVViidg",
+                  "title": "Xiaomi 13T Pro",
+                  "description": "A really amazing Smartphone",
+                  "price": 790.01,
+                  "stockQuantity": 1000,
+                  "available": true,
+                  "brand": "Xiaomi",
+                  "seller": "cWGtlAnhcsVViidg",
+                  "searchingKeywords": ["Smartphone", "Xiaomi", "keyword3"],
+                  "profilePicture": ["/basic-frontend/src/app/assets/Test.png"]
+                },
+                  {
+                    "_id": "cWGtlAnhcsVViidg",
+                    "title": "Xiaomi 13T Pro",
+                    "description": "A really amazing Smartphone",
+                    "price": 790.01,
+                    "stockQuantity": 1000,
+                    "available": true,
+                    "brand": "Xiaomi",
+                    "seller": "cWGtlAnhcsVViidg",
+                    "searchingKeywords": ["Smartphone", "Xiaomi", "keyword3"],
+                    "profilePicture": ["/basic-frontend/src/app/assets/Test.png"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/article/{articleID}": {
+      "get": {
+        "tags": [
+          "article"
+        ],
+        "summary": "Get Article by ArticleID",
+        "operationId": "getArticleByID",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Article not found"
+          },
+          "200": {
+            "description": "Article returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "title": "Xiaomi 13T Pro",
+                  "description": "A really amazing Smartphone",
+                  "price": 790.01,
+                  "stockQuantity": 1000,
+                  "available": true,
+                  "brand": "Xiaomi",
+                  "seller": "cWGtlAnhcsVViidg",
+                  "searchingKeywords": ["Smartphone", "Xiaomi", "keyword3"],
+                  "profilePicture": ["/basic-frontend/src/app/assets/Test.png"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "article"
+        ],
+        "summary": "Update Article",
+        "operationId": "updateArticleByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ArticlePatch"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "404": {
+            "description": "Article not found"
+          },
+          "409": {
+            "description": "Username already taken"
+          },
+          "200": {
+            "description": "Seller updated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "title": "Xiaomi 13T Pro",
+                  "description": "A really amazing Smartphone",
+                  "price": 790.01,
+                  "stockQuantity": 1000,
+                  "available": true,
+                  "brand": "Xiaomi",
+                  "seller": "cWGtlAnhcsVViidg",
+                  "searchingKeywords": ["Smartphone", "Xiaomi", "keyword3"],
+                  "profilePicture": ["/basic-frontend/src/app/assets/Test.png"]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "article"
+        ],
+        "summary": "Delete Article",
+        "operationId": "deleteArticle",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "200": {
+            "description": "Article deleted"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Create a new order",
+        "operationId": "createOrder",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Order"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Failed user validation"
+          },
+          "201": {
+            "description": "Order created",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "buyer": "cWGtlAnhcsVViidg",
+                  "articles": [{
+                    "productID": "cWGtlAnhcsVViidg",
+                    "quantity": 2
+                  }
+                  ],
+                  "totalAmount": 790.01,
+                  "orderDate": "2023-12-01T14:30:00Z",
+                  "status": "placed"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Get all orders",
+        "operationId": "getOrders",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Failed user validation"
+          },
+          "200": {
+            "description": "Orders returned",
+            "content": {
+              "application/json": {
+                "example": [{
+                  "_id": "cWGtlAnhcsVViidg",
+                  "buyer": "cWGtlAnhcsVViidg",
+                  "articles": [{
+                    "productID": "cWGtlAnhcsVViidg",
+                    "quantity": 2
+                  }
+                  ],
+                  "totalAmount": 790.01,
+                  "orderDate": "2023-12-01T14:30:00Z",
+                  "status": "placed"
+                }]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/order/{orderID}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Get Order by OrderID",
+        "operationId": "getOrderByID",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Failed user validation"
+          },
+          "404": {
+            "description": "Order not found"
+          },
+          "200": {
+            "description": "Order returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "cWGtlAnhcsVViidg",
+                  "buyer": "cWGtlAnhcsVViidg",
+                  "articles": [{
+                    "productID": "cWGtlAnhcsVViidg",
+                    "quantity": 2
+                  }
+                  ],
+                  "totalAmount": 790.01,
+                  "orderDate": "2023-12-01T14:30:00Z",
+                  "status": "placed"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+
+    "/cart": {
+      "post": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Create a new Shopping-Cart",
+        "operationId": "createCart",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "201": {
+            "description": "Cart created"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/cart/{cartID}": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Get Shopping-Cart by cartID",
+        "operationId": "getCartByID",
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Cart not found"
+          },
+          "200": {
+            "description": "Cart returned"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Update Shopping-Cart",
+        "operationId": "updateCartByID",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "404": {
+            "description": "Cart not found"
+          },
+          "200": {
+            "description": "Cart updated"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Delete Shopping-Cart",
+        "operationId": "deleteCart",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Buyer"
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Username/Password mismatch"
+          },
+          "200": {
+            "description": "Cart deleted"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Article": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "price",
+          "stockQuantity",
+          "available",
+          "brand",
+          "searchingKeywords"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "example": "Xiaomi 13T Pro"
+          },
+          "description": {
+            "type": "string",
+            "example": "A really amazing Smartphone"
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "multipleOf": 0.01,
+            "example": 790.01
+          },
+          "stockQuantity": {
+            "type": "integer",
+            "example": 1000
+          },
+          "available": {
+            "type": "boolean",
+            "example": true
+          },
+          "brand": {
+            "type": "string",
+            "example": "Xiaomi"
+          },
+          "searchingKeywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Smartphone", "Xiaomi", "keyword3"]
+          },
+          "seller": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "articlePictures": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "example": ["/basic-frontend/src/app/assets/Test.png"]
+          }
+        }
+      },
+      "ArticlePatch": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "example": "Xiaomi 13T Pro"
+          },
+          "description": {
+            "type": "string",
+            "example": "A really amazing Smartphone"
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "multipleOf": 0.01,
+            "example": 790.01
+          },
+          "stockQuantity": {
+            "type": "integer",
+            "example": 1000
+          },
+          "available": {
+            "type": "boolean",
+            "example": true
+          },
+          "brand": {
+            "type": "string",
+            "example": "Xiaomi"
+          },
+          "searchingKeywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Smartphone", "Xiaomi", "keyword3"]
+          },
+          "seller": {
+            "type": "string",
+            "format": "BSON",
+            "example": "cWGtlAnhcsVViidg",
+            "readOnly": true
+          },
+          "articlePictures": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "example": ["/basic-frontend/src/app/assets/Test.png"]
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "required": [
+          "buyer",
+          "articles",
+          "status"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "buyer": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "productID": {
+                  "type": "string",
+                  "format": "BSON",
+                  "example": "cWGtlAnhcsVViidg"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "example": 3
+                }
+              }
+            },
+            "example": [
+              {"productID": "cWGtlAnhcsVViidg", "quantity": 2},
+              {"productID": "xyz123", "quantity": 1}
+            ]
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double",
+            "multipleOf": 0.01,
+            "readOnly": true
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ]
+          }
+        }
+      },
+      "BuyerPatch": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "example": "Zascosium"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
+            "example": "Test123#"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Tarek"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Bürner"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.de"
+          },
+          "address": {
+            "type": "string",
+            "example": "Leiser Weg 12"
+          }
+        }
+      },
+      "Buyer": {
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "address",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "example": "Zascosium"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
+            "example": "Test123#"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Tarek"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Bürner"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.de"
+          },
+          "address": {
+            "type": "string",
+            "example": "Leiser Weg 12"
+          }
+        }
+      },
+      "Seller": {
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "address",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "example": "Zascosium"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
+            "example": "Test123#"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Tarek"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Bürner"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.de"
+          },
+          "address": {
+            "type": "string",
+            "example": "Leiser Weg 12"
+          },
+          "profilePicture": {
+            "type": "string",
+            "format": "uri",
+            "example": "/basic-frontend/src/app/assets/Test.png"
+          }
+        }
+      },
+      "SellerPatch": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "BSON",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "example": "Zascosium"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
+            "example": "Test123#"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Tarek"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Bürner"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.de"
+          },
+          "address": {
+            "type": "string",
+            "example": "Leiser Weg 12"
+          },
+          "profilePicture": {
+            "type": "string",
+            "format": "uri",
+            "example": "/basic-frontend/src/app/assets/Test.png"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "pet_petId_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Updated name of the pet"
+          },
+          "status": {
+            "type": "string",
+            "description": "Updated status of the pet"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Buyer": {
+        "description": "Buyer, that should be registered",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Buyer"
+            }
+          }
+        },
+        "required": true
+      },
+      "BuyerPatch": {
+        "description": "Buyer, that should be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BuyerPatch"
+            }
+          }
+        }
+      },
+      "Seller": {
+        "description": "Seller, that should be created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Seller"
+            }
+          }
+        },
+        "required": true
+      },
+      "SellerPatch": {
+        "description": "Seller, that should be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SellerPatch"
+            }
+          }
+        }
+      },
+      "Article": {
+        "description": "Seller, that should be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Article"
+            }
+          }
+        }
+      },
+      "ArticlePatch": {
+        "description": "Seller, that should be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ArticlePatch"
+            }
+          }
+        }
+      },
+      "Order": {
+        "description": "Seller, that should be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Order"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "examples": {
+      "BasicAuthExample": {
+        "value": "Basic base64encodedstring"
+      }
+    }
+  }
+}
