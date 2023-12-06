@@ -4,6 +4,9 @@ import cors from 'cors';
 import { echoController } from "./controllers/echo.js";
 import { logRequest } from "./util/logger.js";
 import {buyerController} from "./controllers/buyer.js";
+import {orderController} from "./controllers/order.js";
+import {articleController} from "./controllers/article.js";
+import {sellerController} from "./controllers/seller.js";
 
 export const router = express.Router();
 
@@ -13,6 +16,9 @@ router.use(logRequest);
 
 router.use('/echo', echoController);
 router.use('/buyer', buyerController);
+router.use('/seller', sellerController);
+router.use('/article', articleController);
+router.use('/order', orderController);
 
 router.use((req, res) => {
     res.status(404);

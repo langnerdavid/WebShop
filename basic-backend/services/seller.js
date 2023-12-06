@@ -1,29 +1,28 @@
 import {
-    createBuyerLog,
-    listBuyersLog,
-    listOneBuyerLog,
-    deleteOneBuyerLog,
-    updateBuyerLog,
-    listOneBuyerByUsernameLog
-} from "../models/buyer.js";
+    createSellerLog,
+    deleteOneSellerLog, listOneSellerByUsernameLog,
+    listOneSellerLog,
+    listSellersLog,
+    updateSellerLog
+} from "../models/seller.js";
 
-export function createBuyer(user) {
-    return createBuyerLog(user);
+export function createSeller(user) {
+    return createSellerLog(user);
 }
 
-export function updateBuyer(user, buyerId) {
+export function updateSeller(user, sellerId) {
     return new Promise((resolve, reject) => {
-        updateBuyerLog(user, buyerId).then((buyer) => {
-                resolve(buyer);
+        updateSellerLog(user, sellerId).then((seller) => {
+                resolve(seller);
         }).catch((err) =>{
             reject(err);
         });
     });
 }
 
-export function listBuyers() {
+export function listSellers() {
     return new Promise((resolve, reject) => {
-        listBuyersLog((err, documents) => {
+        listSellersLog((err, documents) => {
             if (err) {
                 console.error(err);
                 reject(err);
@@ -35,9 +34,21 @@ export function listBuyers() {
 }
 
 
-export function listOneBuyer(buyerId) {
+export function listOneSeller(sellerId) {
     return new Promise((resolve, reject) => {
-        listOneBuyerLog(buyerId, (err, documents) => {
+        listOneSellerLog(sellerId, (err, documents) => {
+            if (err) {
+                console.error(err);
+                reject(err);
+            } else {
+                resolve(documents);
+            }
+        });
+    });
+}
+export function listOneSellerByUsername(username) {
+    return new Promise((resolve, reject) => {
+        listOneSellerByUsernameLog(username, (err, documents) => {
             if (err) {
                 console.error(err);
                 reject(err);
@@ -48,22 +59,9 @@ export function listOneBuyer(buyerId) {
     });
 }
 
-export function listOneBuyerByUsername(username) {
+export function deleteOneSeller(sellerId) {
     return new Promise((resolve, reject) => {
-        listOneBuyerByUsernameLog(username, (err, documents) => {
-            if (err) {
-                console.error(err);
-                reject(err);
-            } else {
-                resolve(documents);
-            }
-        });
-    });
-}
-
-export function deleteOneBuyer(buyerId) {
-    return new Promise((resolve, reject) => {
-        deleteOneBuyerLog(buyerId, (err, doc) => {
+        deleteOneSellerLog(sellerId, (err, doc) => {
             if (err) {
                 console.error(err);
                 reject(err);
