@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './signin.component.html',
   styleUrls: ['../register/register.component.css', './signin.component.css']
 })
+
 export class SigninComponent {
   userData = {
     username: '',

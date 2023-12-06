@@ -11,8 +11,6 @@ import {FormsModule} from "@angular/forms";
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
-import { RegisterComponent } from './pages/register/register.component';
-import { SigninComponent } from './pages/signin/signin.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,9 +22,7 @@ import { PasswordModule } from 'primeng/password';
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    PageNotFoundComponent,
-    RegisterComponent,
-    SigninComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
