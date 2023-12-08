@@ -1,4 +1,5 @@
 import validator from 'validator';
+import germanZipCodes  from 'german-zip-codes';
 
 export function isPasswordSecure(password) {
     // Überprüfe, ob das Passwort mindestens 8 Zeichen lang ist
@@ -14,4 +15,9 @@ export function isPasswordSecure(password) {
 
     // Überprüfe, ob alle Kriterien erfüllt sind
     return hasUpperCase && hasLowerCase && hasSpecialChar && hasNumber;
+}
+
+export function validateZipCode(zipCode, city){
+    const districts = germanZipCodes.getDistrictsByZipCode(zipCode);
+    return [!(districts.length === 0 || districts.length > 1 || districts[0].toLowerCase() !== city.toLowerCase() || zipCode/10000 < 1), districts[0]];
 }

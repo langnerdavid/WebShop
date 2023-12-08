@@ -7,7 +7,7 @@ import {
     listSellers,
     updateSeller
 } from "../services/seller.js";
-import { isPasswordSecure } from "../shared/shared.js";
+import {isPasswordSecure, validateZipCode} from "../shared/shared.js";
 import {listOneSellerLog} from "../models/seller.js";
 
 const router = express.Router();
@@ -47,14 +47,18 @@ router.get('/:Id', async (req, res) => {
     const sellerId = req.params.Id;
     try {
         const data = await listOneSeller(sellerId);
-        res.json(data);
+        if(data.length === 0){
+            res.status(404).send('Seller doesn\'t exist');
+        }else {
+            res.json(data[0]);
+        }
     } catch (e) {
         console.error(e);
         res.send(500);
     }
 });
 
-router.patch('/:Id',authorizeSeller, async (req, res) => {
+router.patch('/:Id',authorizeSeller, validateSellerPatch, async (req, res) => {
     const sellerId = req.params.Id;
     const user = req.body.user;
 
@@ -80,17 +84,18 @@ router.delete('/:Id', authorizeSeller, async (req, res) => {
 
 function validateSeller(req, res, next) {
     const user = req.body.user;
-    if (user.firstName && user.lastName && user.address) {
+    if (user.brand && user.address && user.email && user.password && user.zipCode && user.city) {
         if(isPasswordSecure(user.password)){
-            if(user.username){
-                if(validator.isEmail(user.email)){
-                    console.log('ja')
+            if(validator.isEmail(user.email)){
+                const validateZips = validateZipCode(user.zipCode,user.city);
+                if(validateZips[0]) {
+                    user.city = validateZips[1];
                     next();
                 }else{
-                    res.status(403).send('Invalid Email')
+                    res.status(403).send('The given Zip-Code doesnt exist or is not in the given city');
                 }
             }else{
-                res.status(409).send('Username already taken')
+                res.status(403).send('Invalid Email')
             }
         }else{
             res.status(403).send('Password is not secure')
@@ -100,6 +105,39 @@ function validateSeller(req, res, next) {
     }
 }
 
+
+function validateSellerPatch(req, res, next) {
+    const user = req.body.user;
+    let hasError = false;
+
+    if (!user.password && !user.brand && !user.address && !user.email && !user.city && !user.zipCode) {
+        res.status(403).send('Error: At least one of the attributes (password, brand, address, email, city, zipCode) must exist.');
+        hasError = true;
+    }
+
+    if (user.password && !isPasswordSecure(user.password)) {
+        res.status(403).send('Password is not secure');
+        hasError = true;
+    }
+
+    if (user.email && !validator.isEmail(user.email)) {
+        res.status(403).send('Invalid Email');
+        hasError = true;
+    }
+
+    const validateZips = validateZipCode(user.zipCode, user.city);
+    if (user.address && user.zipCode && user.city && !validateZips[0]) {
+        res.status(403).send('The given Zip-Code doesn\'t exist or is not in the given city');
+        hasError = true;
+    }
+
+    if (!hasError) {
+        user.city = validateZips[1];
+        next();
+    }
+}
+
+
 async function authorizeSeller(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -108,7 +146,7 @@ async function authorizeSeller(req, res, next) {
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
     const [user] = await listOneSeller(req.params.Id);
-    if(username === user?.username){
+    if(username === user?._id){
         if(password === user?.password){
             console.log('authorized')
             next();

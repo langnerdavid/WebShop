@@ -293,20 +293,16 @@
                 "example": [
                   {
                     "_id": "cWGtlAnhcsVViidg",
-                    "username": "Zascosium",
                     "password": "Test123#",
-                    "firstName": "Tarek",
-                    "lastName": "Bürner",
+                    "brand": "Something",
                     "email": "test@test.de",
                     "address": "Leiser Weg 12",
                     "profilePicture": "/basic-frontend/src/app/assets/Test.png"
                   },
                   {
                     "_id": "cWGtlAnhcsVViidk",
-                    "username": "Zascosium2",
                     "password": "Test123#",
-                    "firstName": "Tarek",
-                    "lastName": "Bürner",
+                    "brand": "Something",
                     "email": "test@test.de",
                     "address": "Leiser Weg 12",
                     "profilePicture": "/basic-frontend/src/app/assets/Test.png"
@@ -341,10 +337,8 @@
               "application/json": {
                 "example": {
                   "_id": "cWGtlAnhcsVViidg",
-                  "username": "Zascosium",
                   "password": "Test123#",
-                  "firstName": "Tarek",
-                  "lastName": "Bürner",
+                  "brand": "Something",
                   "email": "test@test.de",
                   "address": "Leiser Weg 12",
                   "profilePicture": "/basic-frontend/src/app/assets/Test.png"
@@ -382,10 +376,8 @@
               "application/json": {
                 "example": {
                   "_id": "cWGtlAnhcsVViidg",
-                  "username": "Zascosium",
                   "password": "Test123#",
-                  "firstName": "Tarek",
-                  "lastName": "Bürner",
+                  "brand": "Something",
                   "email": "test@test.de",
                   "address": "Leiser Weg 12",
                   "profilePicture": "/basic-frontend/src/app/assets/Test.png"
@@ -1119,12 +1111,10 @@
       },
       "Seller": {
         "required": [
-          "firstName",
-          "lastName",
           "email",
           "password",
           "address",
-          "username"
+          "brand"
         ],
         "type": "object",
         "properties": {
@@ -1133,22 +1123,14 @@
             "format": "BSON",
             "readOnly": true
           },
-          "username": {
-            "type": "string",
-            "example": "Zascosium"
-          },
           "password": {
             "type": "string",
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
             "example": "Test123#"
           },
-          "firstName": {
+          "brand": {
             "type": "string",
-            "example": "Tarek"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Bürner"
+            "example": "Something"
           },
           "email": {
             "type": "string",
@@ -1173,22 +1155,14 @@
             "format": "BSON",
             "readOnly": true
           },
-          "username": {
-            "type": "string",
-            "example": "Zascosium"
-          },
           "password": {
             "type": "string",
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
             "example": "Test123#"
           },
-          "firstName": {
+          "brand": {
             "type": "string",
-            "example": "Tarek"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Bürner"
+            "example": "Something"
           },
           "email": {
             "type": "string",

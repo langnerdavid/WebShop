@@ -6,13 +6,12 @@ export function createSellerLog(user){
     const currentTimestamp = new Date().toISOString();
 
     const seller = {
-        username: user.username,
         password: user.password,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        brand: user.brand,
         address: user.address,
-
+        zipCode: user.zipCode,
+        city: user.city,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp
     };
@@ -24,15 +23,20 @@ export function updateSellerLog(user, sellerId) {
         const currentTimestamp = new Date().toISOString();
 
         listOneSellerLog(sellerId, (err, oldUser) => {
+            oldUser = oldUser[0];
             if (err) {
                 console.error(err);
                 reject(err);
             } else {
                 const seller = {
-                    username: user.username || oldUser.username,
-                    password: user.password || oldUser.password,
+                    password: user?.password ?? oldUser.password,
+                    email: user?.email ?? oldUser.email,
+                    brand: user?.brand ?? oldUser.brand,
+                    address: user?.address ?? oldUser.address,
+                    zipCode: user?.zipCode ?? oldUser.zipCode,
+                    city: user?.city ?? oldUser.city,
                     createdAt: oldUser.createdAt,
-                    updatedAt: currentTimestamp,
+                    updatedAt: currentTimestamp
                 };
 
                 sellerDb.update({ _id: sellerId }, { $set: seller }, {}, (err, numReplaced) => {

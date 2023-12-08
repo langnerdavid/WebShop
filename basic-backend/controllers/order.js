@@ -73,7 +73,7 @@ router.delete('/:Id', authorizeOrder, async (req, res) => {
 function validateOrder(req, res, next) {
     const order = req.body?.order;
     if ((order?.articles.length>0) && order?.status) {
-        if(order.status==="placed"||order.status==="shipped"||order.status==="delivered"||order.status==="cancelde"){
+        if(order.status==="placed"||order.status==="shipped"||order.status==="delivered"||order.status==="canceled"){
             next();
         }else {
             res.status(400).send('Order status out of bounds');
