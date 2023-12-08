@@ -50,7 +50,7 @@ export function updateSellerLog(user, sellerId) {
                                 console.error(err);
                                 reject(err);
                             } else {
-                                resolve(fullyUpdatedSeller);
+                                resolve(fullyUpdatedSeller[0]);
                             }
                         });
                     }
