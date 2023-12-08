@@ -44,7 +44,15 @@ export function updateSellerLog(user, sellerId) {
                         console.error(err);
                         reject(err);
                     } else {
-                        resolve(seller);
+                        listOneSellerLog(sellerId, (err, fullyUpdatedSeller) => {
+                            oldUser = oldUser[0];
+                            if (err) {
+                                console.error(err);
+                                reject(err);
+                            } else {
+                                resolve(fullyUpdatedSeller);
+                            }
+                        });
                     }
                 });
             }});
