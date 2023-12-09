@@ -7,6 +7,7 @@ import {ButtonModule} from "primeng/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
+import {CheckboxModule} from "primeng/checkbox";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {PasswordModule} from "primeng/password";
         FormsModule,
         InputTextModule,
         PasswordModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CheckboxModule
     ]
 })
 export class SigninModule { }

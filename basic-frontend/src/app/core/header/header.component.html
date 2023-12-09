@@ -1,17 +1,15 @@
-<div class="p-d-flex p-jc-between p-ai-center header">
-
-  <div class="p-d-flex p-ai-center">
+<div class="header">
+  <div class="button-container">
     <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-home'" routerLink="/"> </button>
   </div>
 
-  <span class="p-input-icon-left search-bar">
+  <div class="search-bar">
     <input pInputText type="text" placeholder="Suche" [(ngModel)]="searchText" (keydown.enter)="onSearch()">
-    <i class="pi pi-search" (keyup.enter)="onSearch()" (click)="onSearch()" tabindex="0"></i>
-  </span>
+    <i class="pi pi-search search-icon" (keyup.enter)="onSearch()" (click)="onSearch()" tabindex="0"></i>
+  </div>
 
-  <div class="p-d-flex p-ai-center">
+  <div class="button-container">
     <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'" routerLink="basket"> </button>
     <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" routerLink="profile"> </button>
   </div>
-
 </div>
