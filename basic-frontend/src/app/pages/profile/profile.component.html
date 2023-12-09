@@ -1,1 +1,42 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <p-card class="profile-card">
+    <div class="profile-header">
+      <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
+      <div class="profile-name-email">
+        <h2>Username dummy</h2>
+        <p>Email dummy</p>
+      </div>
+    </div>
+    <div class="profile-info">
+      <h3>Additional Information</h3>
+      <p>Age: 69</p>
+      <p>Country: Alabama</p>
+      <p>City: Saarland</p>
+    </div>
+    <div class="profile-actions">
+      <button pButton type="button" label="Edit Profile" class="p-button-rounded p-button-info"></button>
+    </div>
+  </p-card>
+
+  <p-card class="orders-card">
+    <h3>Order History</h3>
+    <p-table [value]="orders" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{order.id}}</td>
+          <td>{{order.date}}</td>
+          <td>{{order.status}}</td>
+          <td>{{order.total}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

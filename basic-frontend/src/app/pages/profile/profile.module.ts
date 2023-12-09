@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
+import {CardModule} from "primeng/card";
+import {TableModule} from "primeng/table";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { ProfileComponent } from './profile.component';
   ],
   imports: [
     CommonModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    CardModule,
+    TableModule
   ]
 })
 export class ProfileModule { }

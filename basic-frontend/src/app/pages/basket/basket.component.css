@@ -1,0 +1,28 @@
+.cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.cart-card {
+  width: 90%;
+  max-width: 800px;
+}
+
+.cart-card h2 {
+  margin-bottom: 1rem;
+}
+
+.cart-total {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: flex-end;
+}
