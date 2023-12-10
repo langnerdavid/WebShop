@@ -1,5 +1,5 @@
-# Web-Eng Lecture Boilerplate
-Autor(en): Lukas Paffen
+# WebShop 24
+Autoren: Tarek Buerner, David Langner
 
 ## FE ausführen
 1. `npm i`
