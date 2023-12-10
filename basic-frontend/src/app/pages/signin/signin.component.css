@@ -1,0 +1,29 @@
+.signin-form {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.p-field {
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.p-field label {
+  margin-right: 1em;
+  min-width: 120px;
+}
+button {
+  margin-top: 1em;
+}
+
+h2, .registration-form, .signin-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+input{
+  width: 53.5%;
+}

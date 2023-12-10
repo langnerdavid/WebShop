@@ -5,6 +5,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import {CardModule} from "primeng/card";
 import {TableModule} from "primeng/table";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {TableModule} from "primeng/table";
     CommonModule,
     ProfileRoutingModule,
     CardModule,
-    TableModule
+    TableModule,
+    ButtonModule
   ]
 })
 export class ProfileModule { }

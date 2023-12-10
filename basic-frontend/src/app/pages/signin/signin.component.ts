@@ -12,7 +12,7 @@ export class SigninComponent {
     password: ''
   };
 
-  onSubmit() {
+  onSignIn() {
     //TODO:
     // Daten mit DB abgleichen
     console.log('Anmeldedaten:', this.userData);

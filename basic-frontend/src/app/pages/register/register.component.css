@@ -1,4 +1,4 @@
-form {
+.registration-form {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -6,14 +6,21 @@ form {
 
 .p-field {
   margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.p-field label {
+  margin-right: 1em;
+  min-width: 120px;
 }
 
 button {
   margin-top: 1em;
 }
 
-h2, form {
-  max-width: 400px;
+h2, .registration-form {
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
