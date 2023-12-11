@@ -1,7 +1,6 @@
 import express from 'express';
-import validator from 'validator';
 import { createBuyer, listBuyers, listOneBuyer, deleteOneBuyer, updateBuyer } from "../services/buyer.js";
-import { isPasswordSecure } from "../shared/shared.js";
+import { validateUserInputs, validateUserPatch } from "../shared/shared.js";
 
 const router = express.Router();
 
@@ -38,7 +37,7 @@ router.get('/:Id', async (req, res) => {
     }
 });
 
-router.patch('/:Id',authorizeBuyer, async (req, res) => {
+router.patch('/:Id',authorizeBuyer, validateBuyerPatch, async (req, res) => {
     const buyerId = req.params.Id;
     const user = req.body.user;
 
@@ -64,22 +63,35 @@ router.delete('/:Id', authorizeBuyer, async (req, res) => {
 
 function validateBuyer(req, res, next) {
     const user = req.body.user;
-    if (user.firstName && user.lastName && user.address) {
-        if(isPasswordSecure(user.password)){
-            if(user.username){
-                if(validator.isEmail(user.email)){
-                    next();
-                }else{
-                    res.status(403).send('Invalid Email')
-                }
-            }else{
-                res.status(409).send('Username already taken')
-            }
+    if (user.firstName && user.lastName && user.address && user.email && user.password && user.zipCode && user.city) {
+
+        //validateUserInputs makes sure, that the given Attributes are correct
+        const validationResult = validateUserInputs(user);
+        if(validationResult.isValid){
+            next();
         }else{
-            res.status(403).send('Password is not secure')
+            res.status(403).send(validationResult.message)
         }
     } else {
         res.status(400).send('User Data incomplete');
+    }
+}
+
+function validateBuyerPatch(req, res, next) {
+    const user = req.body.user;
+    let hasError = false;
+
+    if (!user.password && !user.firstName && !user.lastName && !user.address && !user.email && !user.city && !user.zipCode) {
+        res.status(403).send('Error: At least one of the attributes (password, brand, address, email, city, zipCode) must exist.');
+        hasError = true;
+    }
+
+    // validationUserParch validates, that the patched Attributes are correct
+    const validationResult = validateUserPatch(user, res);
+
+    if (!validationResult.hasError && !hasError) {
+        user.city = validationResult.validateZips[1];
+        next();
     }
 }
 

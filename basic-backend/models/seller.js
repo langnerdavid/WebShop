@@ -1,4 +1,4 @@
-import { sellerDb } from "./databases.js";
+import {articleDb, sellerDb} from "./databases.js";
 import {listOneSeller} from "../services/seller.js";
 
 
@@ -68,7 +68,15 @@ export function listOneSellerLog(sellerId, callback) {
     sellerDb.find({_id : sellerId}, callback);
 }
 export function deleteOneSellerLog(sellerId, callback) {
-    sellerDb.remove({_id : sellerId}, callback);
+    articleDb.remove({ seller: sellerId }, { multi: true }, (articleErr) => {
+        if (articleErr) {
+            console.error(articleErr);
+            callback(articleErr);
+        } else {
+            // If articles are removed successfully, then remove the seller log
+            sellerDb.remove({ _id: sellerId }, callback);
+        }
+    });
 }
 /*export function createEchoLog(message) {
     const currentTimestamp = new Date().toISOString();

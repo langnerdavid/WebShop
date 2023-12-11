@@ -7,7 +7,7 @@ import {
     listSellers,
     updateSeller
 } from "../services/seller.js";
-import {isPasswordSecure, validateZipCode} from "../shared/shared.js";
+import {isPasswordSecure, validateUserInputs, validateUserPatch, validateZipCode} from "../shared/shared.js";
 import {listOneSellerLog} from "../models/seller.js";
 
 const router = express.Router();
@@ -85,20 +85,12 @@ router.delete('/:Id', authorizeSeller, async (req, res) => {
 function validateSeller(req, res, next) {
     const user = req.body.user;
     if (user.brand && user.address && user.email && user.password && user.zipCode && user.city) {
-        if(isPasswordSecure(user.password)){
-            if(validator.isEmail(user.email)){
-                const validateZips = validateZipCode(user.zipCode,user.city);
-                if(validateZips[0]) {
-                    user.city = validateZips[1];
-                    next();
-                }else{
-                    res.status(403).send('The given Zip-Code doesnt exist or is not in the given city');
-                }
-            }else{
-                res.status(403).send('Invalid Email')
-            }
+        //validateUserInputs makes sure, that the given Attributes are correct
+        const validationResult = validateUserInputs(user);
+        if(validationResult.isValid){
+            next();
         }else{
-            res.status(403).send('Password is not secure')
+            res.status(403).send(validationResult.message)
         }
     } else {
         res.status(400).send('User Data incomplete');
@@ -115,24 +107,12 @@ function validateSellerPatch(req, res, next) {
         hasError = true;
     }
 
-    if (user.password && !isPasswordSecure(user.password)) {
-        res.status(403).send('Password is not secure');
-        hasError = true;
-    }
 
-    if (user.email && !validator.isEmail(user.email)) {
-        res.status(403).send('Invalid Email');
-        hasError = true;
-    }
+    // validationUserParch validates, that the patched Attributes are correct
+    const validationResult = validateUserPatch(user, res);
 
-    const validateZips = validateZipCode(user.zipCode, user.city);
-    if (user.address && user.zipCode && user.city && !validateZips[0]) {
-        res.status(403).send('The given Zip-Code doesn\'t exist or is not in the given city');
-        hasError = true;
-    }
-
-    if (!hasError) {
-        user.city = validateZips[1];
+    if (!validationResult.hasError) {
+        user.city = validationResult.validateZips[1];
         next();
     }
 }

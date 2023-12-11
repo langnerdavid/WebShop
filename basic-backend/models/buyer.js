@@ -1,15 +1,17 @@
-import { buyerDb } from "./databases.js";
+import {articleDb, buyerDb, cartDb, orderDb, sellerDb} from "./databases.js";
+import {listOneSellerLog} from "./seller.js";
 
 
 export function createBuyerLog(user){
     const currentTimestamp = new Date().toISOString();
     const buyer = {
-        username: user.username,
         password: user.password,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         address: user.address,
+        zipCode: user.zipCode,
+        city: user.city,
 
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp
@@ -27,10 +29,16 @@ export function updateBuyerLog(user, buyerId) {
                 reject(err);
             } else {
                 const buyer = {
-                    username: user.username || oldUser.username,
-                    password: user.password || oldUser.password,
+                    password: user?.password ?? oldUser.password,
+                    email: user?.email ?? oldUser.email,
+                    firstName: user?.firstName ?? oldUser.firstName,
+                    lastName: user?.lastName ?? oldUser.lastName,
+                    address: user?.address ?? oldUser.address,
+                    zipCode: user?.zipCode ?? oldUser.zipCode,
+                    city: user?.city ?? oldUser.city,
+
                     createdAt: oldUser.createdAt,
-                    updatedAt: currentTimestamp,
+                    updatedAt: currentTimestamp
                 };
 
                 buyerDb.update({ _id: buyerId }, { $set: buyer }, {}, (err, numReplaced) => {
@@ -38,7 +46,15 @@ export function updateBuyerLog(user, buyerId) {
                         console.error(err);
                         reject(err);
                     } else {
-                        resolve(buyer);
+                        listOneBuyerLog(buyerId, (err, fullyUpdatedBuyer) => {
+                            oldUser = oldUser[0];
+                            if (err) {
+                                console.error(err);
+                                reject(err);
+                            } else {
+                                resolve(fullyUpdatedBuyer[0]);
+                            }
+                        });
                     }
                 });
             }});
@@ -55,7 +71,16 @@ export function listOneBuyerLog(buyerId, callback) {
 }
 
 export function deleteOneBuyerLog(buyerId, callback) {
-    buyerDb.remove({_id : buyerId}, callback);
+    orderDb.remove({ buyer: buyerId }, { multi: true }, (articleErr) => {
+        if (articleErr) {
+            console.error(articleErr);
+            callback(articleErr);
+        } else {
+            // If orders are removed successfully, then remove the seller log
+            cartDb.remove({buyer:buyerId}, callback);
+            buyerDb.remove({_id : buyerId}, callback);
+        }
+    });
 }
 /*export function createEchoLog(message) {
     const currentTimestamp = new Date().toISOString();
