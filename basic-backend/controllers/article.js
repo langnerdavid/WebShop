@@ -2,7 +2,7 @@ import express from 'express';
 import validator from 'validator';
 import {createArticle, deleteOneArticle, listOneArticle, listArticles, updateArticle} from "../services/article.js";
 import { isPasswordSecure } from "../shared/shared.js";
-import {listOneSeller, listOneSellerByUsername} from "../services/seller.js";
+import {listOneSeller} from "../services/seller.js";
 
 const router = express.Router();
 
@@ -102,8 +102,8 @@ async function authorizeArticlePost(req, res, next) {
     }
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
-    const [seller] = await listOneSellerByUsername(username);
-    if(username === seller?.username){
+    const [seller] = await listOneSeller(username);
+    if(username === seller?._id){
         if(password === seller?.password){
             console.log('authorized');
             req.body.article.seller = seller._id;

@@ -4,21 +4,21 @@ import {
     createSeller,
     deleteOneSeller,
     listOneSeller,
-    listOneSellerByUsername,
     listSellers,
     updateSeller
 } from "../services/seller.js";
-import { isPasswordSecure } from "../shared/shared.js";
-import {listOneSellerByUsernameLog} from "../models/seller.js";
+import {isPasswordSecure, validateUserInputs, validateUserPatch, validateZipCode} from "../shared/shared.js";
+import {listOneSellerLog} from "../models/seller.js";
 
 const router = express.Router();
 router.post('/', validateSeller, async (req, res) => {
     const user = req.body.user;
     try {
-        const existingSeller = await listOneSellerByUsername(user.username);
+        //If loop is needed if there is a unique attribute of the seller, which can be set with the post request
+        /*const existingSeller = await listOneSellerByUsername(user.username);
         if (existingSeller.length !== 0) {
             res.status(400).json('Username is already taken');
-        } else {
+        } else { */
             try {
                 const data = await createSeller(user);
                 res.json(data);
@@ -26,7 +26,7 @@ router.post('/', validateSeller, async (req, res) => {
                 console.error(e);
                 res.send(500);
             }
-        }
+        //}
     }catch (e) {
         console.error(e);
         res.send(500);
@@ -47,14 +47,18 @@ router.get('/:Id', async (req, res) => {
     const sellerId = req.params.Id;
     try {
         const data = await listOneSeller(sellerId);
-        res.json(data);
+        if(data.length === 0){
+            res.status(404).send('Seller doesn\'t exist');
+        }else {
+            res.json(data[0]);
+        }
     } catch (e) {
         console.error(e);
         res.send(500);
     }
 });
 
-router.patch('/:Id',authorizeSeller, async (req, res) => {
+router.patch('/:Id',authorizeSeller, validateSellerPatch, async (req, res) => {
     const sellerId = req.params.Id;
     const user = req.body.user;
 
@@ -80,25 +84,39 @@ router.delete('/:Id', authorizeSeller, async (req, res) => {
 
 function validateSeller(req, res, next) {
     const user = req.body.user;
-    if (user.firstName && user.lastName && user.address) {
-        if(isPasswordSecure(user.password)){
-            if(user.username){
-                if(validator.isEmail(user.email)){
-                    console.log('ja')
-                    next();
-                }else{
-                    res.status(403).send('Invalid Email')
-                }
-            }else{
-                res.status(409).send('Username already taken')
-            }
+    if (user.brand && user.address && user.email && user.password && user.zipCode && user.city) {
+        //validateUserInputs makes sure, that the given Attributes are correct
+        const validationResult = validateUserInputs(user);
+        if(validationResult.isValid){
+            next();
         }else{
-            res.status(403).send('Password is not secure')
+            res.status(403).send(validationResult.message)
         }
     } else {
         res.status(400).send('User Data incomplete');
     }
 }
+
+
+function validateSellerPatch(req, res, next) {
+    const user = req.body.user;
+    let hasError = false;
+
+    if (!user.password && !user.brand && !user.address && !user.email && !user.city && !user.zipCode) {
+        res.status(403).send('Error: At least one of the attributes (password, brand, address, email, city, zipCode) must exist.');
+        hasError = true;
+    }
+
+
+    // validationUserParch validates, that the patched Attributes are correct
+    const validationResult = validateUserPatch(user, res);
+
+    if (!validationResult.hasError) {
+        user.city = validationResult.validateZips[1];
+        next();
+    }
+}
+
 
 async function authorizeSeller(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -108,7 +126,7 @@ async function authorizeSeller(req, res, next) {
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
     const [user] = await listOneSeller(req.params.Id);
-    if(username === user?.username){
+    if(username === user?._id){
         if(password === user?.password){
             console.log('authorized')
             next();

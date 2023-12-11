@@ -41,7 +41,7 @@ export function listOneArticle(articleId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve(documents);
+                resolve(documents[0]);
             }
         });
     });

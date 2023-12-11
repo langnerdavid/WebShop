@@ -1,8 +1,6 @@
 import express from 'express';
-import validator from 'validator';
-import {createOrder, deleteOneOrder, listOneOrder, listOrders, updateOrder} from "../services/order.js";
-import { isPasswordSecure } from "../shared/shared.js";
-import {listOneBuyer, listOneBuyerByUsername} from "../services/buyer.js";
+import {createOrder, listOneOrder, listOrders} from "../services/order.js";
+import {listOneBuyer} from "../services/buyer.js";
 
 const router = express.Router();
 
@@ -46,34 +44,10 @@ router.get('/:Id', async (req, res) => {
     }
 });
 
-router.patch('/:Id',authorizeOrder, async (req, res) => {
-    const orderId = req.params.Id;
-    const user = req.body.user;
-
-    try {
-        const data = await updateOrder(user, orderId);
-        res.json(data);
-    } catch (e) {
-        console.error(e);
-        res.send(500);
-    }
-});
-
-router.delete('/:Id', authorizeOrder, async (req, res) => {
-    const orderId = req.params.Id;
-    try {
-        const data = await deleteOneOrder(orderId);
-        res.json(data);
-    } catch (e) {
-        console.error(e);
-        res.send(500);
-    }
-});
-
 function validateOrder(req, res, next) {
     const order = req.body?.order;
     if ((order?.articles.length>0) && order?.status) {
-        if(order.status==="placed"||order.status==="shipped"||order.status==="delivered"||order.status==="cancelde"){
+        if(order.status==="placed"||order.status==="shipped"||order.status==="delivered"||order.status==="canceled"){
             next();
         }else {
             res.status(400).send('Order status out of bounds');
