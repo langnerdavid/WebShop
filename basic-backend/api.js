@@ -18,7 +18,7 @@ router.use(logRequest);
 router.use('/echo', echoController);
 router.use('/buyer', buyerController);
 router.use('/seller', sellerController);
-router.use('/article', articleController);
+router.use('/a1', articleController);
 router.use('/order', orderController);
 router.use('/cart', cartController);
 
