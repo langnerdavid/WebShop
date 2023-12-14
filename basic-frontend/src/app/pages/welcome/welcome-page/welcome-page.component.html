@@ -29,5 +29,5 @@
     <button routerLink="/register">Register</button>
     <button routerLink="/signin">Sign in</button>
   </div>
-  <app-articlepreview></app-articlepreview>
+  <app-articlepreview *ngFor="let item of articles" [articleInfo]="item"></app-articlepreview>
 </div>

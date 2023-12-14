@@ -24,3 +24,8 @@ h2, .registration-form {
   margin: 0 auto;
   padding: 20px;
 }
+
+.registration-form input{
+  width: 300px; /* Set a fixed width or use a percentage */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}

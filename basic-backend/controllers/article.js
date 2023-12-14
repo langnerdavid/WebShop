@@ -65,7 +65,7 @@ router.delete('/:Id', authorizeArticle, async (req, res) => {
 
 function validateArticle(req, res, next) {
     const article = req.body.article;
-    if (article.title && article.description && article.price && article.stockQuantity && article.available && article.brand && article.searchingKeywords) {
+    if (article?.title && article?.description && article?.price && article?.stockQuantity !== undefined && article?.available !== undefined && article?.brand && article?.searchingKeywords){
         next();
     }else{
         res.status(400).send('Article Data incomplete');

@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, Input, OnInit} from '@angular/core';
 import {BehaviorSubject, debounceTime, skip} from "rxjs";
-import {Echo} from "../../../core/types/echo.type";
+import {Article, Echo} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
@@ -21,7 +21,15 @@ export class WelcomePageComponent implements OnInit {
 
   echos = new BehaviorSubject<Echo[]>([]);
 
+  articles: Article[] | undefined;
+
   ngOnInit(): void {
+      // Assuming getAllArticles is an asynchronous function (returns Promise)
+    this.apiService.getAllArticles().then((data: any) => {
+      this.articles = data;
+      console.log('Articles:', this.articles);
+    });
+
     void this.loadEchos(this.contains);
 
     if (this.contains) {
