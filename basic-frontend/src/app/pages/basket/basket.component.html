@@ -1,24 +1,24 @@
 <div class="cart-container">
   <p-card class="cart-card">
-    <h2>Warenkorb</h2>
+    <h2>Cart</h2>
     <p-table [value]="cartItems" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
           <th>Name</th>
-          <th>Preis</th>
-          <th>Anzahl</th>
+          <th>Unit price</th>
+          <th>Quantity</th>
           <th>Total</th>
-          <th>Entfernen</th>
+          <th>Delete</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-cartItem>
         <tr>
           <td>{{cartItem.name}}</td>
-          <td>{{cartItem.price}}</td>
+          <td>{{cartItem.price}}€</td>
           <td>
             <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" (onInput)="calculateTotal()"></p-inputNumber>
           </td>
-          <td>{{cartItem.price * cartItem.quantity}}</td>
+          <td>{{cartItem.price * cartItem.quantity}}€</td>
           <td>
             <button pButton pRipple class="p-button-rounded p-button-danger" icon="pi pi-trash" (click)="removeFromCart(cartItem.id)"></button>
           </td>
@@ -26,10 +26,10 @@
       </ng-template>
     </p-table>
     <div class="cart-total">
-      <h3>Total: {{total}}</h3>
+      <h3>Total: {{totalAmount}}€</h3>
     </div>
     <div class="cart-actions">
-      <button pButton type="button" label="Bestellen" class="p-button-rounded p-button-success"></button>
+      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success"></button>
     </div>
   </p-card>
 </div>

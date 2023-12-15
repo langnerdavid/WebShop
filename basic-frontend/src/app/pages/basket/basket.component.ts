@@ -12,14 +12,14 @@ export class BasketComponent {
     { id: 3, name: 'Produkt 3', price: 30, quantity: 1 },
   ];
 
-  total: number | undefined;
+  totalAmount: number | undefined;
 
   constructor() {
     this.calculateTotal();
   }
 
   calculateTotal() {
-    this.total = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    this.totalAmount = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   }
 
   removeFromCart(itemId: number) {
