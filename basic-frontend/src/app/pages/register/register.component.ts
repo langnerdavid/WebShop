@@ -1,5 +1,19 @@
 import { Component } from '@angular/core';
 
+interface UserData {
+  userType: { label: string, value: string } | null;
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  brandName?: string;
+  address: string;
+  zipcode: string;
+  city: string;
+  iban: string;
+}
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -7,16 +21,22 @@ import { Component } from '@angular/core';
 })
 
 export class RegisterComponent {
-  userData = {
-    username: '',
+  userData: UserData = {
+    userType: null,
     email: '',
     password: '',
-    userType: ''
+    firstName: '',
+    lastName: '',
+    brandName: '',
+    address: '',
+    zipcode: '',
+    city: '',
+    iban: '',
   };
 
-  userTypes = [
-    { label: 'Verkäufer', value: 'seller' },
-    { label: 'Käufer', value: 'buyer' }
+  userTypes: { label: string, value: string }[] = [
+    { label: 'Buyer', value: 'Buyer' },
+    { label: 'Seller', value: 'Seller' },
   ];
 
   onSubmit() {
