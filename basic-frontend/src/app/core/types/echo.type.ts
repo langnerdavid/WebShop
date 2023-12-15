@@ -2,12 +2,7 @@ export interface CreateEchoInput {
   message: string;
 }
 
-export enum OrderStatus {
-  Placed = 'placed',
-  Shipped = 'shipped',
-  Delivered = 'delivered',
-  Canceled = 'canceled',
-}
+export type OrderStatus = "placed" | "shipped" | "canceled" | "delivered";
 
 export interface Echo {
   _id: string;
@@ -99,12 +94,12 @@ export interface CartPatch {
 
 export interface Order {
   _id: string;
-  articles: [Article],
+  articles: [{productId:string, quantity:number}],
   buyer: string,
   totalAmount: number,
   status: OrderStatus,
 
-  createdAt: Date;
+  orderDate: string;
 }
 export interface OrderPost {
   articles: [Article],

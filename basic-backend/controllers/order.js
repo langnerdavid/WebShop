@@ -15,7 +15,6 @@ router.post('/', validateOrder, authorizeOrder, async (req, res) => {
         } else {
             res.json(data);
         }
-        res.json(data);
     } catch (e) {
         console.error(e);
         res.status(500).send(e);
@@ -66,7 +65,7 @@ async function authorizeOrder(req, res, next) {
     }
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
-    const [buyer] = await listOneBuyer(username);
+    const buyer = await listOneBuyer(username);
     if(username === buyer?._id){
         if(password === buyer?.password){
             req.body.order.buyer = buyer._id;

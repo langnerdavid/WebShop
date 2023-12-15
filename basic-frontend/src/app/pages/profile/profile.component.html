@@ -3,15 +3,17 @@
     <div class="profile-header">
       <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
       <div class="profile-name-email">
-        <h2>Username dummy</h2>
-        <p>Email dummy</p>
+        <h2>{{firstName}} {{lastName}}</h2>
+        <p>{{email}}</p>
+        <p>password: {{password}}</p>
       </div>
     </div>
     <div class="profile-info">
       <h3>Additional Information</h3>
-      <p>Age: 69</p>
-      <p>Country: Alabama</p>
-      <p>City: Saarland</p>
+      <p>Age: {{age}}</p>
+      <p>City: {{zipCode}} {{city}}</p>
+      <p>Address: {{address}}</p>
+      <p>IBAN: {{iban}}</p>
     </div>
     <div class="profile-actions">
       <button pButton type="button" label="Edit Profile" class="p-button-rounded p-button-info"></button>
@@ -31,10 +33,10 @@
       </ng-template>
       <ng-template pTemplate="body" let-order>
         <tr>
-          <td>{{order.id}}</td>
-          <td>{{order.date}}</td>
+          <td>{{order._id}}</td>
+          <td>{{order.orderDate}}</td>
           <td>{{order.status}}</td>
-          <td>{{order.total}}</td>
+          <td>{{order.totalAmount}}</td>
         </tr>
       </ng-template>
     </p-table>

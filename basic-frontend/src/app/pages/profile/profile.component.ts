@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {ApiService} from "../../core/services/api.service";
+import {Buyer, Order} from "../../core/types/echo.type";
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +8,42 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+  private apiService = inject(ApiService);
+  buyer: Buyer | undefined;
+  allOrders: Order[] | undefined;
+  buyerId:string='w7MuumcIqxDj51ul';
 
-  orders = [
-    { id: 'ORD-001', date: '2021-01-15', status: 'Completed', total: '$120.00' },
-    { id: 'ORD-002', date: '2021-02-20', status: 'Completed', total: '$75.00' },
-    { id: 'ORD-003', date: '2021-03-10', status: 'Pending', total: '$200.00' },
-  ];
+  firstName:string | undefined = 'Max';
+  lastName:string | undefined = 'Mustermann';
+  email:string | undefined = 'musterman@max.de';
+  password: string | undefined = 'Test#1234';
+
+  age:number = 69;
+  zipCode:number | undefined = 12345;
+  city:string | undefined = 'Musterort';
+  address:string | undefined = 'Musterstraße 5';
+  iban:number = 123456789;
+
+
+  orders:Order[] = [{"articles":[{"productId":"5b5WGEyRbK5urrS2","quantity":2}],"buyer":"w7MuumcIqxDj51ul","totalAmount":1580.02,"status":"placed","orderDate":"2023-12-15T08:06:29.558Z","_id":"JDvJrC2jhssr6kuc"}];
+
+  ngOnInit(){
+    this.apiService.getOneBuyer(this.buyerId).then((data: any) => {
+      this.buyer = data;
+      this.firstName = this.buyer?.firstName;
+      this.lastName = this.buyer?.lastName;
+      this.email = this.buyer?.email;
+      this.password = this.buyer?.password;
+      this.zipCode = this.buyer?.zipCode;
+      this.city = this.buyer?.city;
+      this.address =this.buyer?.address;
+
+    });
+
+    this.apiService.getAllOrders().then(((data:Order[])=>{
+      this.allOrders = data;
+      this.orders = this.allOrders.filter(order => order.buyer === this.buyerId);
+
+    }))
+  }
 }

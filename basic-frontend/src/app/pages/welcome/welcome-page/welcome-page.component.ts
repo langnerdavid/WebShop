@@ -27,7 +27,6 @@ export class WelcomePageComponent implements OnInit {
       // Assuming getAllArticles is an asynchronous function (returns Promise)
     this.apiService.getAllArticles().then((data: any) => {
       this.articles = data;
-      console.log('Articles:', this.articles);
     });
 
     void this.loadEchos(this.contains);
