@@ -14,12 +14,12 @@ import {FormsModule} from "@angular/forms";
     ProfileComponent
   ],
     imports: [
-        CommonModule,
-        ProfileRoutingModule,
-        CardModule,
-        TableModule,
-        ButtonModule,
-        FormsModule
+      CommonModule,
+      ProfileRoutingModule,
+      CardModule,
+      TableModule,
+      ButtonModule,
+      FormsModule
     ]
 })
 export class ProfileModule { }

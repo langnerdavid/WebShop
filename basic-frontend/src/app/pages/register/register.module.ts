@@ -8,6 +8,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {PasswordModule} from "primeng/password";
         FormsModule,
         InputTextModule,
         PasswordModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MessagesModule
     ]
 })
 export class RegisterModule { }

@@ -1,8 +1,8 @@
-<h2>Registrierung</h2>
+<h2>Registration</h2>
 
 <form (ngSubmit)="onSubmit()" class="registration-form">
   <div class="p-field">
-    <label for="userType">Nutzerrolle</label>
+    <label for="userType">Role</label>
     <p-dropdown id="userType" [(ngModel)]="userData.userType" [options]="userTypes" optionLabel="label" placeholder="Wählen Sie eine Rolle" [ngModelOptions]="{ standalone: true }"></p-dropdown>
   </div>
 
@@ -12,37 +12,37 @@
   </div>
 
   <div class="p-field">
-    <label for="password">Passwort</label>
-    <p-password id="password" inputStyleClass="passwordInput" [(ngModel)]="userData.password" name="password" [toggleMask]="true" required></p-password>
+    <label for="password">Password</label>
+    <p-password id="password" inputStyleClass="passwordInput" [(ngModel)]="userData.password" strongRegex= "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}" name="password" [toggleMask]="true" required></p-password>
   </div>
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Buyer'">
-    <label for="firstName">Vorname</label>
+    <label for="firstName">First Name</label>
     <input id="firstName" type="text" pInputText [(ngModel)]="userData.firstName" name="firstName" required>
   </div>
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Buyer'">
-    <label for="lastName">Nachname</label>
+    <label for="lastName">Last Name</label>
     <input id="lastName" type="text" pInputText [(ngModel)]="userData.lastName" name="lastName" required>
   </div>
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Seller'">
-    <label for="brandName">Markenname</label>
+    <label for="brandName">Brand</label>
     <input id="brandName" type="text" pInputText [(ngModel)]="userData.brandName" name="brandName" required>
   </div>
 
   <div class="p-field">
-    <label for="address">Adresse</label>
+    <label for="address">Adress</label>
     <input id="address" type="text" pInputText [(ngModel)]="userData.address" name="address" required>
   </div>
 
   <div class="p-field">
-    <label for="zipcode">Postleitzahl</label>
+    <label for="zipcode">Zip-Code</label>
     <input id="zipcode" type="text" pInputText [(ngModel)]="userData.zipcode" name="zipcode" required>
   </div>
 
   <div class="p-field">
-    <label for="city">Stadt</label>
+    <label for="city">City</label>
     <input id="city" type="text" pInputText [(ngModel)]="userData.city" name="city" required>
   </div>
 
@@ -50,6 +50,6 @@
     <label for="iban">IBAN</label>
     <input id="iban" type="text" pInputText [(ngModel)]="userData.iban" name="iban" required>
   </div>
-
-  <p-button type="submit" label="Registrieren"></p-button>
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+  <p-button type="submit" label="Registration"></p-button>
 </form>

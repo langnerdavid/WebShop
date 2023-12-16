@@ -36,12 +36,12 @@ export function getDeleteHeader(username:string, password:string):RequestInit{
   };
 }
 
-export async function handleResponse(response: Response): Promise<string> {
+export async function handleResponse(response: Response): Promise<any> {
   if (response.ok) {
     return response.json();
   }
 
   const errorText = await response.text();
   console.log('Error caught in Service:', response.status, errorText);
-  return(errorText);
+  return { error: response.status, errorText };
 }
