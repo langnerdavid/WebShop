@@ -59,13 +59,15 @@ export function updateSellerLog(user, sellerId) {
         });
 }
 
-
 export function listSellersLog(callback) {
     sellerDb.find({}, callback);
 }
 
 export function listOneSellerLog(sellerId, callback) {
     sellerDb.find({_id : sellerId}, callback);
+}
+export function listOneSellerByEmailLog(email, callback) {
+    sellerDb.find({email : email}, callback);
 }
 export function deleteOneSellerLog(sellerId, callback) {
     articleDb.remove({ seller: sellerId }, { multi: true }, (articleErr) => {

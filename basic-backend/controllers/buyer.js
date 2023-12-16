@@ -1,6 +1,14 @@
 import express from 'express';
-import { createBuyer, listBuyers, listOneBuyer, deleteOneBuyer, updateBuyer } from "../services/buyer.js";
+import {
+    createBuyer,
+    listBuyers,
+    listOneBuyer,
+    deleteOneBuyer,
+    updateBuyer,
+    listOneBuyerByEmail
+} from "../services/buyer.js";
 import { validateUserInputs, validateUserPatch } from "../shared/shared.js";
+import {listOneSellerByEmail} from "../services/seller.js";
 
 const router = express.Router();
 
@@ -15,7 +23,9 @@ router.post('/', validateBuyer, async (req, res) => {
         res.send(500);
     }
 });
-
+router.post('/login', authorizeBuyerLogin, async (req, res) => {
+    res.status(200).send('Login successfully');
+});
 router.get('/', async (req, res) => {
     try {
         const data = await listBuyers();
@@ -61,15 +71,19 @@ router.delete('/:Id', authorizeBuyer, async (req, res) => {
     }
 });
 
-function validateBuyer(req, res, next) {
+async function validateBuyer(req, res, next) {
     const user = req.body.user;
-    if (user.firstName && user.lastName && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
+    const checkUser = await listOneBuyerByEmail(user.email);
+    if (checkUser !== undefined) {
+        res.status(403).send('Account with this email already exists');
+    }
+    else if (user.firstName && user.lastName && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
 
         //validateUserInputs makes sure, that the given Attributes are correct
         const validationResult = validateUserInputs(user);
-        if(validationResult.isValid){
+        if (validationResult.isValid) {
             next();
-        }else{
+        } else {
             res.status(403).send(validationResult.message)
         }
     } else {
@@ -102,12 +116,29 @@ async function authorizeBuyer(req, res, next) {
     }
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
-    const [user] = await listOneBuyer(req.params.Id);
-    console.log(user.username);
-    console.log(username, password);
+    const user = await listOneBuyer(req.params.Id);
     if(username === user?.username){
         if(password === user?.password){
-            console.log('authorized')
+            next();
+        }else{
+            res.status(401).send('Wrong Password');
+        }
+    }else{
+        res.status(404).send('Wrong username');
+    }
+
+}
+
+async function authorizeBuyerLogin(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send('Authorization Header missing.');
+    }
+    const b64auth = authHeader.split(' ')[1];
+    let [email, password] = Buffer.from(b64auth, 'base64').toString().split(':');
+    const user = await listOneBuyerByEmail(email);
+    if(user){
+        if(password === user?.password){
             next();
         }else{
             res.status(401).send('Wrong Password');

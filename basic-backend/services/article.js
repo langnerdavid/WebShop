@@ -36,12 +36,12 @@ export function listArticles() {
 
 export function listOneArticle(articleId) {
     return new Promise((resolve, reject) => {
-        listOneArticleLog(articleId, (err, documents) => {
+        listOneArticleLog(articleId, (err, article) => {
             if (err) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve(documents[0]);
+                resolve(article[0]);
             }
         });
     });

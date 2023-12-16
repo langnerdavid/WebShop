@@ -3,7 +3,7 @@ import {
     listBuyersLog,
     listOneBuyerLog,
     deleteOneBuyerLog,
-    updateBuyerLog
+    updateBuyerLog, listOneBuyerByEmailLog
 } from "../models/buyer.js";
 
 export function createBuyer(user) {
@@ -37,6 +37,19 @@ export function listBuyers() {
 export function listOneBuyer(buyerId) {
     return new Promise((resolve, reject) => {
         listOneBuyerLog(buyerId, (err, documents) => {
+            if (err) {
+                console.error(err);
+                reject(err);
+            } else {
+                resolve(documents[0]);
+            }
+        });
+    });
+}
+
+export function listOneBuyerByEmail(email) {
+    return new Promise((resolve, reject) => {
+        listOneBuyerByEmailLog(email, (err, documents) => {
             if (err) {
                 console.error(err);
                 reject(err);

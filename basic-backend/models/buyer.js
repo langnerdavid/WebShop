@@ -71,6 +71,9 @@ export function listBuyersLog(callback) {
 export function listOneBuyerLog(buyerId, callback) {
     buyerDb.find({_id : buyerId}, callback);
 }
+export function listOneBuyerByEmailLog(email, callback) {
+    buyerDb.find({email : email}, callback);
+}
 
 export function deleteOneBuyerLog(buyerId, callback) {
     orderDb.remove({ buyer: buyerId }, { multi: true }, (articleErr) => {

@@ -3,12 +3,12 @@ import validator from 'validator';
 import {
     createSeller,
     deleteOneSeller,
-    listOneSeller,
+    listOneSeller, listOneSellerByEmail,
     listSellers,
     updateSeller
 } from "../services/seller.js";
 import {isPasswordSecure, validateUserInputs, validateUserPatch, validateZipCode} from "../shared/shared.js";
-import {listOneSellerLog} from "../models/seller.js";
+import {listOneSellerByEmailLog, listOneSellerLog} from "../models/seller.js";
 
 const router = express.Router();
 router.post('/', validateSeller, async (req, res) => {
@@ -43,19 +43,23 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:Id', async (req, res) => {
+router.get('/:Id',  async (req, res) => {
     const sellerId = req.params.Id;
     try {
         const data = await listOneSeller(sellerId);
-        if(data.length === 0){
+        if (data.length === 0) {
             res.status(404).send('Seller doesn\'t exist');
-        }else {
+        } else {
             res.json(data[0]);
         }
     } catch (e) {
         console.error(e);
         res.send(500);
     }
+});
+
+router.post('/login', authorizeSellerLogin, async(req, res)=>{
+    res.status(200).json('login successfully');
 });
 
 router.patch('/:Id',authorizeSeller, validateSellerPatch, async (req, res) => {
@@ -82,14 +86,18 @@ router.delete('/:Id', authorizeSeller, async (req, res) => {
     }
 });
 
-function validateSeller(req, res, next) {
+async function validateSeller(req, res, next) {
     const user = req.body.user;
-    if (user.brand && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
+    const checkUser = await listOneSellerByEmail(user.email);
+    if(checkUser !== undefined){
+        res.status(403).send('Account with this email already exists');
+    }
+    else if (user.brand && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
         //validateUserInputs makes sure, that the given Attributes are correct
         const validationResult = validateUserInputs(user);
-        if(validationResult.isValid){
+        if (validationResult.isValid) {
             next();
-        }else{
+        } else {
             res.status(403).send(validationResult.message)
         }
     } else {
@@ -125,8 +133,30 @@ async function authorizeSeller(req, res, next) {
     }
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
-    const [user] = await listOneSeller(req.params.Id);
+    const user = await listOneSeller(req.params.Id);
     if(username === user?._id){
+        if(password === user?.password){
+            console.log('authorized')
+            next();
+        }else{
+            res.status(401).send('Wrong Password');
+        }
+    }else{
+        res.status(404).send('Wrong username');
+    }
+
+}
+
+async function authorizeSellerLogin(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send('Authorization Header missing.');
+    }
+    const b64auth = authHeader.split(' ')[1];
+    let [email, password] = Buffer.from(b64auth, 'base64').toString().split(':');
+    const user = await listOneSellerByEmail(email);
+    console.log(user);
+    if(user){
         if(password === user?.password){
             console.log('authorized')
             next();

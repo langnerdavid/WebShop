@@ -1,6 +1,6 @@
 import {
     createSellerLog,
-    deleteOneSellerLog,
+    deleteOneSellerLog, listOneSellerByEmailLog,
     listOneSellerLog,
     listSellersLog,
     updateSellerLog
@@ -41,7 +41,19 @@ export function listOneSeller(sellerId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve(documents);
+                resolve(documents[0]);
+            }
+        });
+    });
+}
+export function listOneSellerByEmail(email) {
+    return new Promise((resolve, reject) => {
+        listOneSellerByEmailLog(email, (err, documents) => {
+            if (err) {
+                console.error(err);
+                reject(err);
+            } else {
+                resolve(documents[0]);
             }
         });
     });
