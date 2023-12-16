@@ -4,19 +4,20 @@
       <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
       <div class="profile-name-email">
         <h2>{{firstName}} {{lastName}}</h2>
-        <p>{{email}}</p>
-        <p>password: {{password}}</p>
+        <p>Email: <input [(ngModel)]="email" name="email" [readonly]="!isEditing"></p>
+        <p>Password: <input [(ngModel)]="password" name="password" [readonly]="!isEditing" [type]="isEditing ? 'text' : 'password'"></p>
       </div>
     </div>
     <div class="profile-info">
       <h3>Additional Information</h3>
-      <p>Age: {{age}}</p>
-      <p>City: {{zipCode}} {{city}}</p>
-      <p>Address: {{address}}</p>
-      <p>IBAN: {{iban}}</p>
+      <p><label>Age:</label> <input [(ngModel)]="age" name="age" [readonly]="!isEditing"></p>
+      <p><label>Zip Code:</label> <input [(ngModel)]="zipCode" name="zipCode" [readonly]="!isEditing"></p>
+      <p><label>City:</label> <input [(ngModel)]="city" name="city" [readonly]="!isEditing"></p>
+      <p><label>Address:</label> <input [(ngModel)]="address" name="address" [readonly]="!isEditing"></p>
+      <p><label>IBAN:</label> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
     </div>
     <div class="profile-actions">
-      <button pButton type="button" label="Edit Profile" class="p-button-rounded p-button-info"></button>
+      <button pButton type="button" label="{{editLabel}}" class="p-button-rounded p-button-info" (click)="isEditing ? onSaveChanges() : onEditProfile()"></button>
     </div>
   </p-card>
 

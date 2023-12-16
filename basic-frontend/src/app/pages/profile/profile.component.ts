@@ -8,6 +8,9 @@ import {Buyer, Order} from "../../core/types/echo.type";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+  isEditing: boolean = false;
+  editLabel: string = "Edit Profile";
+
   private apiService = inject(ApiService);
   buyer: Buyer | undefined;
   allOrders: Order[] | undefined;
@@ -46,4 +49,16 @@ export class ProfileComponent {
 
     }))
   }
+
+  onEditProfile() {
+    this.isEditing = true;
+    this.editLabel = "Save Changes";
+  }
+
+  onSaveChanges() {
+    this.isEditing = false;
+    this.editLabel = "Edit Profile";
+  }
+
+
 }
