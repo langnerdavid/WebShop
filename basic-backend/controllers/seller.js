@@ -155,10 +155,8 @@ async function authorizeSellerLogin(req, res, next) {
     const b64auth = authHeader.split(' ')[1];
     let [email, password] = Buffer.from(b64auth, 'base64').toString().split(':');
     const user = await listOneSellerByEmail(email);
-    console.log(user);
     if(user){
         if(password === user?.password){
-            console.log('authorized')
             next();
         }else{
             res.status(401).send('Wrong Password');

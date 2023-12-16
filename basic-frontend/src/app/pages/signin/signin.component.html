@@ -2,15 +2,25 @@
 
 <form (ngSubmit)="onSignIn()" class="signin-form">
   <div class="p-field">
-    <label for="signin-username">Benutzername</label>
-    <input id="signin-username" type="text" pInputText [(ngModel)]="userData.username" name="username" required>
+    <label for="userType">Role</label>
+    <p-dropdown id="userType" [(ngModel)]="userType" [options]="userTypes" optionLabel="label" placeholder="Choose a role" [ngModelOptions]="{ standalone: true }"></p-dropdown>
+  </div>
+  <div class="p-field">
+    <label for="signin-email">Email</label>
+    <input id="signin-email" type="text" pInputText [(ngModel)]="userData.email" name="email" required>
   </div>
 
   <div class="p-field">
-    <label for="signin-password">Passwort</label>
-    <p-password id="signin-password" [(ngModel)]="userData.password" name="password" [toggleMask]="true" required></p-password>
+    <label for="signin-password">Password</label>
+    <p-password [feedback]="false" id="signin-password" [(ngModel)]="userData.password" name="password" [toggleMask]="true" required></p-password>
   </div>
 
+  <div class="p-field">
+    <label for="stay-signed-in">Stay signed in</label>
+    <p-checkbox id="stay-signed-in" [(ngModel)]="staySignedIn" [binary]="true" inputId="binary" name="signedIn"></p-checkbox>
+  </div>
+
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <p-button type="submit" label="Anmelden"></p-button>
 </form>
 

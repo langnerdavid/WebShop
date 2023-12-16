@@ -3,6 +3,7 @@ import {ApiService} from "../../core/services/api.service";
 import {Buyer, BuyerPost, SellerPost} from "../../core/types/echo.type";
 import {shakeAnimation} from "../../shared/animations";
 import {Message} from "primeng/api";
+import { Router } from '@angular/router';
 
 interface UserData {
   userType: { label: string, value: string } | null;
@@ -27,6 +28,8 @@ interface UserData {
 
 export class RegisterComponent {
   private apiService = inject(ApiService);
+  constructor(private router: Router) {}
+
   messages: Message[] = [];
   userData: UserData = {
     userType: null,
@@ -75,7 +78,10 @@ export class RegisterComponent {
           console.log(data.error);
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText }];
         }else{
-          // Weiterleitung und speichern der Zugangsdaten nach erfolgreichem Registrieren
+          localStorage.setItem("role","buyer");
+          localStorage.setItem("id",data._id);
+          localStorage.setItem("password", data.password);
+          // Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
         }
       })
     }else if (this.userData.userType.value === 'Seller' && this.userData.brandName){
@@ -94,7 +100,10 @@ export class RegisterComponent {
           console.log(data.error);
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText }];
         }else{
-          // Weiterleitung und speichern der Zugangsdaten nach erfolgreichem Registrieren
+          localStorage.setItem("role","seller");
+          localStorage.setItem("id",data._id);
+          localStorage.setItem("password", data.password);
+          // Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
         }
       })
 

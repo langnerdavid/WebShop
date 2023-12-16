@@ -8,6 +8,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
 import {CheckboxModule} from "primeng/checkbox";
+import {MessagesModule} from "primeng/messages";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import {CheckboxModule} from "primeng/checkbox";
         InputTextModule,
         PasswordModule,
         ReactiveFormsModule,
-        CheckboxModule
+        CheckboxModule,
+        MessagesModule,
+        DropdownModule
     ]
 })
 export class SigninModule { }

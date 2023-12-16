@@ -24,10 +24,5 @@
   <ng-template #empty>
     Keine Echos vorhanden
   </ng-template>
-
-  <div>
-    <button routerLink="/register">Register</button>
-    <button routerLink="/signin">Sign in</button>
-  </div>
   <app-articlepreview *ngFor="let item of articles" [articleInfo]="item"></app-articlepreview>
 </div>

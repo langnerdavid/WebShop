@@ -24,8 +24,9 @@ router.post('/', validateBuyer, async (req, res) => {
     }
 });
 router.post('/login', authorizeBuyerLogin, async (req, res) => {
-    res.status(200).send('Login successfully');
+    res.status(200).send('login successfully');
 });
+
 router.get('/', async (req, res) => {
     try {
         const data = await listBuyers();

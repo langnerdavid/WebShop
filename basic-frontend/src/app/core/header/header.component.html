@@ -9,7 +9,13 @@
   </div>
 
   <div class="button-container">
+    <div *ngIf="!signedIn">
+      <button routerLink="/register" pButton type="button" class="p-button-rounded p-button-text">Register</button>
+      <button routerLink="/signin" pButton type="button" class="p-button-rounded p-button-text" >Sign In</button>
+    </div>
     <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'" routerLink="basket"> </button>
-    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" routerLink="profile"> </button>
+    <div *ngIf="signedIn">
+      <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" routerLink="profile"> </button>
+    </div>
   </div>
 </div>

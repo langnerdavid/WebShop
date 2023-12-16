@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {ApiService} from "../../core/services/api.service";
+import {UserLogin} from "../../core/types/echo.type";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-signin',
@@ -7,14 +10,87 @@ import { Component } from '@angular/core';
 })
 
 export class SigninComponent {
-  userData = {
-    username: '',
+  private apiService = inject(ApiService);
+  messages: Message[] = [];
+  userType: null | undefined;
+  staySignedIn: boolean | undefined;
+  error:string = 'User does not exist';
+
+  userData: UserLogin = {
+    email: '',
     password: ''
   };
 
+  userTypes: { label: string, value: string }[] = [
+    { label: 'Buyer', value: 'Buyer' },
+    { label: 'Seller', value: 'Seller' },
+  ];
+
   onSignIn() {
-    //TODO:
-    // Daten mit DB abgleichen
-    console.log('Anmeldedaten:', this.userData);
+    console.log(this.staySignedIn);
+    if (!this.userType) {
+      this.error='Choose a role!';
+    }else if(this.userType === 'Buyer'){
+      this.apiService.loginBuyer({user: this.userData}).then((data:any)=>{
+        if(data.error){
+          this.error = data;
+        }else{
+          if(this.staySignedIn){
+            localStorage.setItem("role","seller");
+            localStorage.setItem("id",data._id);
+            localStorage.setItem("password", data.password);
+          }else{
+            sessionStorage.setItem("role","seller");
+            sessionStorage.setItem("id",data._id);
+            sessionStorage.setItem("password", data.password);
+          }
+
+          //TODO weiterleitung nach erfolgreichem Login
+
+        }
+      });
+    }
+    else{
+      this.apiService.loginSeller({user: this.userData}).then((data:any)=>{
+        if(data.error){
+          this.error = data;
+        }else{
+          if(this.staySignedIn){
+            localStorage.setItem("role","seller");
+            localStorage.setItem("id",data._id);
+            localStorage.setItem("password", data.password);
+          }else{
+            sessionStorage.setItem("role","seller");
+            sessionStorage.setItem("id",data._id);
+            sessionStorage.setItem("password", data.password);
+          }
+          //TODO weiterleitung nach erfolgreichem Login
+
+        }
+      });
+    }
+    this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
   }
 }
+/*[Log] Response (default-src_app_core_services_api_service_ts.js, line 207)
+
+body: ReadableStream {locked: true, cancel: function, getReader: function, pipeTo: function, pipeThrough: function, …}
+
+bodyUsed: true
+
+headers: Headers {append: function, delete: function, get: function, getSetCookie: function, has: function, …}
+
+ok: true
+
+redirected: false
+
+status: 200
+
+statusText: "OK"
+
+type: "cors"
+
+url: "http://localhost:3000/api/seller/login"
+
+Response Prototyp
+*/

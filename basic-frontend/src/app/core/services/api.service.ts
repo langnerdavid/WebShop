@@ -8,7 +8,7 @@ import {
   Echo,
   Order, OrderPost,
   Seller,
-  SellerPost
+  SellerPost, UserLogin
 } from "../types/echo.type";
 import {
   getDeleteHeader,
@@ -74,6 +74,11 @@ export class ApiService {
     options.body = JSON.stringify(buyer);
 
     const response = await fetch(`${this.BUYER_URL}`, options);
+    return handleResponse(response);
+  }
+  async loginBuyer(user: { user: UserLogin }): Promise<any> {
+    const options: RequestInit = getPostHeaderAuthorized(user.user.email, user.user.password);
+    const response = await fetch(`${this.BUYER_URL}/login`, options);
     return handleResponse(response);
   }
 
@@ -146,6 +151,11 @@ export class ApiService {
     options.body = JSON.stringify(seller);
 
     const response = await fetch(`${this.SELLER_URL}`, options);
+    return handleResponse(response);
+  }
+  async loginSeller(user: { user: UserLogin }): Promise<string> {
+    const options: RequestInit = getPostHeaderAuthorized(user.user.email, user.user.password);
+    const response = await fetch(`${this.SELLER_URL}/login`, options);
     return handleResponse(response);
   }
   async patchSeller(sellerId: string, password: string, seller: { user: object }): Promise<string> {

@@ -75,6 +75,10 @@ export interface BuyerPatch {
   zipCode?: number,
   city?: string,
 }
+export interface UserLogin {
+  password: string,
+  email: string
+}
 export interface Cart {
   _id: string;
   articles: [Article],

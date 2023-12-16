@@ -7,7 +7,10 @@ import {Component} from '@angular/core';
 })
 export class HeaderComponent {
   searchText: string | undefined;
+  signedIn:boolean = false;
 
+  ngOnInit(){
+  }
   onSearch(){
     //TODO
     // SuchLogik -> beim drücken des Icons soll Suche abgeschlossen werden
