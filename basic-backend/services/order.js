@@ -1,10 +1,11 @@
 import {
     createOrderLog,
     listOneOrderLog,
-    listOrdersLog
+    listOrdersLog, updateOrderLog
 } from "../models/order.js";
 import {listOneArticle} from "./article.js";
 import {calculateTotalAmount} from "../shared/shared.js"
+import {updateSellerLog} from "../models/seller.js";
 
 export async function createOrder(order) {
     const result = await calculateTotalAmount(order);
@@ -39,6 +40,16 @@ export function listOneOrder(orderId) {
             } else {
                 resolve(documents[0]);
             }
+        });
+    });
+}
+
+export function updateOrder(orderPatch, orderId) {
+    return new Promise((resolve, reject) => {
+        updateOrderLog(orderPatch, orderId).then((order) => {
+            resolve(order);
+        }).catch((err) =>{
+            reject(err);
         });
     });
 }

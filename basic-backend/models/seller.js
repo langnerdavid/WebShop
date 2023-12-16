@@ -9,6 +9,7 @@ export function createSellerLog(user){
         password: user.password,
         email: user.email,
         brand: user.brand,
+        iban: user.iban,
         address: user.address,
         zipCode: user.zipCode,
         city: user.city,
@@ -45,7 +46,6 @@ export function updateSellerLog(user, sellerId) {
                         reject(err);
                     } else {
                         listOneSellerLog(sellerId, (err, fullyUpdatedSeller) => {
-                            oldUser = oldUser[0];
                             if (err) {
                                 console.error(err);
                                 reject(err);

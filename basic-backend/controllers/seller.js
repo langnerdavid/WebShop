@@ -84,7 +84,7 @@ router.delete('/:Id', authorizeSeller, async (req, res) => {
 
 function validateSeller(req, res, next) {
     const user = req.body.user;
-    if (user.brand && user.address && user.email && user.password && user.zipCode && user.city) {
+    if (user.brand && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
         //validateUserInputs makes sure, that the given Attributes are correct
         const validationResult = validateUserInputs(user);
         if(validationResult.isValid){
@@ -102,7 +102,7 @@ function validateSellerPatch(req, res, next) {
     const user = req.body.user;
     let hasError = false;
 
-    if (!user.password && !user.brand && !user.address && !user.email && !user.city && !user.zipCode) {
+    if (!user.password && !user.brand && !user.address && !user.email && !user.city && !user.zipCode && !user.iban) {
         res.status(403).send('Error: At least one of the attributes (password, brand, address, email, city, zipCode) must exist.');
         hasError = true;
     }
