@@ -5,7 +5,9 @@
 
   <div class="search-bar">
     <input pInputText type="text" placeholder="Suche" [(ngModel)]="searchText" (keydown.enter)="onSearch()">
-    <i class="pi pi-search search-icon" (keyup.enter)="onSearch()" (click)="onSearch()" tabindex="0"></i>
+    <button (click)="onSearch()" class="search-button" tabindex="0">
+      <i class="pi pi-search search-icon"></i>
+    </button>
   </div>
 
   <div class="button-container">

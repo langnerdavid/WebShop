@@ -14,6 +14,19 @@
   max-width: 400px;
   width: 100%;
 }
+.search-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+}
+
 
 .search-bar input {
   flex: 1;
