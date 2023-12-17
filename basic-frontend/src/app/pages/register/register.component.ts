@@ -29,6 +29,7 @@ interface UserData {
 
 export class RegisterComponent {
   private apiService = inject(ApiService);
+
   constructor(private router: Router) {}
 
   messages: Message[] = [];

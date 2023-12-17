@@ -44,7 +44,7 @@
     <input id="zipcode" type="text" pInputText [(ngModel)]="userData.zipcode" name="zipcode" required pattern="[0-9]{5}" #zipcodeField="ngModel" [ngClass]="{'error': zipcodeField.invalid && (zipcodeField.dirty || zipcodeField.touched || submitted)}">
   </div>
   <div *ngIf="zipcodeField.invalid && (zipcodeField.dirty || zipcodeField.touched || submitted)" class="error-message">
-    Please enter a valid 5-digit ZIP code.
+    Please enter a 5-digit ZIP code.
   </div>
 
   <div class="p-field">
