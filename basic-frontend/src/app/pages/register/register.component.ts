@@ -4,6 +4,7 @@ import {Buyer, BuyerPost, SellerPost} from "../../core/types/echo.type";
 import {shakeAnimation} from "../../shared/animations";
 import {Message} from "primeng/api";
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 interface UserData {
   userType: { label: string, value: string } | null;
@@ -49,8 +50,14 @@ export class RegisterComponent {
     { label: 'Seller', value: 'Seller' },
   ];
 
+  submitted = false;
+  onSubmit(form: NgForm) {
 
-  onSubmit() {
+    if (!form.valid) {
+      this.submitted = true;
+      return;
+    }
+
     if (!this.userData.userType) {
       console.error('Bitte wählen Sie eine Nutzerrolle aus.');
       return;

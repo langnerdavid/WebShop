@@ -29,3 +29,22 @@ h2, .registration-form {
   width: 300px;
   box-sizing: border-box;
 }
+
+.error {
+  border-color: red;
+}
+
+.input-container {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+
+

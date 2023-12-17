@@ -1,6 +1,5 @@
 <h2>Registration</h2>
-
-<form (ngSubmit)="onSubmit()" class="registration-form">
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="registration-form">
   <div class="p-field">
     <label for="userType">Role</label>
     <p-dropdown id="userType" [(ngModel)]="userData.userType" [options]="userTypes" optionLabel="label" placeholder="Wählen Sie eine Rolle" [ngModelOptions]="{ standalone: true }"></p-dropdown>
@@ -8,23 +7,27 @@
 
   <div class="p-field">
     <label for="email">E-Mail</label>
-    <input id="email" type="email" pInputText [(ngModel)]="userData.email" name="email" required>
+    <input id="email" type="email" pInputText [(ngModel)]="userData.email" name="email" email required #emailField="ngModel" [ngClass]="{'error': emailField.invalid && (emailField.dirty || emailField.touched || submitted)}">
+  </div>
+  <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched || submitted)" class="error-message">
+    Please enter a valid email.
   </div>
 
   <div class="p-field">
     <label for="password">Password</label>
-    <p-password id="password" inputStyleClass="passwordInput" [(ngModel)]="userData.password" strongRegex= "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}" name="password" [toggleMask]="true" required></p-password>
+    <p-password id="password" inputStyleClass="passwordInput" [(ngModel)]="userData.password" name="password" [toggleMask]="true" required></p-password>
   </div>
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Buyer'">
     <label for="firstName">First Name</label>
-    <input id="firstName" type="text" pInputText [(ngModel)]="userData.firstName" name="firstName" required>
+    <input id="firstName" type="text" pInputText [(ngModel)]="userData.firstName" name="firstName" required #firstNameField="ngModel" [ngClass]="{'error': firstNameField.invalid && (firstNameField.dirty || firstNameField.touched || submitted)}">
   </div>
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Buyer'">
     <label for="lastName">Last Name</label>
-    <input id="lastName" type="text" pInputText [(ngModel)]="userData.lastName" name="lastName" required>
+    <input id="lastName" type="text" pInputText [(ngModel)]="userData.lastName" name="lastName" required #lastNameField="ngModel" [ngClass]="{'error': lastNameField.invalid && (lastNameField.dirty || lastNameField.touched || submitted)}">
   </div>
+
 
   <div class="p-field" *ngIf="userData.userType?.value === 'Seller'">
     <label for="brandName">Brand</label>
@@ -33,23 +36,29 @@
 
   <div class="p-field">
     <label for="address">Adress</label>
-    <input id="address" type="text" pInputText [(ngModel)]="userData.address" name="address" required>
+    <input id="address" type="text" pInputText [(ngModel)]="userData.address" name="address" required #addressField="ngModel" [ngClass]="{'error': addressField.invalid && addressField.touched}">
   </div>
 
   <div class="p-field">
     <label for="zipcode">Zip-Code</label>
-    <input id="zipcode" type="text" pInputText [(ngModel)]="userData.zipcode" name="zipcode" required>
+    <input id="zipcode" type="text" pInputText [(ngModel)]="userData.zipcode" name="zipcode" required pattern="[0-9]{5}" #zipcodeField="ngModel" [ngClass]="{'error': zipcodeField.invalid && (zipcodeField.dirty || zipcodeField.touched || submitted)}">
+  </div>
+  <div *ngIf="zipcodeField.invalid && (zipcodeField.dirty || zipcodeField.touched || submitted)" class="error-message">
+    Please enter a valid 5-digit ZIP code.
   </div>
 
   <div class="p-field">
     <label for="city">City</label>
-    <input id="city" type="text" pInputText [(ngModel)]="userData.city" name="city" required>
+    <input id="city" type="text" pInputText [(ngModel)]="userData.city" name="city" required #cityField="ngModel" [ngClass]="{'error': cityField.invalid && cityField.touched}">
   </div>
 
   <div class="p-field">
     <label for="iban">IBAN</label>
-    <input id="iban" type="text" pInputText [(ngModel)]="userData.iban" name="iban" required>
+    <input id="iban" type="text" pInputText [(ngModel)]="userData.iban" name="iban" required #ibanField="ngModel" [ngClass]="{'error': ibanField.invalid && ibanField.touched}">
+  </div>
+  <div *ngIf="!form.valid" class="error-message">
+    Bitte füllen Sie alle Felder aus.
   </div>
   <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
-  <p-button type="submit" label="Registration"></p-button>
+  <p-button type="submit" label="Registration" [disabled]="!form.valid"></p-button>
 </form>
