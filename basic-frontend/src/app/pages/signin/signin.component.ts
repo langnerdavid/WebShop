@@ -12,7 +12,7 @@ import {Message} from "primeng/api";
 export class SigninComponent {
   private apiService = inject(ApiService);
   messages: Message[] = [];
-  userType: null | undefined;
+  userType: any;
   staySignedIn: boolean | undefined;
   error:string = 'User does not exist';
 
@@ -30,9 +30,9 @@ export class SigninComponent {
     console.log(this.staySignedIn);
     if (!this.userType) {
       this.error='Choose a role!';
-    }else if(this.userType === 'Buyer'){
+    }else if(this.userType.value === 'Buyer'){
       this.apiService.loginBuyer({user: this.userData}).then((data:any)=>{
-        if(data.error){
+        if(data?.error){
           this.error = data;
         }else{
           if(this.staySignedIn){

@@ -31,7 +31,6 @@ export class ArticlepreviewComponent implements OnChanges{
 
 
   private initializeProduct() {
-    console.log(this.articleInfo);
     if (this.articleInfo) {
       this.product.id = this.articleInfo._id;
       this.product.name = this.articleInfo.title;

@@ -39,7 +39,7 @@ export function getDeleteHeader(username:string, password:string):RequestInit{
 export async function handleResponse(response: Response): Promise<any> {
   console.log(response)
   if (response.ok) {
-    return response.text();
+    return response.json();
   }
 
   const errorText = await response.text();

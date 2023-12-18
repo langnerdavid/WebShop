@@ -24,7 +24,13 @@ router.post('/', validateBuyer, async (req, res) => {
     }
 });
 router.post('/login', authorizeBuyerLogin, async (req, res) => {
-    res.status(200).send('login successfully');
+    try {
+        const data = await listOneBuyerByEmail(req.email);
+        res.json(data);
+    } catch (e) {
+        console.error(e);
+        res.send(500);
+    }
 });
 
 router.get('/', async (req, res) => {
@@ -140,6 +146,7 @@ async function authorizeBuyerLogin(req, res, next) {
     const user = await listOneBuyerByEmail(email);
     if(user){
         if(password === user?.password){
+            req.email = email;
             next();
         }else{
             res.status(401).send('Wrong Password');

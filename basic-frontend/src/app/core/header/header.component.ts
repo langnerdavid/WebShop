@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {userDataService} from "../services/userData.service";
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,12 @@ import {Component} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  private userData = inject(userDataService);
   searchText: string | undefined;
   signedIn:boolean = false;
 
   ngOnInit(){
+    this.signedIn = !(this.userData.role === null || this.userData.id === null || this.userData.password === null);
   }
   onSearch(){
     //TODO
