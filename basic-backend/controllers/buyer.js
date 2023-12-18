@@ -81,10 +81,20 @@ router.delete('/:Id', authorizeBuyer, async (req, res) => {
 async function validateBuyer(req, res, next) {
     const user = req.body.user;
     const checkUser = await listOneBuyerByEmail(user.email);
+    console.log(user?.firstName && user?.lastName && user?.address && user?.email && user?.password && user?.zipCode && user?.city && user?.iban);
     if (checkUser !== undefined) {
         res.status(403).send('Account with this email already exists');
     }
-    else if (user.firstName && user.lastName && user.address && user.email && user.password && user.zipCode && user.city && user.iban) {
+    else if ((
+        user.firstName !== undefined && user.firstName !== null &&
+        user.lastName !== undefined && user.lastName !== null &&
+        user.address !== undefined && user.address !== null &&
+        user.email !== undefined && user.email !== null &&
+        user.password !== undefined && user.password !== null &&
+        user.zipCode !== undefined && user.zipCode !== null &&
+        user.city !== undefined && user.city !== null &&
+        user.iban !== undefined && user.iban !== null
+    )) {
 
         //validateUserInputs makes sure, that the given Attributes are correct
         const validationResult = validateUserInputs(user);
