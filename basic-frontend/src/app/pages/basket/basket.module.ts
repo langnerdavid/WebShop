@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BasketRoutingModule } from './basket-routing.module';
@@ -8,6 +8,7 @@ import {TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
+import { userDataService } from 'src/app/core/services/userData.service';
 
 
 @NgModule({
@@ -24,4 +25,6 @@ import {ButtonModule} from "primeng/button";
     ButtonModule
   ]
 })
-export class BasketModule { }
+export class BasketModule {
+
+}

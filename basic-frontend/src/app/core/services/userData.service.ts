@@ -24,5 +24,16 @@ export class userDataService {
     this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
     this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
     this.cart = localStorage.getItem("cart");
+    //TODO Update header
+  }
+
+  deleteAll(){
+    localStorage.removeItem("role");
+    localStorage.removeItem("id");
+    localStorage.removeItem("password");
+
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("password");
   }
 }

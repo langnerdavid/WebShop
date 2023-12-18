@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ApiService} from "../../core/services/api.service";
 import {Buyer, Order} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent {
 
   role: string|undefined;
 
+  constructor(private router: Router) {}
   private userDataService = inject(userDataService);
   private apiService = inject(ApiService);
   buyer: Buyer | undefined;
@@ -89,5 +91,10 @@ export class ProfileComponent {
     this.editLabel = "Edit Profile";
   }
 
+  logOut():void{
+    this.userDataService.deleteAll();
+    this.userDataService.updateData();
+    this.router.navigate(['']);
+  }
 
 }
