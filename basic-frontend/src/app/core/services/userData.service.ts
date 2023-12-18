@@ -22,7 +22,7 @@ export class userDataService {
     this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
     this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
     this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
-    this.cart = localStorage.getItem("cart");
+    this.cart = sessionStorage.getItem("cart");
     //TODO Update header
   }
 
@@ -44,8 +44,20 @@ export class userDataService {
     }
     let oldCart:any = sessionStorage.getItem('cart');
     if(oldCart){
+      let conditionMet:boolean = false;
       oldCart = JSON.parse(oldCart);
-      oldCart.articles.push(newArticle);
+      for (let i = 0; i<oldCart.articles.length; i++){
+        if(oldCart.articles[i].productId === productId){
+          oldCart.articles[i].quantity += quantity;
+          console.log(oldCart.articles[i].quantity);
+          conditionMet = true;
+          break;
+        }
+      }
+      if(!conditionMet){
+        oldCart.articles.push(newArticle);
+      }
+      sessionStorage.setItem('cart', JSON.stringify(oldCart));
     }else{
       let cart ={
         articles:[

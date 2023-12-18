@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/', validateCart, authorizeCart, async (req, res) => {
     const cart = req.body.cart;
-
     try {
         const data = await createCart(cart);
         if (data.error) {
@@ -33,10 +32,14 @@ router.get('/', async (req, res) => {
 
 
 router.get('/:Id', async (req, res) => {
-    const cartId = req.params.Id;
+    const buyerId = req.params.Id;
     try {
-        const data = await listOneCart(cartId);
-        res.json(data);
+        const data = await listOneCart(buyerId);
+        if(data===undefined){
+            res.status(400).send('No Cart')
+        }else{
+            res.json(data);
+        }
     } catch (e) {
         console.error(e);
         res.send(500);
@@ -44,11 +47,12 @@ router.get('/:Id', async (req, res) => {
 });
 
 router.patch('/:Id',authorizeCart, async (req, res) => {
-    const cartId = req.params.Id;
+    const buyerId = req.params.Id;
     const cart = req.body?.cart;
 
     try {
-        const data = await updateCart(cart, cartId);
+        const data = await updateCart(cart, buyerId);
+        console.log(data);
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -98,12 +102,8 @@ async function authorizeCart(req, res, next) {
     const buyer = await listOneBuyer(username);
     if(username === buyer?._id){
         if(password === buyer?.password){
-            if(req.body?.cart?.buyer){
-                req.body.cart.buyer = buyer._id;
-                next();
-            }else{
-                next();
-            }
+            req.body.cart.buyer = buyer._id;
+            next();
         }else{
             res.status(401).send('Wrong Password');
         }

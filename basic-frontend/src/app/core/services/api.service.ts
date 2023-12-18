@@ -4,7 +4,7 @@ import {
   ArticlePatch,
   ArticlePost,
   Buyer,
-  BuyerPost,
+  BuyerPost, Cart,
   CartPatch,
   CartPost,
   CreateEchoInput,
@@ -40,9 +40,9 @@ export class ApiService {
     const response = await fetch(`${this.ARTICLE_URL}`);
     return response.json();
   }
-  async getOneArticle(articleId:string): Promise<Seller[]>{
+  async getOneArticle(articleId:string): Promise<string>{
     const response = await fetch(`${this.ARTICLE_URL}/${articleId}`);
-    return response.json();
+    return handleResponse(response);
   }
   async postArticle(sellerId: string, password: string, article: { article: ArticlePost }): Promise<string> {
     const options: RequestInit = getPostHeaderAuthorized(sellerId, password);
@@ -100,9 +100,9 @@ export class ApiService {
     return await fetch(`${this.BUYER_URL}/${buyerId}`, options);
   }
   ////////////////////////////////////////// ALL CART API-REQUESTS /////////////////////////////////////////////////////////
-  async getOneCart(cartId:string): Promise<Order[]>{
-    const response = await fetch(`${this.CART_URL}/${cartId}`);
-    return response.json();
+  async getOneCart(buyerId: string | null): Promise<string>{
+    const response = await fetch(`${this.CART_URL}/${buyerId}`);
+    return handleResponse(response);
   }
   async postCart(buyerId: string, password: string, cart: { cart: CartPost }): Promise<string> {
     const options: RequestInit = getPostHeaderAuthorized(buyerId, password);
@@ -111,7 +111,7 @@ export class ApiService {
     const response = await fetch(`${this.CART_URL}`, options);
     return handleResponse(response);
   }
-  async patchCart(buyerId: string, password: string, cart: { user: CartPatch }): Promise<string> {
+  async patchCart(buyerId: string, password: string, cart: { cart: CartPost }): Promise<string> {
     const options: RequestInit = getPatchHeader(buyerId, password);
     options.body = JSON.stringify(cart);
 

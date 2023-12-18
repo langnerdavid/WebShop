@@ -12,11 +12,11 @@ export function createCartLog(cartReq){
     return cartDb.insertAsync(cart);
 }
 
-export function updateCartLog(cartReq, cartId) {
+export function updateCartLog(cartReq, buyerId) {
     return new Promise((resolve, reject) => {
         const currentTimestamp = new Date().toISOString();
 
-        listOneCartLog(cartId, (err, oldCart) => {
+        listOneCartLog(buyerId, (err, oldCart) => {
             if (err) {
                 console.error(err);
                 reject(err);
@@ -30,7 +30,7 @@ export function updateCartLog(cartReq, cartId) {
                     updatedAt: currentTimestamp
                 };
 
-                cartDb.update({ _id: cartId }, { $set: cart }, {}, (err, numReplaced) => {
+                cartDb.update({ buyer: buyerId }, { $set: cart }, {}, (err, numReplaced) => {
                     if (err) {
                         console.error(err);
                         reject(err);
@@ -47,8 +47,8 @@ export function listCartLog(callback) {
     cartDb.find({}, callback);
 }
 
-export function listOneCartLog(cartId, callback) {
-    cartDb.find({_id : cartId}, callback);
+export function listOneCartLog(buyerId, callback) {
+    cartDb.find({buyer : buyerId}, callback);
 }
 
 export function deleteOneCartLog(cartId, callback) {

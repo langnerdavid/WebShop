@@ -10,7 +10,7 @@ export async function createCart(cart) {
     return createCartLog(cart);
 }
 
-export function updateCart(cartReq, cartId) {
+export function updateCart(cartReq, buyerId) {
     return new Promise((resolve, reject) => {
         calculateTotalAmount(cartReq).then((totalAmount)=>{
             if(totalAmount.error){
@@ -18,7 +18,7 @@ export function updateCart(cartReq, cartId) {
             }else if(totalAmount > 0){
                 cartReq.totalAmount = totalAmount;
             }
-            updateCartLog(cartReq, cartId).then((cart) => {
+            updateCartLog(cartReq, buyerId).then((cart) => {
                 resolve(cart);
             }).catch((err) =>{
                 reject(err);
@@ -41,9 +41,9 @@ export function listCarts() {
 }
 
 
-export function listOneCart(cartId) {
+export function listOneCart(buyerId) {
     return new Promise((resolve, reject) => {
-        listOneCartLog(cartId, (err, cart) => {
+        listOneCartLog(buyerId, (err, cart) => {
             if (err) {
                 console.error(err);
                 reject(err);

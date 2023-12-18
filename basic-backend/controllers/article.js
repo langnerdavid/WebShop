@@ -81,7 +81,7 @@ async function authorizeArticle(req, res, next) {
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
     const [article] = await listOneArticle(req.params.Id);
     const sellerArticle = article?.seller;
-    const [seller] = await listOneSeller(sellerArticle);
+    const seller = await listOneSeller(sellerArticle);
     if(username === seller?.username){
         if(password === seller?.password){
             console.log('authorized');

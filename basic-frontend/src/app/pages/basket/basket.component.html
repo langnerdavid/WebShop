@@ -18,7 +18,7 @@
           <td>
             <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" (onInput)="calculateTotal()"></p-inputNumber>
           </td>
-          <td>{{cartItem.price * cartItem.quantity}}€</td>
+          <td>{{cartItem.total}}€</td>
           <td>
             <button pButton pRipple class="p-button-rounded p-button-danger" icon="pi pi-trash" (click)="removeFromCart(cartItem.id)"></button>
           </td>
