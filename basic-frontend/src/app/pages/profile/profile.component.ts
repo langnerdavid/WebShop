@@ -3,11 +3,13 @@ import {ApiService} from "../../core/services/api.service";
 import {Buyer, BuyerPatch, Order, Seller, SellerPatch} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 import {Router} from "@angular/router";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers: [ConfirmationService, MessageService]
 })
 export class ProfileComponent {
   isEditing: boolean = false;
@@ -15,9 +17,7 @@ export class ProfileComponent {
 
   role: string|undefined;
 
-  constructor(private router: Router) {}
-  private userDataService = inject(userDataService);
-  private apiService = inject(ApiService);
+  constructor(private router: Router, private userDataService:userDataService, private apiService:ApiService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
   buyer: Buyer | undefined;
   seller: Seller | undefined;
   isBuyer:boolean = true;
@@ -171,5 +171,41 @@ export class ProfileComponent {
     this.userDataService.updateData();
     this.router.navigate(['']);
   }
+
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure you want to delete your account?',
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        if(this.isBuyer){
+          this.apiService.deleteBuyer(this.buyerId, this.password).then((data:any)=>{
+            if(data.ok){
+              this.userDataService.deleteAll();
+              this.router.navigate(['']);
+            }else{
+              console.log(data);
+            }
+          });
+        }else{
+          this.apiService.deleteSeller(this.sellerId, this.password).then((data:any)=>{
+            if(data.ok){
+              this.userDataService.deleteAll();
+              this.router.navigate(['']);
+            }else{
+              console.log(data);
+            }
+
+          });
+        }
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+      }
+    });
+  }
+
+
 
 }

@@ -8,20 +8,24 @@ import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {FormsModule} from "@angular/forms";
 import { userDataService } from 'src/app/core/services/userData.service';
+import {ToastModule} from "primeng/toast";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
 
 
 @NgModule({
   declarations: [
     ProfileComponent
   ],
-    imports: [
-      CommonModule,
-      ProfileRoutingModule,
-      CardModule,
-      TableModule,
-      ButtonModule,
-      FormsModule
-    ]
+  imports: [
+    CommonModule,
+    ProfileRoutingModule,
+    CardModule,
+    TableModule,
+    ButtonModule,
+    FormsModule,
+    ToastModule,
+    ConfirmPopupModule
+  ]
 })
 export class ProfileModule {
   private userDataService = inject(userDataService);

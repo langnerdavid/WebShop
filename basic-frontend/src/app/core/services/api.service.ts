@@ -1,14 +1,19 @@
 import {Injectable} from '@angular/core';
 import {
-  Article, ArticlePatch,
+  Article,
+  ArticlePatch,
   ArticlePost,
   Buyer,
-  BuyerPost, CartPatch, CartPost,
+  BuyerPost,
+  CartPatch,
+  CartPost,
   CreateEchoInput,
   Echo,
-  Order, OrderPost,
+  Order,
+  OrderPost,
   Seller,
-  SellerPost, UserLogin
+  SellerPost,
+  UserLogin
 } from "../types/echo.type";
 import {
   getDeleteHeader,
@@ -89,11 +94,10 @@ export class ApiService {
     const response = await fetch(`${this.BUYER_URL}/${buyerId}`, options);
     return handleResponse(response);
   }
-  async deleteBuyer(buyerId: string, password: string): Promise<string> {
+  async deleteBuyer(buyerId: string, password: string): Promise<Response> {
     const options: RequestInit = getDeleteHeader(buyerId, password);
 
-    const response = await fetch(`${this.BUYER_URL}/${buyerId}`, options);
-    return handleResponse(response);
+    return await fetch(`${this.BUYER_URL}/${buyerId}`, options);
   }
   ////////////////////////////////////////// ALL CART API-REQUESTS /////////////////////////////////////////////////////////
   async getOneCart(cartId:string): Promise<Order[]>{
@@ -168,11 +172,10 @@ export class ApiService {
     const response = await fetch(`${this.SELLER_URL}/${sellerId}`, options);
     return handleResponse(response);
   }
-  async deleteSeller(sellerId: string, password: string): Promise<string> {
+  async deleteSeller(sellerId: string, password: string): Promise<Response> {
     const options: RequestInit = getDeleteHeader(sellerId, password);
 
-    const response = await fetch(`${this.SELLER_URL}/${sellerId}`, options);
-    return handleResponse(response);
+    return await fetch(`${this.SELLER_URL}/${sellerId}`, options);
   }
 
 

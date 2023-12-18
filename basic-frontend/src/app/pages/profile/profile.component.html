@@ -18,6 +18,16 @@
     </div>
     <!-- TODO bitte hier den Log out button rot nach links -->
     <div class="profile-actions">
+      <p-toast></p-toast>
+      <p-confirmPopup>
+        <ng-template pTemplate="content" let-message>
+          <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+            <p>{{ message.message }}</p>
+          </div>
+        </ng-template>
+      </p-confirmPopup>
+      <button pButton (click)="confirm($event)" label="Delete" class="p-button-rounded p-button-info"></button>
+
       <button (click) ="logOut()" pButton type="button" label="Log Out" class="p-button-rounded p-button-info"></button>
       <button pButton type="button" label="{{editLabel}}" class="p-button-rounded p-button-info" (click)="isEditing ? onSaveChanges() : onEditProfile()"></button>
     </div>
