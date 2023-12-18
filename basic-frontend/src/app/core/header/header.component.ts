@@ -7,12 +7,16 @@ import {userDataService} from "../services/userData.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  private userData = inject(userDataService);
+  private userDataService = inject(userDataService);
   searchText: string | undefined;
   signedIn:boolean = false;
 
   ngOnInit(){
-    this.signedIn = this.userData.isSignedIn();
+    this.signedIn = this.userDataService.isSignedIn();
+  }
+
+  ngOnChanges(){
+    this.userDataService.updateData();
   }
   onSearch(){
     //TODO

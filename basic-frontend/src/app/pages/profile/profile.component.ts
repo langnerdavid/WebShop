@@ -38,6 +38,7 @@ export class ProfileComponent {
   orders:Order[] = [{"articles":[{"productId":"5b5WGEyRbK5urrS2","quantity":2}],"buyer":"w7MuumcIqxDj51ul","totalAmount":1580.02,"status":"placed","orderDate":"2023-12-15T08:06:29.558Z","_id":"JDvJrC2jhssr6kuc"}];
 
   ngOnInit(){
+    this.userDataService.updateData();
     if(this.userDataService.isSignedIn()){
       if(this.userDataService.role === "buyer"){
         this.isBuyer = true;

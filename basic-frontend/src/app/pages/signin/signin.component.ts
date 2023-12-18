@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ApiService} from "../../core/services/api.service";
 import {UserLogin} from "../../core/types/echo.type";
 import {Message} from "primeng/api";
+import { userDataService } from 'src/app/core/services/userData.service';
 
 @Component({
   selector: 'app-signin',
@@ -11,6 +12,7 @@ import {Message} from "primeng/api";
 
 export class SigninComponent {
   private apiService = inject(ApiService);
+  private userDataService = inject(userDataService);
   messages: Message[] = [];
   userType: any;
   staySignedIn: boolean | undefined;
@@ -31,20 +33,21 @@ export class SigninComponent {
     if (!this.userType) {
       this.error='Choose a role!';
     }else if(this.userType.value === 'Buyer'){
+      console.log('buyer');
       this.apiService.loginBuyer({user: this.userData}).then((data:any)=>{
         if(data?.error){
           this.error = data;
         }else{
           if(this.staySignedIn){
-            localStorage.setItem("role","seller");
+            localStorage.setItem("role","buyer");
             localStorage.setItem("id",data._id);
             localStorage.setItem("password", data.password);
           }else{
-            sessionStorage.setItem("role","seller");
+            sessionStorage.setItem("role","buyer");
             sessionStorage.setItem("id",data._id);
             sessionStorage.setItem("password", data.password);
           }
-
+          this.userDataService.updateData();
           //TODO weiterleitung nach erfolgreichem Login
 
         }

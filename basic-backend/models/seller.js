@@ -7,7 +7,7 @@ export function createSellerLog(user){
 
     const seller = {
         password: user.password,
-        email: user.email,
+        email: user.email.toLowerCase(),
         brand: user.brand,
         iban: user.iban,
         address: user.address,
@@ -31,7 +31,7 @@ export function updateSellerLog(user, sellerId) {
             } else {
                 const seller = {
                     password: user?.password ?? oldUser.password,
-                    email: user?.email ?? oldUser.email,
+                    email: user?.email.toLowerCase() ?? oldUser.email,
                     brand: user?.brand ?? oldUser.brand,
                     address: user?.address ?? oldUser.address,
                     zipCode: user?.zipCode ?? oldUser.zipCode,
@@ -67,6 +67,7 @@ export function listOneSellerLog(sellerId, callback) {
     sellerDb.find({_id : sellerId}, callback);
 }
 export function listOneSellerByEmailLog(email, callback) {
+    email = email.toLowerCase();
     sellerDb.find({email : email}, callback);
 }
 export function deleteOneSellerLog(sellerId, callback) {
