@@ -65,6 +65,7 @@ export class ArticlepreviewComponent implements OnChanges{
           cart = data;
           console.log('cart bevor: ', cart.articles)
           let isExecuted=false;
+          //TODO there is currently a problem with this for loop
           for(let i = 0; i<data.articles.length; i++){
             if(cart.articles[i].productId === this.product.id){
               console.log(i);
