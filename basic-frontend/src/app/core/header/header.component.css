@@ -7,7 +7,17 @@
   justify-content: space-between;
   align-items: center;
 }
-
+:host ::ng-deep .small-button{
+  height: 40px;
+}
+:host ::ng-deep .small-button-width{
+  width: 40px;
+}
+.shopping-cart-value{
+  position: absolute;
+  top: -7px;
+  right: 7px;
+}
 .search-bar {
   display: flex;
   align-items: center;
@@ -48,7 +58,9 @@
   background-color: #FFA500;
   color: #363636;
 }
-
+.shopping-cart-unit{
+  position: relative;
+}
 .search-icon {
   margin-left: 8px;
   color: #FFA500;

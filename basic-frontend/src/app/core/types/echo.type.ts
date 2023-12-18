@@ -135,3 +135,12 @@ export interface SellerPost {
   zipCode: number,
   city: string,
 }
+export interface SellerPatch {
+  password?: string,
+  email?: string,
+  brand?: string,
+  iban?: string,
+  address?: string,
+  zipCode?: number,
+  city?: string,
+}

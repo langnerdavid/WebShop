@@ -1,18 +1,20 @@
-<div class="product-display p-card">
+<div class="product-display p-card" (click)="onTitleClicked()">
   <div class="product-image">
     <img [src]="product.image" alt="{{product.name}}">
   </div>
   <div class="product-details">
-    <h2><a routerLink="article" class="product-name">{{product.name}}</a></h2>
+    <h2 class="product-name">{{product.name}}</h2>
     <p class="product-description">{{product.description}}</p>
   </div>
   <div class="product-price-add">
     <p class="product-price">{{product.price}}€</p>
-    <div *ngIf="stockQuantity !== 0; else outOfStockText">
-      <p-button label="In den Warenkorb" class="p-button-rounded p-button-success add-to-cart-btn" (onClick)="addToCart()"></p-button>
+    <div *ngIf="stockQuantity!==0 else OutOfStock">
+      <p-button label="In den Warenkorb" class="p-button-rounded p-button-success add-to-cart-btn" (onClick)="addToCart($event)"></p-button>
     </div>
-    <ng-template #outOfStockText>
-      <p>Out of Stock</p>
+    <ng-template #OutOfStock>
+      <div>
+        <p>Out of Stock</p>
+      </div>
     </ng-template>
   </div>
 </div>

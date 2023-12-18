@@ -109,6 +109,7 @@ async function validateBuyer(req, res, next) {
 }
 
 function validateBuyerPatch(req, res, next) {
+    console.log(req.body)
     const user = req.body.user;
     let hasError = false;
 
@@ -134,7 +135,7 @@ async function authorizeBuyer(req, res, next) {
     const b64auth = authHeader.split(' ')[1];
     let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
     const user = await listOneBuyer(req.params.Id);
-    if(username === user?.username){
+    if(username === user?._id){
         if(password === user?.password){
             next();
         }else{

@@ -3,6 +3,7 @@ import {ApiService} from "../../core/services/api.service";
 import {UserLogin} from "../../core/types/echo.type";
 import {Message} from "primeng/api";
 import { userDataService } from 'src/app/core/services/userData.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -13,6 +14,8 @@ import { userDataService } from 'src/app/core/services/userData.service';
 export class SigninComponent {
   private apiService = inject(ApiService);
   private userDataService = inject(userDataService);
+  constructor(private router: Router) {}
+
   messages: Message[] = [];
   userType: any;
   staySignedIn: boolean | undefined;
@@ -29,7 +32,6 @@ export class SigninComponent {
   ];
 
   onSignIn() {
-    console.log(this.staySignedIn);
     if (!this.userType) {
       this.error='Choose a role!';
     }else if(this.userType.value === 'Buyer'){
@@ -48,13 +50,15 @@ export class SigninComponent {
             sessionStorage.setItem("password", data.password);
           }
           this.userDataService.updateData();
-          //TODO weiterleitung nach erfolgreichem Login
+          this.router.navigate(['']);
 
         }
       });
     }
     else{
+      console.log('seller')
       this.apiService.loginSeller({user: this.userData}).then((data:any)=>{
+        console.log(data);
         if(data.error){
           this.error = data;
         }else{
@@ -67,7 +71,9 @@ export class SigninComponent {
             sessionStorage.setItem("id",data._id);
             sessionStorage.setItem("password", data.password);
           }
-          //TODO weiterleitung nach erfolgreichem Login
+          this.userDataService.updateData();
+          this.router.navigate(['']);
+
 
         }
       });

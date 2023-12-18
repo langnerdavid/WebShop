@@ -3,21 +3,22 @@
     <div class="profile-header">
       <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
       <div class="profile-name-email">
-        <h2 *ngIf="isBuyer">{{firstName}} {{lastName}}</h2>
-        <h2 *ngIf="!isBuyer">{{brand}}</h2>
+        <h2 *ngIf="isBuyer"><input [(ngModel)]="firstName" name="firstName" [readonly]="!isEditing"><input [(ngModel)]="lastName" name="lastName" [readonly]="!isEditing"></h2>
+        <h2 *ngIf="!isBuyer"><input [(ngModel)]="brand" name="brand" [readonly]="!isEditing"></h2>
         <p>Email: <input [(ngModel)]="email" name="email" [readonly]="!isEditing"></p>
         <p>Password: <input [(ngModel)]="password" name="password" [readonly]="!isEditing" [type]="isEditing ? 'text' : 'password'"></p>
       </div>
     </div>
     <div class="profile-info">
       <h3>Additional Information</h3>
-      <p *ngIf="isBuyer"><label>Age:</label> <input [(ngModel)]="age" name="age" [readonly]="!isEditing"></p>
       <p><label>Zip Code:</label> <input [(ngModel)]="zipCode" name="zipCode" [readonly]="!isEditing"></p>
       <p><label>City:</label> <input [(ngModel)]="city" name="city" [readonly]="!isEditing"></p>
       <p><label>Address:</label> <input [(ngModel)]="address" name="address" [readonly]="!isEditing"></p>
       <p><label>IBAN:</label> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
     </div>
+    <!-- TODO bitte hier den Log out button rot nach links -->
     <div class="profile-actions">
+      <button (click) ="logOut()" pButton type="button" label="Log Out" class="p-button-rounded p-button-info"></button>
       <button pButton type="button" label="{{editLabel}}" class="p-button-rounded p-button-info" (click)="isEditing ? onSaveChanges() : onEditProfile()"></button>
     </div>
   </p-card>

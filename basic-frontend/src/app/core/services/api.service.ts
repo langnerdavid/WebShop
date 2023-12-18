@@ -65,7 +65,7 @@ export class ApiService {
     const response = await fetch(`${this.BUYER_URL}`);
     return response.json();
   }
-  async getOneBuyer(buyerId:string): Promise<Seller[]>{
+  async getOneBuyer(buyerId:string): Promise<Buyer>{
     const response = await fetch(`${this.BUYER_URL}/${buyerId}`);
     return response.json();
   }
@@ -82,9 +82,9 @@ export class ApiService {
     return handleResponse(response);
   }
 
-  async patchBuyer(buyerId: string, password: string, buyer: { user: object }): Promise<string> {
+  async patchBuyer(buyerId: string, password: string, user: { user: Buyer }): Promise<string> {
     const options: RequestInit = getPatchHeader(buyerId, password);
-    options.body = JSON.stringify(buyer);
+    options.body = JSON.stringify(user);
 
     const response = await fetch(`${this.BUYER_URL}/${buyerId}`, options);
     return handleResponse(response);
@@ -142,8 +142,9 @@ export class ApiService {
     const response = await fetch(`${this.SELLER_URL}`);
     return response.json();
   }
-  async getOneSeller(sellerId:string): Promise<Seller[]>{
+  async getOneSeller(sellerId:string): Promise<Seller>{
     const response = await fetch(`${this.SELLER_URL}/${sellerId}`);
+    console.log(response);
     return response.json();
   }
   async postSeller(seller: { user: SellerPost }): Promise<string> {
@@ -154,6 +155,7 @@ export class ApiService {
     return handleResponse(response);
   }
   async loginSeller(user: { user: UserLogin }): Promise<string> {
+    console.log(user);
     const options: RequestInit = getPostHeaderAuthorized(user.user.email, user.user.password);
     const response = await fetch(`${this.SELLER_URL}/login`, options);
     return handleResponse(response);

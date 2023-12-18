@@ -1,6 +1,8 @@
 import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Article} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service"
+import {Router} from "@angular/router";
+import {userDataService} from "../../../core/services/userData.service";
 
 @Component({
   selector: 'app-articlepreview',
@@ -20,7 +22,7 @@ export class ArticlepreviewComponent implements OnChanges{
   };
   stockQuantity: number | undefined;
 
-  constructor() {
+  constructor(private router: Router, private userDataService: userDataService) {
     this.initializeProduct();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,9 +43,21 @@ export class ArticlepreviewComponent implements OnChanges{
   }
 
 
-  addToCart() {
-    console.log('Produkt hinzugefügt:', this.product.id);
+  addToCart(event: Event) {
+    event.stopPropagation();
+    if(this.userDataService.isSignedIn()){
+      //TODO Datenbank Integration Cart
+    }else{
+      this.userDataService.setCartNotSignedIn(this.product.id, 1);
+    }
   }
+
+  onTitleClicked(){
+    console.log(this.product.id)
+    this.router.navigate(['/article', this.product.id]);
+  }
+
+  protected readonly event = event;
 }
 
 

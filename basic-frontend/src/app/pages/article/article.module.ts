@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ArticleRoutingModule } from './article-routing.module';
 import { ArticleComponent } from './article.component';
-import {ButtonModule} from "primeng/button";
-import {CardModule} from "primeng/card";
-import {DropdownModule} from "primeng/dropdown";
-import {FormsModule} from "@angular/forms";
+import { userDataService } from 'src/app/core/services/userData.service';
 import {InputNumberModule} from "primeng/inputnumber";
+import {ButtonModule} from "primeng/button";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -17,11 +16,14 @@ import {InputNumberModule} from "primeng/inputnumber";
   imports: [
     CommonModule,
     ArticleRoutingModule,
+    InputNumberModule,
     ButtonModule,
-    CardModule,
-    DropdownModule,
-    FormsModule,
-    InputNumberModule
+    FormsModule
   ]
 })
-export class ArticleModule { }
+export class ArticleModule {
+  private userDataService = inject(userDataService);
+  ngDoCheck(){
+    this.userDataService.updateData();
+  }
+}

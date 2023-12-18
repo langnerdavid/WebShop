@@ -9,6 +9,7 @@ import {
 } from "../services/seller.js";
 import {isPasswordSecure, validateUserInputs, validateUserPatch, validateZipCode} from "../shared/shared.js";
 import {listOneSellerByEmailLog, listOneSellerLog} from "../models/seller.js";
+import {listOneBuyerByEmail} from "../services/buyer.js";
 
 const router = express.Router();
 router.post('/', validateSeller, async (req, res) => {
@@ -51,7 +52,7 @@ router.get('/:Id',  async (req, res) => {
         if (data.length === 0) {
             res.status(404).send('Seller doesn\'t exist');
         } else {
-            res.json(data[0]);
+            res.json(data);
         }
     } catch (e) {
         console.error(e);
@@ -60,7 +61,13 @@ router.get('/:Id',  async (req, res) => {
 });
 
 router.post('/login', authorizeSellerLogin, async(req, res)=>{
-    res.status(200).json('login successfully');
+    try {
+        const data = await listOneSellerByEmail(req.email);
+        res.json(data);
+    } catch (e) {
+        console.error(e);
+        res.send(500);
+    }
 });
 
 router.patch('/:Id',authorizeSeller, validateSellerPatch, async (req, res) => {
@@ -137,7 +144,6 @@ async function authorizeSeller(req, res, next) {
     const user = await listOneSeller(req.params.Id);
     if(username === user?._id){
         if(password === user?.password){
-            console.log('authorized')
             next();
         }else{
             res.status(401).send('Wrong Password');
@@ -158,6 +164,7 @@ async function authorizeSellerLogin(req, res, next) {
     const user = await listOneSellerByEmail(email);
     if(user){
         if(password === user?.password){
+            req.email = email;
             next();
         }else{
             res.status(401).send('Wrong Password');

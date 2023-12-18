@@ -1,6 +1,6 @@
 <div class="header">
   <div class="button-container">
-    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-home'" routerLink="/"> </button>
+    <button pButton type="button" class="p-button-rounded p-button-text small-button small-button-width" [icon]="'pi pi-home'" routerLink="/"> </button>
   </div>
 
   <div class="search-bar">
@@ -12,12 +12,15 @@
 
   <div class="button-container">
     <div *ngIf="!signedIn">
-      <button routerLink="/register" pButton type="button" class="p-button-rounded p-button-text">Register</button>
-      <button routerLink="/signin" pButton type="button" class="p-button-rounded p-button-text" >Sign In</button>
+      <button routerLink="/register" pButton type="button" class="p-button-rounded p-button-text small-button">Register</button>
+      <button routerLink="/signin" pButton type="button" class="p-button-rounded p-button-text small-button" >Sign In</button>
     </div>
-    <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-shopping-cart'" routerLink="basket"> </button>
+    <div class="shopping-cart-unit">
+      <button pButton type="button" class="p-button-rounded p-button-text small-button small-button-width" [icon]="'pi pi-shopping-cart'" routerLink="basket"> </button>
+      <p-badge *ngIf="shoppingCartNumber>0" class="shopping-cart-value" value="{{shoppingCartNumber}}"></p-badge>
+    </div>
     <div *ngIf="signedIn">
-      <button pButton type="button" class="p-button-rounded p-button-text" [icon]="'pi pi-user'" routerLink="profile"> </button>
+      <button pButton type="button" class="p-button-rounded p-button-text small-button small-button-width" [icon]="'pi pi-user'" routerLink="profile"> </button>
     </div>
   </div>
 </div>

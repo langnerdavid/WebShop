@@ -49,6 +49,14 @@
   justify-content: flex-end;
 }
 
+h2{
+  display: flex;
+}
+h2 > input{
+  font-size: 1.5em; /* Adjust the font size as needed */
+  margin-right: 10px;
+}
+
 .orders-card {
   margin-top: 2rem;
 }

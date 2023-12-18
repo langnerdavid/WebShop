@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
+import {BadgeModule} from "primeng/badge";
 
 
 
@@ -26,18 +27,19 @@ import { PasswordModule } from 'primeng/password';
     HeaderComponent,
     PageNotFoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    InputTextModule,
-    ButtonModule,
-    MenubarModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    DropdownModule,
-    PasswordModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        InputTextModule,
+        ButtonModule,
+        MenubarModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        DropdownModule,
+        PasswordModule,
+        BadgeModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

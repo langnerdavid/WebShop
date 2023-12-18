@@ -10,7 +10,9 @@ const routes: Routes = [
   { path: 'signin', loadChildren: () => import('./pages/signin/signin.module').then(m => m.SigninModule) },
   { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule) },
   { path: 'basket', loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketModule) },
-  { path: 'article', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
+  { path: 'article/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
+  //TODO Seller geöns anlegen
+  { path: 'seller/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
   { path: '**', redirectTo: '404'}
 ];
 

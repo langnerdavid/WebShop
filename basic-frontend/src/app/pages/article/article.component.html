@@ -3,12 +3,12 @@
     <img src="../../../../assets/ArticlePic.png" alt="Dummy-Bild" class="p-d-block p-mx-auto">
   </div>
   <div class="description-container">
-    <h2>Produktname</h2>
-    <p>Produktbeschreibung</p>
+    <h2>{{productName}}</h2>
+    <p>{{productDescription}}</p>
   </div>
   <div class="actions-container">
-    <h3>Preis: 19,99 €</h3>
-    <p-inputNumber [(ngModel)]="selectedQuantity" [min]="1" inputId="quantity" class="quantity-input"></p-inputNumber>
+    <h3>Preis: {{productPrice}} €</h3>
+    <p-inputNumber [(ngModel)]="selectedQuantity" [showButtons]="true" [min]="1" [max]=productStockQuantity inputId="quantity" class="quantity-input"> </p-inputNumber>
     <p-button label="In den Warenkorb" (click)="addToCart()" class="p-mb-2 add-to-cart-button"></p-button>
     <p-button label="Zum Verkäuferprofil" (click)="goToSellerProfile()"></p-button>
   </div>
