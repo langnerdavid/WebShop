@@ -24,6 +24,9 @@
   <ng-template #empty>
     Keine Echos vorhanden
   </ng-template>
-  <app-articlepreview *ngFor="let item of articles" [articleInfo]="item"></app-articlepreview>
-  <app-articlepreview></app-articlepreview>
+  <button routerLink="profile">Profile</button>
+  <div class="article-container">
+    <app-articlepreview *ngFor="let item of articles" [articleInfo]="item"></app-articlepreview>
+  </div>
+
 </div>

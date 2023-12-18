@@ -8,7 +8,8 @@
 }
 
 .profile-card,
-.orders-card {
+.orders-card,
+.article-card{
   width: 80%;
   max-width: 800px;
   padding: 1rem;
@@ -57,11 +58,11 @@ h2 > input{
   margin-right: 10px;
 }
 
-.orders-card {
+.orders-card, .article-card {
   margin-top: 2rem;
 }
 
-.orders-card h3 {
+.orders-card h3, .article-card h3 {
   margin-bottom: 1rem;
 }
 

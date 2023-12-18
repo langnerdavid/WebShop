@@ -54,4 +54,46 @@
       </ng-template>
     </p-table>
   </p-card>
+  <p-card class="article-card" *ngIf="!isBuyer">
+    <h3>Your articles</h3>
+    <p-table [value]="orders" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{order._id}}</td>
+          <td>{{order.orderDate}}</td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalAmount}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+  <p-card class="orders-card" *ngIf="!isBuyer">
+    <h3>Reiceved orders</h3>
+    <p-table [value]="orders" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{order._id}}</td>
+          <td>{{order.orderDate}}</td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalAmount}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
 </div>
