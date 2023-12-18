@@ -6,7 +6,7 @@ export function createBuyerLog(user){
     const currentTimestamp = new Date().toISOString();
     const buyer = {
         password: user.password,
-        email: user.email,
+        email: user.email.toLowerCase(),
         firstName: user.firstName,
         lastName: user.lastName,
         iban : user.iban,
@@ -31,7 +31,7 @@ export function updateBuyerLog(user, buyerId) {
             } else {
                 const buyer = {
                     password: user?.password ?? oldUser.password,
-                    email: user?.email ?? oldUser.email,
+                    email: user?.email.toLowerCase() ?? oldUser.email,
                     firstName: user?.firstName ?? oldUser.firstName,
                     lastName: user?.lastName ?? oldUser.lastName,
                     iban : user?.iban ?? oldUser.iban,
@@ -72,6 +72,7 @@ export function listOneBuyerLog(buyerId, callback) {
     buyerDb.find({_id : buyerId}, callback);
 }
 export function listOneBuyerByEmailLog(email, callback) {
+    email = email.toLowerCase();
     buyerDb.find({email : email}, callback);
 }
 

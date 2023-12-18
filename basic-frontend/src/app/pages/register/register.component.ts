@@ -29,6 +29,7 @@ interface UserData {
 
 export class RegisterComponent {
   private apiService = inject(ApiService);
+
   constructor(private router: Router) {}
 
   messages: Message[] = [];
@@ -60,16 +61,13 @@ export class RegisterComponent {
 
     if (!this.userData.userType) {
       console.error('Bitte wählen Sie eine Nutzerrolle aus.');
+      this.messages = [{ severity: 'error', summary: 'Error', detail: 'please select role' }];
       return;
 
     }
 
-    else if(!parseInt(this.userData.zipcode, 10)){
-      console.error('Bitte geben sie eine korrekte PLZ an.');
-      return;
-    }
     else if (this.userData.userType.value === 'Buyer' && this.userData.firstName && this.userData.lastName){
-      let buyer: BuyerPost = {
+      const buyer: BuyerPost = {
         password: this.userData.password,
         email: this.userData.email,
         firstName: this.userData.firstName,
@@ -88,11 +86,12 @@ export class RegisterComponent {
           localStorage.setItem("role","buyer");
           localStorage.setItem("id",data._id);
           localStorage.setItem("password", data.password);
-          // Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
+          //TODO Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
+          this.router.navigate(['/profile']);
         }
       })
     }else if (this.userData.userType.value === 'Seller' && this.userData.brandName){
-      let seller: SellerPost = {
+      const seller: SellerPost = {
         password: this.userData.password,
         email: this.userData.email,
         brand: this.userData.brandName,
@@ -110,7 +109,8 @@ export class RegisterComponent {
           localStorage.setItem("role","seller");
           localStorage.setItem("id",data._id);
           localStorage.setItem("password", data.password);
-          // Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
+          //TODO Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
+          this.router.navigate(['/profile']);
         }
       })
 
