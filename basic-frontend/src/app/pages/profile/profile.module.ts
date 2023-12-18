@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
@@ -7,6 +7,7 @@ import {CardModule} from "primeng/card";
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {FormsModule} from "@angular/forms";
+import { userDataService } from 'src/app/core/services/userData.service';
 
 
 @NgModule({
@@ -22,4 +23,9 @@ import {FormsModule} from "@angular/forms";
       FormsModule
     ]
 })
-export class ProfileModule { }
+export class ProfileModule {
+  private userDataService = inject(userDataService);
+  ngDoCheck(){
+    this.userDataService.updateData();
+  }
+}

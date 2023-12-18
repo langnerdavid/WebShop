@@ -17,7 +17,9 @@
       <p><label>Address:</label> <input [(ngModel)]="address" name="address" [readonly]="!isEditing"></p>
       <p><label>IBAN:</label> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
     </div>
+    <!-- TODO bitte hier den Log out button rot nach links -->
     <div class="profile-actions">
+      <button (click) ="logOut()" pButton type="button" label="Log Out" class="p-button-rounded p-button-info"></button>
       <button pButton type="button" label="{{editLabel}}" class="p-button-rounded p-button-info" (click)="isEditing ? onSaveChanges() : onEditProfile()"></button>
     </div>
   </p-card>

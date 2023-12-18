@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RegisterRoutingModule } from './register-routing.module';
@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
 import {MessagesModule} from "primeng/messages";
+import { userDataService } from 'src/app/core/services/userData.service';
 
 
 @NgModule({
@@ -27,4 +28,5 @@ import {MessagesModule} from "primeng/messages";
         MessagesModule
     ]
 })
-export class RegisterModule { }
+export class RegisterModule {
+}
