@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./basket.component.css']
 })
 export class BasketComponent {
+  isCartEmpty:boolean = true;
   cartItems = [
     { id: 1, name: 'Produkt 1', price: 10, quantity: 1 },
     { id: 2, name: 'Produkt 2', price: 20, quantity: 2 },
@@ -14,6 +15,9 @@ export class BasketComponent {
 
   totalAmount: number | undefined;
 
+  ngOnInit(){
+
+  }
   constructor() {
     this.calculateTotal();
   }

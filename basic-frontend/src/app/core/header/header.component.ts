@@ -12,7 +12,7 @@ export class HeaderComponent {
   signedIn:boolean = false;
 
   ngOnInit(){
-    this.signedIn = !(this.userData.role === null || this.userData.id === null || this.userData.password === null);
+    this.signedIn = this.userData.isSignedIn();
   }
   onSearch(){
     //TODO

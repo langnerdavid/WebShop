@@ -14,7 +14,7 @@ export class ProfileComponent {
 
   role: string|undefined;
 
-  private headerComponent = inject(userDataService);
+  private userDataService = inject(userDataService);
   private apiService = inject(ApiService);
   buyer: Buyer | undefined;
   isBuyer:boolean = true;
@@ -38,33 +38,37 @@ export class ProfileComponent {
   orders:Order[] = [{"articles":[{"productId":"5b5WGEyRbK5urrS2","quantity":2}],"buyer":"w7MuumcIqxDj51ul","totalAmount":1580.02,"status":"placed","orderDate":"2023-12-15T08:06:29.558Z","_id":"JDvJrC2jhssr6kuc"}];
 
   ngOnInit(){
-    if(this.headerComponent.role === "buyer"){
-      this.isBuyer = true;
-      this.buyerId = this.headerComponent.id;
-      if (typeof this.buyerId === 'string') {
-        this.apiService.getOneBuyer(this.buyerId).then((data: any) => {
-          this.buyer = data;
-          this.firstName = this.buyer?.firstName;
-          this.lastName = this.buyer?.lastName;
-          this.email = this.buyer?.email;
-          this.password = this.buyer?.password;
-          this.zipCode = this.buyer?.zipCode;
-          this.city = this.buyer?.city;
-          this.address =this.buyer?.address;
+    if(this.userDataService.isSignedIn()){
+      if(this.userDataService.role === "buyer"){
+        this.isBuyer = true;
+        this.buyerId = this.userDataService.id;
+        if (typeof this.buyerId === 'string') {
+          this.apiService.getOneBuyer(this.buyerId).then((data: any) => {
+            this.buyer = data;
+            this.firstName = this.buyer?.firstName;
+            this.lastName = this.buyer?.lastName;
+            this.email = this.buyer?.email;
+            this.password = this.buyer?.password;
+            this.zipCode = this.buyer?.zipCode;
+            this.city = this.buyer?.city;
+            this.address =this.buyer?.address;
 
-        });
-      } else {
-        //TODO weiterleitung zum login, darf eigentlich nicht passieren
-        console.error("this.buyerId is not a string");
-      }
-    }else if (this.headerComponent.role === "seller"){
-      this.isBuyer = false;
-      this.sellerId = this.headerComponent.id;
-      if(typeof  this.sellerId === 'string'){
-        this.apiService.getOneSeller(this.sellerId).then((data:any)=>{
+          });
+        } else {
+          //TODO weiterleitung zum login, darf eigentlich nicht passieren
+          console.error("this.buyerId is not a string");
+        }
+      }else if (this.userDataService.role === "seller"){
+        this.isBuyer = false;
+        this.sellerId = this.userDataService.id;
+        if(typeof  this.sellerId === 'string'){
+          this.apiService.getOneSeller(this.sellerId).then((data:any)=>{
 
-        });
+          });
+        }
       }
+    }else{
+      //TODO weiterleitung 404 (sollte nicht auf die Profil Seite können, wenn man nicht angemeldet ist
     }
 
     this.apiService.getAllOrders().then(((data:Order[])=>{

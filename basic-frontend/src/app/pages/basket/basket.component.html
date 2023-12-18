@@ -1,5 +1,5 @@
 <div class="cart-container">
-  <p-card class="cart-card">
+  <p-card class="cart-card" *ngIf="!isCartEmpty">
     <h2>Cart</h2>
     <p-table [value]="cartItems" dataKey="id">
       <ng-template pTemplate="header">
@@ -31,5 +31,8 @@
     <div class="cart-actions">
       <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success"></button>
     </div>
+  </p-card>
+  <p-card *ngIf="isCartEmpty">
+    <p>Your Cart is currently empty</p>
   </p-card>
 </div>
