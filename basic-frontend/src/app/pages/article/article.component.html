@@ -1,1 +1,15 @@
-<p>article works!</p>
+<div class="article-details">
+  <div class="image-container">
+    <img src="https://via.placeholder.com/300" alt="Dummy-Bild" class="p-d-block p-mx-auto">
+  </div>
+  <div class="description-container">
+    <h2>Produktname</h2>
+    <p>Produktbeschreibung</p>
+  </div>
+  <div class="actions-container">
+    <h3>Preis: 19,99 €</h3>
+    <p-inputNumber [(ngModel)]="selectedQuantity" [min]="1" inputId="quantity" class="quantity-input"></p-inputNumber>
+    <p-button label="In den Warenkorb" (click)="addToCart()" class="p-mb-2 add-to-cart-button"></p-button>
+    <p-button label="Zum Verkäuferprofil" (click)="goToSellerProfile()"></p-button>
+  </div>
+</div>

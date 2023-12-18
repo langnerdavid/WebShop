@@ -1,0 +1,38 @@
+.article-details {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 1rem;
+  align-items: start;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.quantity-input {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.add-to-cart-button {
+  margin-bottom: 2rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
