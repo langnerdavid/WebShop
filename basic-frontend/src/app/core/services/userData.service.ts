@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ export class userDataService {
   id: string | null = null;
   password: string | null = null;
   cart: string | null = null;
-  constructor() {
+  constructor(private apiService: ApiService) {
     this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
     this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
     this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
@@ -71,16 +72,20 @@ export class userDataService {
     }
   }
 
-  getCart(){
+  getCartNumber(){
     if(this.isSignedIn()){
-      //TODO cart für signed In User
-      return
+      this.
+      return 1;
     }else{
-      let cart:any = sessionStorage.getItem('cart');
-      if(cart){
-        return JSON.parse(cart);
+      if (typeof this.cart === "string") {
+        let cart = JSON.parse(this.cart);
+        let cartNumber = 0;
+        for(let i = 0; i<cart.articles.length; i++){
+          cartNumber += parseInt(cart.articles.quantity);
+        }
+        return cartNumber;
       }else{
-        return false;
+        return 0;
       }
     }
   }

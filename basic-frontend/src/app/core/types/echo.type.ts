@@ -81,7 +81,7 @@ export interface UserLogin {
 }
 export interface Cart {
   _id: string;
-  articles: [{productId:string, quantity:number}],
+  articles: {productId:string, quantity:number}[],
   buyer: string,
   totalAmount: number,
 
@@ -89,17 +89,17 @@ export interface Cart {
   updatedAt: Date;
 }
 export interface CartPost {
-  articles: [{productId:string, quantity:number}]
+  articles: {productId:string, quantity:number}[]
 }
 export interface CartPatch {
-  articles?: [{productId:string, quantity:number}],
+  articles?: {productId:string, quantity:number}[],
   buyer?: string,
   totalAmount?: number
 }
 
 export interface Order {
   _id: string;
-  articles: [{productId:string, quantity:number}],
+  articles: {productId:string, quantity:number}[],
   buyer: string,
   totalAmount: number,
   status: OrderStatus,
@@ -107,7 +107,7 @@ export interface Order {
   orderDate: string;
 }
 export interface OrderPost {
-  articles: [{productId:string, quantity:number}],
+  articles: {productId:string, quantity:number}[],
   buyer: string,
   totalAmount: number,
   status: OrderStatus
