@@ -16,7 +16,7 @@
           <td>{{cartItem.name}}</td>
           <td>{{cartItem.price}}€</td>
           <td>
-            <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" (onInput)="calculateTotal()"></p-inputNumber>
+            <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" (ngModelChange)="onQuantityChange($event, cartItem.id)"></p-inputNumber>
           </td>
           <td>{{cartItem.total}}€</td>
           <td>
@@ -29,7 +29,7 @@
       <h3>Total: {{totalAmount}}€</h3>
     </div>
     <div class="cart-actions">
-      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success"></button>
+      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success" (click)="updateCartButton()"></button>
     </div>
   </p-card>
   <p-card *ngIf="isCartEmpty">

@@ -3,6 +3,7 @@ import {Article, CartPost} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service"
 import {Router} from "@angular/router";
 import {userDataService} from "../../../core/services/userData.service";
+import {updateCart} from "../../shared.code";
 
 @Component({
   selector: 'app-articlepreview',
@@ -45,48 +46,7 @@ export class ArticlepreviewComponent implements OnChanges{
 
   addToCart(event: Event) {
     event.stopPropagation();
-    if(this.userDataService.isSignedIn()){
-      this.userDataService.updateData();
-      //TODO Datenbank Integration Cart
-      let cart:CartPost={
-        articles: [{
-          productId: this.product.id,
-          quantity: 1
-        }]
-      };
-      this.apiService.getOneCart(this.userDataService.id).then((data:any)=>{
-        if(data.error === 400){
-          this.apiService.postCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: cart}).then((data:any)=>{
-            console.log(data);
-          });
-        }else if(data.error){
-          //TODO was wenn error
-        }else{
-          cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
-          let isExecuted=false;
-          //TODO there is currently a problem with this for loop
-          for(let i = 0; i<cart.articles.length; i++){
-            if(cart.articles[i].productId === this.product.id){
-              cart.articles[i].quantity += 1;
-              isExecuted=true;
-            }
-          }
-          if(!isExecuted){
-            let cartPatch={
-              productId: this.product.id,
-              quantity: 1
-            }
-            cart.articles.push(cartPatch);
-          }
-          //TODO cart gibts schon
-          this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: cart}).then((data:any) =>{
-            console.log(data);
-          });
-        }
-      });
-    }else{
-      this.userDataService.setCartNotSignedIn(this.product.id, 1);
-    }
+    updateCart(this.product.id, 1, false, this.userDataService, this.apiService);
     this.userDataService.updateCartNumberTest();
   }
 

@@ -44,7 +44,10 @@ export class userDataService {
     sessionStorage.removeItem("cart");
   }
 
-  setCartNotSignedIn(productId:string, quantity:number){
+  setFullCartNotSignedIn(cart:{articles:{productId:string, quantity: number}[]}){
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  }
+  setCartNotSignedIn(productId:string, quantity:number, inCart: boolean){
     let newArticle = {
       productId: productId,
       quantity: quantity
@@ -55,8 +58,11 @@ export class userDataService {
       oldCart = JSON.parse(oldCart);
       for (let i = 0; i<oldCart.articles.length; i++){
         if(oldCart.articles[i].productId === productId){
-          oldCart.articles[i].quantity += quantity;
-          console.log(oldCart.articles[i].quantity);
+          if(inCart){
+            oldCart.articles[i].quantity = quantity;
+          }else{
+            oldCart.articles[i].quantity += quantity;
+          }
           conditionMet = true;
           break;
         }
