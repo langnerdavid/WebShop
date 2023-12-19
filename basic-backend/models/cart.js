@@ -16,7 +16,7 @@ export function updateCartLog(cartReq, buyerId) {
     return new Promise((resolve, reject) => {
         const currentTimestamp = new Date().toISOString();
 
-        listOneCartLog(buyerId, (err, oldCart) => {
+        listOneCartLog(buyerId, (err, [oldCart]) => {
             if (err) {
                 console.error(err);
                 reject(err);
