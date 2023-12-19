@@ -23,6 +23,9 @@ export class HeaderComponent {
       this.userDataService.updateData();
       this.signedIn = this.userDataService.isSignedIn();
     });
+    this.userDataService.getCartNumber().then((cartNumber) => {
+      this.shoppingCartNumber = cartNumber;
+    });
   }
   onSearch(){
     //TODO

@@ -72,23 +72,35 @@ export class userDataService {
     }
   }
 
-  getCartNumber(){
-    if(this.isSignedIn()){
-      this.
-      return 1;
-    }else{
+  getCartNumber(): Promise<number> {
+    if (this.isSignedIn()) {
+      return this.apiService.getOneCart(this.id).then((data: any) => {
+        console.log(data);
+        if (!data.error) {
+          let cartNumber = 0;
+          for (let i = 0; i < data.articles.length; i++) {
+            cartNumber += data.articles[i].quantity;
+            console.log(cartNumber);
+          }
+          return cartNumber;
+        } else {
+          return 0;
+        }
+      });
+    } else {
       if (typeof this.cart === "string") {
         let cart = JSON.parse(this.cart);
         let cartNumber = 0;
-        for(let i = 0; i<cart.articles.length; i++){
-          cartNumber += parseInt(cart.articles.quantity);
+        for (let i = 0; i < cart.articles.length; i++) {
+          cartNumber += cart.articles[i].quantity;
         }
-        return cartNumber;
-      }else{
-        return 0;
+        return Promise.resolve(cartNumber);
+      } else {
+        return Promise.resolve(0);
       }
     }
   }
+
 
   isBuyer(){
     return this.role === 'buyer';
