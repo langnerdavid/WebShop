@@ -1,0 +1,38 @@
+<h2>Neuen Artikel erstellen</h2>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="create-article-form">
+  <div class="p-field">
+    <label for="title">Titel</label>
+    <input id="title" [(ngModel)]="articleData.title" name="title" required/>
+  </div>
+
+  <div class="p-field">
+    <label for="description">Beschreibung</label>
+    <textarea id="description" rows="5" [(ngModel)]="articleData.description" name="description" required pInputTextarea></textarea>
+  </div>
+
+  <div class="p-field">
+    <label for="price">Preis</label>
+    <p-inputNumber id="price" [(ngModel)]="articleData.price" name="price" mode="currency" currency="EUR" [minFractionDigits]="2" [required]="true"></p-inputNumber>
+  </div>
+
+  <div class="p-field">
+    <label for="stockQuantity">Lagerbestand</label>
+    <p-inputNumber id="stockQuantity" [(ngModel)]="articleData.stockQuantity" name="stockQuantity" [step]="1" [required]="true"></p-inputNumber>
+  </div>
+
+  <div class="p-field-checkbox">
+    <p-checkbox id="available" [binary]="true" [(ngModel)]="articleData.available" name="available" label="Verfügbar"></p-checkbox>
+  </div>
+
+  <div class="p-field">
+    <label for="brand">Marke</label>
+    <textarea id="brand" [(ngModel)]="articleData.brand" name="brand" pInputTextarea required></textarea>
+  </div>
+
+  <div class="p-field">
+    <label for="searchingKeywords">Suchbegriffe (kommagetrennt)</label>
+    <textarea id="searchingKeywords" [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" required pInputTextarea></textarea>
+  </div>
+
+  <p-button type="submit" label="Artikel erstellen" [disabled]="!form.valid"></p-button>
+</form>

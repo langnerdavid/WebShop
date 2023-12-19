@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'article/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
   //TODO Seller geöns anlegen
   { path: 'seller/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
+  { path: 'newarticle', loadChildren: () => import('./pages/newarticle/newarticle.module').then(m => m.NewarticleModule) },
   { path: '**', redirectTo: '404'}
 ];
 

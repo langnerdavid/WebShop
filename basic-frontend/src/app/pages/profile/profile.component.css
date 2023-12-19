@@ -88,3 +88,13 @@ h2 > input{
   background-color: transparent;
   border: none;
 }
+
+.article-heading-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+p-button{
+  margin-right: 5px;
+}
