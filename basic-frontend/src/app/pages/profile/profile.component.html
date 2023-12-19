@@ -59,18 +59,16 @@
     <p-table [value]="orders" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th>Order ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Total</th>
+          <th>Name</th>
+          <th>Anzahl auf Lager</th>
+          <th>Preis</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-order>
         <tr>
-          <td>{{order._id}}</td>
-          <td>{{order.orderDate}}</td>
-          <td>{{order.status}}</td>
-          <td>{{order.totalAmount}}</td>
+          <td>muss</td>
+          <td>noch</td>
+          <td>gelinked werden</td>
         </tr>
       </ng-template>
     </p-table>
@@ -80,17 +78,18 @@
     <p-table [value]="orders" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th>Date</th>
           <th>Status</th>
-          <th>Total</th>
+          <th>Kunde</th>
+          <th>Anzahl Produkte</th>
+          <th>Summe</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-order>
         <tr>
-          <td>{{order._id}}</td>
-          <td>{{order.orderDate}}</td>
-          <td>{{order.status}}</td>
-          <td>{{order.totalAmount}}</td>
+          <td>muss</td>
+          <td>noch</td>
+          <td>gelinked</td>
+          <td>werden</td>
         </tr>
       </ng-template>
     </p-table>
