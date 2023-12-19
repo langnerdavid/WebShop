@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {userDataService} from "../services/userData.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {filter} from "rxjs";
+import {filter, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -9,23 +9,33 @@ import {filter} from "rxjs";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  private unsubscribe$ = new Subject<void>();
   constructor(private userDataService: userDataService, private router: Router) {}
 
   searchText: string | undefined;
   signedIn:boolean = false;
-  shoppingCartNumber:number = 1;
+  shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
   ngOnInit(){
+    this.userDataService.updateCartNumberTest();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       // Execute code every time the route changes (component is shown)
       this.userDataService.updateData();
       this.signedIn = this.userDataService.isSignedIn();
+
+      this.userDataService.updateCartNumberTest();
     });
-    this.userDataService.getCartNumber().then((cartNumber) => {
-      this.shoppingCartNumber = cartNumber;
-    });
+    this.userDataService.cartNumber$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((cartNumber) => {
+        this.shoppingCartNumber = cartNumber;
+      });
+  }
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   onSearch(){
     //TODO

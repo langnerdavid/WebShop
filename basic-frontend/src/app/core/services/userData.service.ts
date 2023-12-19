@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class userDataService {
+  private cartNumberSubject = new Subject<number>();
+
+  cartNumber$ = this.cartNumberSubject.asObservable();
+
   role: string | null = null;
   id: string | null = null;
   password: string | null = null;
   cart: string | null = null;
+  shoppingCartNumber$: number = 0;
   constructor(private apiService: ApiService) {
     this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
     this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
@@ -72,33 +78,42 @@ export class userDataService {
     }
   }
 
-  getCartNumber(): Promise<number> {
+  updateCartNumberTest(): void{
     if (this.isSignedIn()) {
-      return this.apiService.getOneCart(this.id).then((data: any) => {
-        console.log(data);
+      this.apiService.getOneCart(this.id).then((data: any) => {
         if (!data.error) {
           let cartNumber = 0;
           for (let i = 0; i < data.articles.length; i++) {
             cartNumber += data.articles[i].quantity;
             console.log(cartNumber);
           }
-          return cartNumber;
+          this.updateCartNumber(cartNumber);
+          return
         } else {
-          return 0;
+          this.updateCartNumber(0);
+          return
         }
       });
     } else {
       if (typeof this.cart === "string") {
-        let cart = JSON.parse(this.cart);
+        this.updateData();
+        let cartReq = JSON.parse(this.cart);
         let cartNumber = 0;
-        for (let i = 0; i < cart.articles.length; i++) {
-          cartNumber += cart.articles[i].quantity;
+        console.log(cartReq);
+        for (let i = 0; i < cartReq.articles.length; i++) {
+          cartNumber += cartReq.articles[i].quantity;
         }
-        return Promise.resolve(cartNumber);
+        this.updateCartNumber(cartNumber);
+        return;
       } else {
-        return Promise.resolve(0);
+        this.updateCartNumber(0);
+        return;
       }
     }
+  }
+
+  updateCartNumber(cartNumber: number) {
+    this.cartNumberSubject.next(cartNumber);
   }
 
 
