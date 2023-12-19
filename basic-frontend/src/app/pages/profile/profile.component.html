@@ -26,10 +26,11 @@
           </div>
         </ng-template>
       </p-confirmPopup>
-      <button pButton (click)="confirm($event)" label="Delete" class="p-button-rounded p-button-info"></button>
 
-      <button (click) ="logOut()" pButton type="button" label="Log Out" class="p-button-rounded p-button-info"></button>
-      <button pButton type="button" label="{{editLabel}}" class="p-button-rounded p-button-info" (click)="isEditing ? onSaveChanges() : onEditProfile()"></button>
+      <p-button (click)="confirm($event)" label="Delete" [rounded]="true" severity="danger"></p-button>
+      <p-button (onClick)="logOut()" label="Log Out" [rounded]="true" severity="warning"></p-button>
+      <p-button label="{{editLabel}}" (onClick)="isEditing ? onSaveChanges() : onEditProfile()" [rounded]="true"></p-button>
+
     </div>
   </p-card>
 
@@ -74,7 +75,10 @@
     </p-table>
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
-    <h3>Reiceved orders</h3>
+    <div class="article-heading-button">
+      <h3>Reiceved orders</h3>
+      <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
+    </div>
     <p-table [value]="orders" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
