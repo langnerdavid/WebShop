@@ -7,23 +7,28 @@
   justify-content: space-between;
   align-items: center;
 }
-:host ::ng-deep .small-button{
+
+:host ::ng-deep .small-button {
   height: 40px;
 }
-:host ::ng-deep .small-button-width{
+
+:host ::ng-deep .small-button-width {
   width: 40px;
 }
-.shopping-cart-value{
+
+.shopping-cart-value {
   position: absolute;
   top: -7px;
   right: 7px;
 }
+
 .search-bar {
   display: flex;
   align-items: center;
   max-width: 400px;
   width: 100%;
 }
+
 .search-button {
   background: none;
   border: none;
@@ -36,7 +41,6 @@
   width: 24px;
   height: 24px;
 }
-
 
 .search-bar input {
   flex: 1;
@@ -58,13 +62,16 @@
   background-color: #FFA500;
   color: #363636;
 }
-.shopping-cart-unit{
+
+.shopping-cart-unit {
   position: relative;
 }
+
 .search-icon {
   margin-left: 8px;
   color: #FFA500;
 }
+
 .p-button:focus {
   outline: none !important;
   box-shadow: none !important;
@@ -72,4 +79,42 @@
 
 .p-button::-moz-focus-inner {
   border: 0;
+}
+
+@media (max-width: 790px) {
+  :host ::ng-deep .small-button {
+    height: 30px;
+  }
+  :host ::ng-deep .small-button-width {
+    width: 30px;
+  }
+  .search-icon {
+    width: 18px;
+    height: 18px;
+  }
+  .button-container button {
+    font-size: 1rem;
+  }
+  .button-container {
+    flex-shrink: 0;
+  }
+  .search-bar input {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 791px) and (max-width: 991px) {
+  :host ::ng-deep .small-button {
+    height: 35px;
+  }
+  :host ::ng-deep .small-button-width {
+    width: 35px;
+  }
+  .search-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .button-container button {
+    font-size: 1.1rem;
+  }
 }
