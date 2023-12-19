@@ -12,8 +12,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
   providers: [ConfirmationService, MessageService]
 })
 export class ProfileComponent {
-  isEditing: boolean = false;
-  editLabel: string = "Edit Profile";
+  isEditing = false;
+  editLabel = "Edit Profile";
 
   role: string|undefined;
 

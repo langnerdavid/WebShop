@@ -26,7 +26,12 @@
   </ng-template>
   <button routerLink="profile">Profile</button>
   <div class="article-container">
-    <app-articlepreview *ngFor="let item of articles" [articleInfo]="item"></app-articlepreview>
+    <div class="article-row" *ngFor="let item of articles; let i = index">
+      <app-articlepreview [articleInfo]="item"></app-articlepreview>
+      <ng-container *ngIf="(i + 1) % 2 === 0">
+        <div class="clearfix"></div>
+      </ng-container>
+    </div>
   </div>
 
 </div>
