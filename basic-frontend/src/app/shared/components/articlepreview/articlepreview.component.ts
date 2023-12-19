@@ -3,7 +3,7 @@ import {Article, CartPost} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service"
 import {Router} from "@angular/router";
 import {userDataService} from "../../../core/services/userData.service";
-import {updateCart} from "../../shared.code";
+import { updateCartSignedIn} from "../../shared.code";
 
 @Component({
   selector: 'app-articlepreview',
@@ -46,9 +46,21 @@ export class ArticlepreviewComponent implements OnChanges{
 
   addToCart(event: Event) {
     event.stopPropagation();
-    updateCart(this.product.id, 1, false, this.userDataService, this.apiService);
+    if (this.userDataService.isSignedIn()) {
+      updateCartSignedIn(this.product.id, 1, false, this.userDataService, this.apiService)
+        .then(() => {
+          this.userDataService.updateCartNumberTest();
+        })
+        .catch((error) => {
+          console.error('Error updating cart:', error);
+          //TODO Handle the error appropriately
+        });
+    } else {
+      this.userDataService.setCartNotSignedIn(this.product.id, 1, false);
+    }
     this.userDataService.updateCartNumberTest();
   }
+
 
   onTitleClicked(){
     console.log(this.product.id)

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {userDataService} from "../../core/services/userData.service";
 import {Cart} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
-import {updateCart, updateFullCart} from "../../shared/shared.code";
+import {updateFullCartSignedIn} from "../../shared/shared.code";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 
 @Component({
@@ -143,29 +144,19 @@ export class BasketComponent {
 
   async updateCartButton() {
     if (this.userDataService.isSignedIn()) {
-      this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
-        if (!data.error) {
-          let oldCart: { articles: { productId: string; quantity: number }[] } = data;
-          let newCart: { articles: { productId: string; quantity: number }[] }={articles:[]};
-
-          this.cartItems.forEach((cartItem) => {
-            let existingCartItem = oldCart.articles.find((item) => item.productId === cartItem.productId);
-
-            if (existingCartItem) {
-              existingCartItem.quantity = cartItem.quantity;
-            }
-            newCart.articles.push(<{productId: string, quantity: number}>existingCartItem);
-          });
-
-          this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: newCart}).then();
-        }
+      updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data:any)=>{
+        this.cartItems = data;
+        this.userDataService.updateCartNumberTest();
+      }).catch(()=>{
+        //TODO error handling
       });
+      console.log(this.cartItems);
     }else{
       for (let i = 0; i < this.cartItems.length; i++) {
-        updateCart(this.cartItems[i].productId, this.cartItems[i].quantity, true, this.userDataService, this.apiService);
+        this.userDataService.setCartNotSignedIn(this.cartItems[i].productId, this.cartItems[i].quantity, true);
 
       }
+      this.userDataService.updateCartNumberTest();
     }
-    this.userDataService.updateCartNumberTest();
   }
 }

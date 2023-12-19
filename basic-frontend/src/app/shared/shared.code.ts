@@ -50,72 +50,85 @@ export async function handleResponse(response: Response): Promise<any> {
   return { error: response.status, errorText };
 }
 
-export function updateCart(productId: string, quantity: number, inCart:boolean, userDataService: userDataService, apiService: ApiService){
-  if(userDataService.isSignedIn()){
-    let cart:CartPost={
-      articles: [{
-        productId: productId,
-        quantity: quantity
-      }]
-    };
-    apiService.getOneCart(userDataService.id).then((data:any)=>{
-      if(data.error === 400){
-        apiService.postCart(<string>userDataService.id, <string>userDataService.password, {cart: cart}).then((data:any)=>{
-          console.log(data);
-        });
-      }else if(data.error){
-        //TODO was wenn error
-      }else{
-        cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
-        let isExecuted=false;
-        //TODO there is currently a problem with this for loop
-        for(let i = 0; i<cart.articles.length; i++){
-          if(cart.articles[i].productId === productId){
-            if(inCart){
-              cart.articles[i].quantity = quantity;
-            }else{
-              cart.articles[i].quantity += quantity;
-            }
-            isExecuted=true;
+export async function updateCartSignedIn(productId: string, quantity: number, inCart: boolean, userDataService: userDataService, apiService: ApiService) {
+  let cart: CartPost = {
+    articles: [{
+      productId: productId,
+      quantity: quantity
+    }]
+  };
+
+  try {
+    const data: any = await apiService.getOneCart(userDataService.id);
+
+    if (data.error === 400) {
+      const postData: any = await apiService.postCart(<string>userDataService.id, <string>userDataService.password, { cart: cart });
+      console.log(postData);
+    } else if (data.error) {
+      // TODO: Handle error
+    } else {
+      cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
+      let isExecuted = false;
+
+      for (let i = 0; i < cart.articles.length; i++) {
+        if (cart.articles[i].productId === productId) {
+          if (inCart) {
+            cart.articles[i].quantity = quantity;
+          } else {
+            cart.articles[i].quantity += quantity;
           }
-        }console.log(cart);
-        if(!isExecuted){
-          let cartPatch={
-            productId: productId,
-            quantity: quantity
-          }
-          cart.articles.push(cartPatch);
+          isExecuted = true;
         }
-        console.log(cart);
-        //TODO cart gibts schon
-        apiService.patchCart(<string>userDataService.id, <string>userDataService.password, {cart: cart}).then((data:any) =>{
-          console.log(data);
-        });
       }
-    });
-  }else{
-    userDataService.setCartNotSignedIn(productId, quantity, inCart);
+
+      console.log(cart);
+
+      if (!isExecuted) {
+        const cartPatch = {
+          productId: productId,
+          quantity: quantity
+        };
+        cart.articles.push(cartPatch);
+      }
+
+      console.log(cart);
+
+      // TODO: Handle the case when 'patchCart' fails
+      const patchData: any = await apiService.patchCart(<string>userDataService.id, <string>userDataService.password, { cart: cart });
+      console.log(patchData);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    // TODO: Handle the error appropriately
   }
 }
 
-export function updateFullCart(cart: { articles:{productId: string, quantity:number}[] }, userDataService: userDataService, apiService: ApiService){
-  if(userDataService.isSignedIn()){
-    apiService.getOneCart(userDataService.id).then((data:any)=>{
-      if(data.error === 400){
-        apiService.postCart(<string>userDataService.id, <string>userDataService.password, {cart: cart}).then((data:any)=>{
-          console.log(data);
-        });
-      }else if(data.error){
-        //TODO was wenn error
+
+export async function updateFullCartSignedIn(cartItems:{id: number, productId:string, name: string, price: number, quantity: number, total:number}[],userDataService: userDataService, apiService: ApiService):Promise<any>{
+  apiService.getOneCart(userDataService.id).then((data: any) => {
+  if (!data.error) {
+    let oldCart: { articles: { productId: string; quantity: number }[] } = data;
+    let newCart: { articles: { productId: string; quantity: number }[] }={articles:[]};
+
+    cartItems.forEach((cartItem) => {
+      let existingCartItem = oldCart.articles.find((item) => item.productId === cartItem.productId);
+
+      if (existingCartItem) {
+        existingCartItem.quantity = cartItem.quantity;
+      }
+      newCart.articles.push(<{productId: string, quantity: number}>existingCartItem);
+    });
+    console.log(newCart);
+    apiService.patchCart(<string>userDataService.id, <string>userDataService.password, {cart: newCart}).then((data:any)=>{
+      console.log(data);
+      if(!data.error){
+        return data;
       }else{
-        cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
-        //TODO cart gibts schon
-        apiService.patchCart(<string>userDataService.id, <string>userDataService.password, {cart: cart}).then((data:any) =>{
-          console.log(data);
-        });
+        return data.error
       }
     });
   }else{
-    userDataService.setFullCartNotSignedIn(cart);
+    return data.error
   }
+});
 }
