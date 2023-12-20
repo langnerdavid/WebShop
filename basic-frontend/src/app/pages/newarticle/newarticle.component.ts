@@ -12,18 +12,18 @@ export class NewarticleComponent {
     description: '',
     price: null,
     stockQuantity: null,
-    available: true,
+    available: false,
     brand: '',
-    searchingKeywords: '',
+    searchingKeywords: ''
   };
 
-  constructor() {}
+  messages = [];
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      console.log('Article Data:', this.articleData);
+      console.log(this.articleData);
     } else {
-      console.log('Form is not valid.');
+      console.log('error creating article');
     }
   }
 }

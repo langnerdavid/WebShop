@@ -1,4 +1,4 @@
-.create-article-form {
+.article-form {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -19,17 +19,14 @@ button {
   margin-top: 1em;
 }
 
-h2,
-.create-article-form {
+h2, .article-form {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.create-article-form .p-inputtext,
-.create-article-form .p-inputtextarea,
-.create-article-form .p-inputnumber {
-  width: 100%;
+.article-form input, .article-form textarea {
+  width: 300px;
   box-sizing: border-box;
 }
 
@@ -46,4 +43,19 @@ h2,
   color: red;
   font-size: 12px;
   margin-top: 5px;
+}
+:host ::ng-deep .article-form .p-inputnumber {
+  width: 300px !important;
+}
+
+:host ::ng-deep .article-form .p-inputnumber .p-inputnumber-inputwrapper {
+  width: 100% !important;
+}
+
+:host ::ng-deep .article-form .p-inputnumber .p-inputnumber-input {
+  width: 100% !important;
+}
+:host ::ng-deep .article-form .p-inputnumber .p-button.p-inputnumber-button {
+  background-color: #32CD32 !important;
+  border-color: #32CD32 !important;
 }
