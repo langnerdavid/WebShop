@@ -1,0 +1,49 @@
+.create-article-form {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.p-field {
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.p-field label {
+  margin-right: 1em;
+  min-width: 120px;
+}
+
+button {
+  margin-top: 1em;
+}
+
+h2,
+.create-article-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.create-article-form .p-inputtext,
+.create-article-form .p-inputtextarea,
+.create-article-form .p-inputnumber {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.error {
+  border-color: red;
+}
+
+.input-container {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
