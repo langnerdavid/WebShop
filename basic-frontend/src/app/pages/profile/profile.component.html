@@ -56,7 +56,10 @@
     </p-table>
   </p-card>
   <p-card class="article-card" *ngIf="!isBuyer">
-    <h3>Your articles</h3>
+    <div class="article-heading-button">
+      <h3>Your articles</h3>
+      <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
+    </div>
     <p-table [value]="orders" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
@@ -75,10 +78,7 @@
     </p-table>
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
-    <div class="article-heading-button">
-      <h3>Reiceved orders</h3>
-      <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
-    </div>
+    <h3>Reiceved orders</h3>
     <p-table [value]="orders" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
