@@ -10,6 +10,8 @@ import {FormsModule} from "@angular/forms";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {ToastModule} from "primeng/toast";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {AccordionModule} from "primeng/accordion";
+import {CheckboxModule} from "primeng/checkbox";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
     ButtonModule,
     FormsModule,
     ToastModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    AccordionModule,
+    CheckboxModule
   ]
 })
 export class ProfileModule {
