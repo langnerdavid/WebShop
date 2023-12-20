@@ -82,6 +82,7 @@ export class userDataService {
       }
       sessionStorage.setItem('cart', JSON.stringify(cart));
     }
+    this.updateCartNumberTest();
   }
 
   updateCartNumberTest(): void{
@@ -125,5 +126,8 @@ export class userDataService {
 
   isBuyer(){
     return this.role === 'buyer';
+  }
+  isSeller(){
+    return this.role === 'seller';
   }
 }

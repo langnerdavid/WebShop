@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {SelectItem} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
+import {userDataService} from "../../core/services/userData.service";
 
 @Component({
   selector: 'app-article',
@@ -17,7 +18,7 @@ export class ArticleComponent {
   selectedQuantity = 1;
   private articleId: string='';
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private userDataSerivce: userDataService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -43,6 +44,11 @@ export class ArticleComponent {
   addToCart() {
     //TODO:  Logik, um Artikel zum Warenkorb hinzuzufügen
     console.log('Menge:', this.selectedQuantity);
+    if(this.userDataSerivce.isSeller()){
+
+    }else{
+      this.userDataSerivce.setCartNotSignedIn(this.articleId, this.selectedQuantity, true);
+    }
   }
 
   goToSellerProfile() {

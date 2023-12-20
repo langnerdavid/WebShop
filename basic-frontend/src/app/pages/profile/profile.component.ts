@@ -13,11 +13,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 })
 export class ProfileComponent {
   //test article for profile page
-  articles = [
-    { id: 1, name: 'Product A', quantity: 10, price: 20.00 },
-    { id: 2, name: 'Product B', quantity: 5, price: 15.00 },
-    { id: 3, name: 'Product C', quantity: 2, price: 35.00 }
-  ];
+  articles:{id:number, name: string, quantity: number, price: number, productId: string}[] = [];
 
   //also for testing purposes
   orders2 = [
@@ -111,6 +107,22 @@ export class ProfileComponent {
           this.address = this.seller?.address;
           this.iban = this.seller?.iban;
 
+        });
+        this.apiService.getAllArticles().then((data:any)=>{
+          if(!data.error){
+            console.log(data);
+            const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === this.userDataService.id);
+            for(let i = 0; filteredArticles.length; i++){
+              let article ={
+                id: i,
+                name:filteredArticles[i].title,
+                price:filteredArticles[i].price,
+                quantity:filteredArticles[i].stockQuantity,
+                productId: filteredArticles[i]._id,
+              }
+              this.articles.push(article);
+            }
+          }
         });
       }
     }else{

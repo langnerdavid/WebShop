@@ -14,6 +14,8 @@ export class HeaderComponent {
 
   searchText: string | undefined;
   signedIn:boolean = false;
+  isBuyer:boolean = false;
+  isSeller: boolean = true;
   shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
   ngOnInit(){
@@ -24,6 +26,7 @@ export class HeaderComponent {
       // Execute code every time the route changes (component is shown)
       this.userDataService.updateData();
       this.signedIn = this.userDataService.isSignedIn();
+      this.isSeller = this.userDataService.isSeller();
 
       this.userDataService.updateCartNumberTest();
     });

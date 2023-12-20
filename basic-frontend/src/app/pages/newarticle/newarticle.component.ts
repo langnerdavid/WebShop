@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {ApiService} from "../../core/services/api.service";
+import {userDataService} from "../../core/services/userData.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-newarticle',
@@ -10,18 +13,31 @@ export class NewarticleComponent {
   articleData = {
     title: '',
     description: '',
-    price: null,
-    stockQuantity: null,
-    available: false,
+    price: 0,
+    stockQuantity: 0,
+    visible: true,
     brand: '',
     searchingKeywords: ''
   };
 
   messages = [];
 
+  constructor(private apiService: ApiService, private userDataService: userDataService, private router: Router) {
+  }
   onSubmit(form: NgForm) {
     if (form.valid) {
-      console.log(this.articleData);
+      let articlePost = {
+        title: this.articleData.title,
+        description: this.articleData.description,
+        price: this.articleData.price,
+        stockQuantity: this.articleData.stockQuantity,
+        visible: this.articleData.visible,
+        brand: this.articleData.brand,
+        searchingKeywords: this.articleData.searchingKeywords.split(',').map(keyword => keyword.trim())
+      };
+      this.apiService.postArticle(<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
+        this.router.navigate(['profile']);
+      });
     } else {
       console.log('error creating article');
     }

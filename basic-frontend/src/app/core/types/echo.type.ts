@@ -17,9 +17,9 @@ export interface Article {
   description: string;
   price: number;
   stockQuantity: number;
-  available: string;
+  visible: boolean;
   brand: string;
-  searchingKeywords: [string];
+  searchingKeywords: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,18 +28,18 @@ export interface ArticlePost {
   description: string;
   price: number;
   stockQuantity: number;
-  available: string;
+  visible: boolean;
   brand: string;
-  searchingKeywords: [string];
+  searchingKeywords: string[];
 }
 export interface ArticlePatch {
   title?: string;
   description?: string;
   price?: number;
   stockQuantity?: number;
-  available?: string;
+  visible?: boolean;
   brand?: string;
-  searchingKeywords?: [string];
+  searchingKeywords?: string[];
 }
 export interface Buyer {
   _id: string;

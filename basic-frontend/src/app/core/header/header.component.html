@@ -15,7 +15,7 @@
       <button routerLink="/register" pButton type="button" class="p-button-rounded p-button-text small-button">Register</button>
       <button routerLink="/signin" pButton type="button" class="p-button-rounded p-button-text small-button" >Sign In</button>
     </div>
-    <div class="shopping-cart-unit">
+    <div *ngIf="!isSeller" class="shopping-cart-unit">
       <button pButton type="button" class="p-button-rounded p-button-text small-button small-button-width" [icon]="'pi pi-shopping-cart'" routerLink="basket"> </button>
       <p-badge *ngIf="shoppingCartNumber>0" class="shopping-cart-value" value="{{shoppingCartNumber}}"></p-badge>
     </div>

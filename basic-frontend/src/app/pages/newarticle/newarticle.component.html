@@ -6,32 +6,37 @@
   </div>
 
   <div class="p-field">
-    <label for="description">Beschreibung</label>
+    <label for="description">Description</label>
     <textarea rows="5" cols="30" pInputTextarea id="description" [(ngModel)]="articleData.description" name="description" required></textarea>
   </div>
 
   <div class="p-field">
-    <label for="price">Preis</label>
+    <label for="price">Price</label>
     <p-inputNumber name="price" id="price" [(ngModel)]="articleData.price" mode="currency" inputId="currency-germany" currency="EUR" locale="de-DE" [min]="0" [required]="true" [showButtons]="true"></p-inputNumber>
   </div>
 
   <div class="p-field">
-    <label for="stockQuantity">Lagerbestand</label>
+    <label for="stockQuantity">Stock Quantity</label>
     <p-inputNumber name="stockQuantity" id="stockQuantity" [(ngModel)]="articleData.stockQuantity" [min]="0" [required]="true" [showButtons]="true"></p-inputNumber>
   </div>
 
   <div class="p-field">
-    <label for="brand">Marke</label>
+    <label for="brand">Brand</label>
     <input id="brand" type="text" pInputText [(ngModel)]="articleData.brand" name="brand" required>
   </div>
 
   <div class="p-field">
-    <label for="searchingKeywords">Suchbegriffe</label>
-    <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Suchbegriffe getrennt mit Leerzeichen"required>
+    <label for="searchingKeywords">Searching Keywords</label>
+    <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Searching Keywords seperated by comma"required>
+  </div>
+
+  <div class="p-field">
+    <label for="visible" >Visible</label>
+    <p-checkbox id="visible" [(ngModel)]="articleData.visible" [binary]="true" inputId="binary"></p-checkbox>
   </div>
 
   <div *ngIf="!form.valid" class="error-message">
-    Bitte füllen Sie alle Felder aus.
+    Please complete Input!
   </div>
   <p-button type="submit" label="Artikel erstellen" [disabled]="!form.valid" severity="success"></p-button>
 </form>
