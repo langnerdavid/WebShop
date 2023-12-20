@@ -56,46 +56,95 @@
     </p-table>
   </p-card>
   <p-card class="article-card" *ngIf="!isBuyer">
-    <h3>Your articles</h3>
-    <p-table [value]="orders" dataKey="id">
+    <div class="article-heading-button">
+      <h3>Your articles</h3>
+      <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
+    </div>
+    <p-table [value]="articles" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
           <th>Name</th>
           <th>Anzahl auf Lager</th>
           <th>Preis</th>
+          <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-order>
+      <ng-template pTemplate="body" let-article>
         <tr>
-          <td>muss</td>
-          <td>noch</td>
-          <td>gelinked werden</td>
+          <td>{{ article.name }}</td>
+          <td>{{ article.quantity }}</td>
+          <td>{{ article.price }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
-    <div class="article-heading-button">
-      <h3>Reiceved orders</h3>
-      <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
-    </div>
-    <p-table [value]="orders" dataKey="id">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Status</th>
-          <th>Kunde</th>
-          <th>Anzahl Produkte</th>
-          <th>Summe</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-order>
-        <tr>
-          <td>muss</td>
-          <td>noch</td>
-          <td>gelinked</td>
-          <td>werden</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <h3>Orders</h3>
+    <p-accordion>
+      <p-accordionTab header="Eingegangen">
+        <p-table [value]="eingegangenOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Kunde</th>
+              <th>Anzahl Produkte</th>
+              <th>Summe</th>
+              <th>Bezahlt?</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.productCount }}</td>
+              <td>{{ order.total }}</td>
+              <td>
+                <p-checkbox [binary]="true"></p-checkbox>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+
+      <p-accordionTab header="Bezahlt">
+        <p-table [value]="bezahltOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Kunde</th>
+              <th>Anzahl Produkte</th>
+              <th>Summe</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.productCount }}</td>
+              <td>{{ order.total }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+
+      <p-accordionTab header="Abgeschlossen">
+        <p-table [value]="abgeschlossenOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Kunde</th>
+              <th>Anzahl Produkte</th>
+              <th>Summe</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.productCount }}</td>
+              <td>{{ order.total }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-card>
+
 </div>

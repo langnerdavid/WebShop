@@ -12,6 +12,27 @@ import {ConfirmationService, MessageService} from "primeng/api";
   providers: [ConfirmationService, MessageService]
 })
 export class ProfileComponent {
+  //test article for profile page
+  articles = [
+    { id: 1, name: 'Product A', quantity: 10, price: 20.00 },
+    { id: 2, name: 'Product B', quantity: 5, price: 15.00 },
+    { id: 3, name: 'Product C', quantity: 2, price: 35.00 }
+  ];
+
+  //also for testing purposes
+  orders2 = [
+    { id: 1, status: 'eingegangen', customer: 'Kunde 1', productCount: 5, total: 100.00 },
+    { id: 2, status: 'eingegangen', customer: 'Kunde 2', productCount: 3, total: 75.00 },
+    { id: 3, status: 'bezahlt', customer: 'Kunde 3', productCount: 2, total: 50.00 },
+    { id: 4, status: 'bezahlt', customer: 'Kunde 4', productCount: 6, total: 120.00 },
+    { id: 5, status: 'abgeschlossen', customer: 'Kunde 5', productCount: 1, total: 25.00 }
+  ];
+
+  eingegangenOrders = this.orders2.filter(order => order.status === 'eingegangen');
+  bezahltOrders = this.orders2.filter(order => order.status === 'bezahlt');
+  abgeschlossenOrders = this.orders2.filter(order => order.status === 'abgeschlossen');
+  //testing end
+
   isEditing = false;
   editLabel = "Edit Profile";
 
@@ -59,7 +80,6 @@ export class ProfileComponent {
   }
 
   orders:Order[] = [{"articles":[{"productId":"5b5WGEyRbK5urrS2","quantity":2}],"buyer":"w7MuumcIqxDj51ul","totalAmount":1580.02,"status":"placed","orderDate":"2023-12-15T08:06:29.558Z","_id":"JDvJrC2jhssr6kuc"}];
-
   ngOnInit(){
     this.isBuyer = this.userDataService.isBuyer();
 
