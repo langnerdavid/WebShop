@@ -19,22 +19,34 @@ export class HeaderComponent {
   shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
   ngOnInit(){
-    this.userDataService.updateCartNumberTest();
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      // Execute code every time the route changes (component is shown)
-      this.userDataService.updateData();
-      this.signedIn = this.userDataService.isSignedIn();
-      this.isSeller = this.userDataService.isSeller();
-
+    if(!this.userDataService.isSeller()){
       this.userDataService.updateCartNumberTest();
-    });
-    this.userDataService.cartNumber$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((cartNumber) => {
-        this.shoppingCartNumber = cartNumber;
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        // Execute code every time the route changes (component is shown)
+        this.userDataService.updateData();
+        this.signedIn = this.userDataService.isSignedIn();
+        this.isSeller = this.userDataService.isSeller();
+
+        this.userDataService.updateCartNumberTest();
       });
+      this.userDataService.cartNumber$
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((cartNumber) => {
+          this.shoppingCartNumber = cartNumber;
+        });
+    }else{
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        // Execute code every time the route changes (component is shown)
+        this.userDataService.updateData();
+        this.signedIn = this.userDataService.isSignedIn();
+        this.isSeller = this.userDataService.isSeller();
+
+      });
+    }
   }
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -44,6 +56,7 @@ export class HeaderComponent {
     //TODO
     // SuchLogik -> beim drücken des Icons soll Suche abgeschlossen werden
     // mit BE/DB diie Artikel anzeigen
+    this.router.navigate(['/searchResults', this.searchText]);
     console.log('Suche nach:', this.searchText);
   }
 }
