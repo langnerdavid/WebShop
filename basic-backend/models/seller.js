@@ -33,6 +33,7 @@ export function updateSellerLog(user, sellerId) {
                     password: user?.password ?? oldUser.password,
                     email: user?.email.toLowerCase() ?? oldUser.email,
                     brand: user?.brand ?? oldUser.brand,
+                    iban: user?.iban ?? oldUser.iban,
                     address: user?.address ?? oldUser.address,
                     zipCode: user?.zipCode ?? oldUser.zipCode,
                     city: user?.city ?? oldUser.city,

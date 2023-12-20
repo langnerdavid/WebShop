@@ -35,10 +35,10 @@ export class SigninComponent {
     if (!this.userType) {
       this.error='Choose a role!';
     }else if(this.userType.value === 'Buyer'){
-      console.log('buyer');
       this.apiService.loginBuyer({user: this.userData}).then((data:any)=>{
-        if(data?.error){
-          this.error = data;
+        if(data.error){
+          this.error = data.errorText;
+          this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
         }else{
           if(this.staySignedIn){
             localStorage.setItem("role","buyer");
@@ -58,9 +58,9 @@ export class SigninComponent {
     else{
       console.log('seller')
       this.apiService.loginSeller({user: this.userData}).then((data:any)=>{
-        console.log(data);
         if(data.error){
-          this.error = data;
+          this.error = data.text;
+          this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
         }else{
           if(this.staySignedIn){
             localStorage.setItem("role","seller");
@@ -78,7 +78,6 @@ export class SigninComponent {
         }
       });
     }
-    this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
   }
 }
 /*[Log] Response (default-src_app_core_services_api_service_ts.js, line 207)

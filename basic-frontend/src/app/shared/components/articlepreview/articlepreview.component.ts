@@ -58,7 +58,6 @@ export class ArticlepreviewComponent implements OnChanges{
     } else {
       this.userDataService.setCartNotSignedIn(this.product.id, 1, false);
     }
-    this.userDataService.updateCartNumberTest();
   }
 
 

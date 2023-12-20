@@ -108,22 +108,7 @@ export class ProfileComponent {
           this.iban = this.seller?.iban;
 
         });
-        this.apiService.getAllArticles().then((data:any)=>{
-          if(!data.error){
-            console.log(data);
-            const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === this.userDataService.id);
-            for(let i = 0; filteredArticles.length; i++){
-              let article ={
-                id: i,
-                name:filteredArticles[i].title,
-                price:filteredArticles[i].price,
-                quantity:filteredArticles[i].stockQuantity,
-                productId: filteredArticles[i]._id,
-              }
-              this.articles.push(article);
-            }
-          }
-        });
+        this.getArticlesSeller();
       }
     }else{
       //TODO weiterleitung 404 (sollte nicht auf die Profil Seite können, wenn man nicht angemeldet ist
@@ -239,5 +224,22 @@ export class ProfileComponent {
   }
 
 
-
+  private async getArticlesSeller(){
+    this.apiService.getAllArticles().then((data:any)=>{
+      if(!data.error){
+        console.log(data);
+        const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === this.userDataService.id);
+        for(let i = 0; i<filteredArticles.length; i++){
+          let article ={
+            id: i,
+            name:filteredArticles[i].title,
+            price:filteredArticles[i].price,
+            quantity:filteredArticles[i].stockQuantity,
+            productId: filteredArticles[i]._id,
+          }
+          this.articles.push(article);
+        }
+      }
+    });
+  }
 }

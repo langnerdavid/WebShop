@@ -26,7 +26,6 @@ export class BasketComponent {
         if(!data.error){
           this.cart = data;
           if(this.cart && this.cart?.articles.length !== 0){
-            console.log(this.cart);
             this.isCartEmpty = false;
             for(let i = 0; <number>this.cart.articles.length > i; i++){
               this.apiService.getOneArticle(this.cart.articles[i].productId).then((data:any) => {
@@ -77,6 +76,8 @@ export class BasketComponent {
             }
           });
         }
+      }else{
+        this.isCartEmpty=true;
       }
     }
   }
@@ -95,19 +96,17 @@ export class BasketComponent {
       this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
         if (!data.error) {
           let newCart: { articles: { productId: string; quantity: number }[] } = { articles: data.articles };
-
-          // Log the initial state of newCart.articles and the itemId to be removed
-
-          // Use filter to remove the item with the specified itemId
-          newCart.articles = newCart.articles.filter((item, index) => index !== itemId);
-          console.log(newCart)
+          let productId = this.cartItems.find(item => item.id === itemId)?.productId;
+          newCart.articles = newCart.articles.filter((item) => item.productId !== productId);
           // Call the patchCart API to update the cart
           this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, { cart: newCart })
             .then((patchData: any) => {
-              console.log(patchData);
               this.cartItems = this.cartItems.filter(item => item.id !== itemId);
               if (this.cartItems.length === 0) {
                 this.isCartEmpty = true;
+                this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(()=>{
+                  console.log('cart deleted');
+                })
               }
               this.userDataService.updateCartNumberTest();
               this.calculateTotal();
@@ -117,23 +116,27 @@ export class BasketComponent {
             });
         }
       });
-    } else {
-      console.log(this.cartItems);
-      console.log(itemId);
+      this.updateDisplayCart();
+    }else {
+      let index = this.cartItems.findIndex(item => item.id === itemId);
       let newCart = JSON.parse(<string>this.userDataService.cart);
-      newCart.articles = newCart.articles.filter((item: {
-        productId: string,
-        quantity: number
-      }) => item.productId !== this.cartItems[itemId].productId);
-      this.userDataService.setFullCartNotSignedIn(newCart);
-    }
 
-    this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-    if (this.cartItems.length === 0) {
-      this.isCartEmpty = true;
+      // Create a new cart object with updated articles
+      const updatedCart = {
+        articles: newCart.articles.filter((item: {
+          productId: string,
+          quantity: number
+        }) => item.productId !== this.cartItems[index].productId)
+      };
+      this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+      this.userDataService.setFullCartNotSignedIn(updatedCart);
+      if (this.cartItems.length === 0) {
+        this.userDataService.deleteCartNotSignedIn();
+        this.isCartEmpty = true;
+      }
+      // Set the updated cart object in the user data service
+      this.updateDisplayCart();
     }
-    this.userDataService.updateCartNumberTest();
-    this.calculateTotal();
   }
 
   onQuantityChange(quantity:number, itemId: number){
@@ -145,12 +148,13 @@ export class BasketComponent {
   async updateCartButton() {
     if (this.userDataService.isSignedIn()) {
       updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data:any)=>{
-        this.cartItems = data;
-        this.userDataService.updateCartNumberTest();
+        if(!data.error){
+          this.cartItems = data;
+          this.userDataService.updateCartNumberTest();
+        }
       }).catch(()=>{
         //TODO error handling
       });
-      console.log(this.cartItems);
     }else{
       for (let i = 0; i < this.cartItems.length; i++) {
         this.userDataService.setCartNotSignedIn(this.cartItems[i].productId, this.cartItems[i].quantity, true);
@@ -158,5 +162,13 @@ export class BasketComponent {
       }
       this.userDataService.updateCartNumberTest();
     }
+  }
+
+  private updateDisplayCart(){
+    if (this.cartItems.length === 0) {
+      this.isCartEmpty = true;
+    }
+    this.userDataService.updateCartNumberTest();
+    this.calculateTotal();
   }
 }

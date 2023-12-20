@@ -121,11 +121,7 @@ export async function updateFullCartSignedIn(cartItems:{id: number, productId:st
     console.log(newCart);
     apiService.patchCart(<string>userDataService.id, <string>userDataService.password, {cart: newCart}).then((data:any)=>{
       console.log(data);
-      if(!data.error){
-        return data;
-      }else{
-        return data.error
-      }
+      return data;
     });
   }else{
     return data.error

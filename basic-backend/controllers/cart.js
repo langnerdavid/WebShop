@@ -60,7 +60,7 @@ router.patch('/:Id',authorizeCart, async (req, res) => {
     }
 });
 
-router.delete('/:Id', authorizeCart, async (req, res) => {
+router.delete('/:Id', authorizeCartDelete, async (req, res) => {
     const cartId = req.params.Id;
     try {
         const data = await deleteOneCart(cartId);
@@ -103,6 +103,26 @@ async function authorizeCart(req, res, next) {
     if(username === buyer?._id){
         if(password === buyer?.password){
             req.body.cart.buyer = buyer._id;
+            next();
+        }else{
+            res.status(401).send('Wrong Password');
+        }
+    }else{
+        res.status(404).send('Wrong username');
+    }
+
+}
+
+async function authorizeCartDelete(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send('Authorization Header missing.');
+    }
+    const b64auth = authHeader.split(' ')[1];
+    let [username, password] = Buffer.from(b64auth, 'base64').toString().split(':');
+    const buyer = await listOneBuyer(username);
+    if(username === buyer?._id){
+        if(password === buyer?.password){
             next();
         }else{
             res.status(401).send('Wrong Password');

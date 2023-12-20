@@ -106,7 +106,6 @@ export class userDataService {
         this.updateData();
         let cartReq = JSON.parse(this.cart);
         let cartNumber = 0;
-        console.log(cartReq);
         for (let i = 0; i < cartReq.articles.length; i++) {
           cartNumber += cartReq.articles[i].quantity;
         }
@@ -129,5 +128,10 @@ export class userDataService {
   }
   isSeller(){
     return this.role === 'seller';
+  }
+
+  deleteCartNotSignedIn(){
+    sessionStorage.removeItem('cart');
+    this.cart = null;
   }
 }
