@@ -44,9 +44,11 @@ export class ArticleComponent {
   addToCart() {
     //TODO:  Logik, um Artikel zum Warenkorb hinzuzufügen
     console.log('Menge:', this.selectedQuantity);
-    if(this.userDataSerivce.isSeller()){
-
-    }else{
+    if (this.userDataSerivce.isSignedIn()&&this.userDataSerivce.isBuyer()) {
+      this.setCartSignedIn(this.articleId, this.selectedQuantity).then((data:any)=>{
+        console.log('ja');
+      });
+    } else {
       this.userDataSerivce.setCartNotSignedIn(this.articleId, this.selectedQuantity, true);
     }
   }
@@ -54,6 +56,34 @@ export class ArticleComponent {
   goToSellerProfile() {
     //TODO: Logik, um zum Verkäuferprofil zu navigieren
     this.router.navigate(['/seller', this.productSellerId]);
+  }
+
+  async setCartSignedIn(articleId:string, quantity: number){
+    this.apiService.getOneCart(this.userDataSerivce.id).then((data:any)=>{
+      if(data.error === 400){
+        this.apiService.postCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart:{articles:[{productId: articleId, quantity: quantity}]}}).then((data:any)=>{
+          this.userDataSerivce.updateCartNumberTest();
+        });
+      }else if (!data.error){
+        let cart = data;
+        let isExecuted = false;
+        for(let i = 0; i<cart.articles.length; i++){
+          if(cart.articles[i].productId === articleId){
+            cart.articles[i].quantity += quantity;
+            isExecuted=true;
+          }
+        }
+        if(!isExecuted){
+          cart.push({productId: articleId, quantity: quantity});
+        }
+        console.log(cart);
+        this.apiService.patchCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart: cart}).then((data: any)=>{
+          if(!data.error){
+            this.userDataSerivce.updateCartNumberTest();
+          }
+        });
+      }
+    });
   }
 
 }

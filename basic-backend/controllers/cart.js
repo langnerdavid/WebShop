@@ -46,7 +46,7 @@ router.get('/:Id', async (req, res) => {
     }
 });
 
-router.patch('/:Id',authorizeCart, async (req, res) => {
+router.patch('/:Id',validateCart, authorizeCart, async (req, res) => {
     const buyerId = req.params.Id;
     const cart = req.body?.cart;
 
@@ -91,6 +91,8 @@ function validateCart(req, res, next) {
 }
 
 
+
+
 //username in AuthHeader is the Buyer_id!!
 async function authorizeCart(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -102,6 +104,7 @@ async function authorizeCart(req, res, next) {
     const buyer = await listOneBuyer(username);
     if(username === buyer?._id){
         if(password === buyer?.password){
+            console.log(req.body.cart);
             req.body.cart.buyer = buyer._id;
             next();
         }else{

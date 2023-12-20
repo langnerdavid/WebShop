@@ -46,7 +46,6 @@ export async function handleResponse(response: Response): Promise<any> {
   }
 
   const errorText = await response.text();
-  console.log('Error caught in Service:', response.status, errorText);
   return { error: response.status, errorText };
 }
 
