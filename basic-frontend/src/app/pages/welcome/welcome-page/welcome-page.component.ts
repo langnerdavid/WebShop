@@ -21,12 +21,22 @@ export class WelcomePageComponent implements OnInit {
 
   echos = new BehaviorSubject<Echo[]>([]);
 
-  articles: Article[] | undefined;
+  articles: Article[] =[];
 
   ngOnInit(): void {
       // Assuming getAllArticles is an asynchronous function (returns Promise)
     this.apiService.getAllArticles().then((data: any) => {
-      this.articles = data;
+      if(!data.error){
+        let countInvis = 0;
+        for(let i = 0; i<data.length; i++){
+          if(data[i].visible){
+            console.log(data[i]);
+            this.articles[i-countInvis] = data[i];
+          }else{
+            countInvis +=1;
+          }
+        }
+      }
     });
 
     void this.loadEchos(this.contains);
