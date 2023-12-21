@@ -41,7 +41,7 @@ export function listOneBuyer(buyerId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve(documents[0]);
+                resolve(documents);
             }
         });
     });

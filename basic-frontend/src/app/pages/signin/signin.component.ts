@@ -65,10 +65,9 @@ export class SigninComponent {
       });
     }
     else{
-      console.log('seller')
       this.apiService.loginSeller({user: this.userData}).then((data:any)=>{
         if(data.error){
-          this.error = data.text;
+          this.error = data.errorText;
           this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
         }else{
           if(this.staySignedIn){
