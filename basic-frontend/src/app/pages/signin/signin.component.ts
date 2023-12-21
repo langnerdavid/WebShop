@@ -4,6 +4,7 @@ import {UserLogin} from "../../core/types/echo.type";
 import {Message} from "primeng/api";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {Router} from "@angular/router";
+import {updateCartSignedIn, updateFullCartSignedIn} from "../../shared/shared.code";
 
 @Component({
   selector: 'app-signin',
@@ -40,6 +41,7 @@ export class SigninComponent {
           this.error = data.errorText;
           this.messages = [{ severity: 'error', summary: 'Error', detail: this.error}];
         }else{
+
           if(this.staySignedIn){
             localStorage.setItem("role","buyer");
             localStorage.setItem("id",data._id);
@@ -50,7 +52,14 @@ export class SigninComponent {
             sessionStorage.setItem("password", data.password);
           }
           this.userDataService.updateData();
-          this.router.navigate(['']);
+          if(this.userDataService.cart){
+            let cart = JSON.parse(this.userDataService.cart);
+            updateCartSignedIn(cart, false, this.userDataService, this.apiService).then((data:any)=>{
+              this.router.navigate(['']);
+            });
+          }else{
+            this.router.navigate(['']);
+          }
 
         }
       });
