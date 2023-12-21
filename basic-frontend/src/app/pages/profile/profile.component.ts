@@ -15,6 +15,11 @@ export class ProfileComponent {
   //test article for profile page
   articles:{id:number, name: string, quantity: number, price: number, productId: string}[] = [];
 
+  orderBuyer:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
+
+  toBePayedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'placed');
+  payedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'shipped');
+
   //also for testing purposes
   ordersSeller:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
 

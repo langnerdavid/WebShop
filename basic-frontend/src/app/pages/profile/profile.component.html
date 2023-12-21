@@ -38,7 +38,7 @@
     <h3>Order History</h3>
     <p-accordion>
       <p-accordionTab header="Placed">
-        <p-table [value]="eingegangenOrders" dataKey="id">
+        <p-table [value]="toBePayedOrdersBuyer" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Order ID</th>
@@ -59,7 +59,7 @@
       </p-accordionTab>
 
       <p-accordionTab header="Bezahlt">
-        <p-table [value]="bezahlteOrders" dataKey="id">
+        <p-table [value]="payedOrdersBuyer" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Order ID</th>
