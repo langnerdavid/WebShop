@@ -6,10 +6,10 @@ import {Article} from "../../core/types/echo.type";
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.css']
+  styleUrls: ['../welcome/welcome-page/welcome-page.component.css', './search-results.component.css']
 })
 export class SearchResultsComponent {
-  searchText: string = '';
+  searchText = '';
   articles: Article[] =[];
   searchResult = false;
 
