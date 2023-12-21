@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ApiService} from "../../core/services/api.service";
-import {Buyer, BuyerPatch, Order, Seller, SellerPatch} from "../../core/types/echo.type";
+import {Buyer, BuyerPatch, Order, OrderStatus, Seller, SellerPatch} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -16,17 +16,10 @@ export class ProfileComponent {
   articles:{id:number, name: string, quantity: number, price: number, productId: string}[] = [];
 
   //also for testing purposes
-  orders2 = [
-    { id: 1, status: 'eingegangen', customer: 'Kunde 1', productCount: 5, total: 100.00 },
-    { id: 2, status: 'eingegangen', customer: 'Kunde 2', productCount: 3, total: 75.00 },
-    { id: 3, status: 'bezahlt', customer: 'Kunde 3', productCount: 2, total: 50.00 },
-    { id: 4, status: 'bezahlt', customer: 'Kunde 4', productCount: 6, total: 120.00 },
-    { id: 5, status: 'abgeschlossen', customer: 'Kunde 5', productCount: 1, total: 25.00 }
-  ];
-
-  eingegangenOrders = this.orders2.filter(order => order.status === 'eingegangen');
-  bezahltOrders = this.orders2.filter(order => order.status === 'bezahlt');
-  abgeschlossenOrders = this.orders2.filter(order => order.status === 'abgeschlossen');
+  ordersSeller:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
+  placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
+  payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
+  deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
   //testing end
 
   isEditing = false;
@@ -109,6 +102,7 @@ export class ProfileComponent {
 
         });
         this.getArticlesSeller();
+        this.getOrdersSeller();
       }
     }else{
       //TODO weiterleitung 404 (sollte nicht auf die Profil Seite können, wenn man nicht angemeldet ist
@@ -241,5 +235,34 @@ export class ProfileComponent {
         }
       }
     });
+  }
+
+  private async getOrdersSeller(){
+    this.apiService.getAllOrders().then((data:any)=>{
+      if(!data.error){
+        const filteredOrders = data.filter((order:{seller:string|null})=> order.seller === this.userDataService.id);
+        for(let i = 0; i<filteredOrders.length; i++){
+          this.apiService.getOneBuyer(filteredOrders[i].buyer).then((data:any)=>{
+            if(!data.error){
+              let order={
+                id: i,
+                status: filteredOrders[i].status,
+                buyer: data.firstName+' '+data.lastName,
+                productCount: filteredOrders[i].articles.length,
+                total: filteredOrders[i].totalAmount,
+                orderId: filteredOrders[i]._id
+              }
+              this.ordersSeller.push(order);
+              this.updateOrdersView();
+            }
+          });
+        }
+      }
+    });
+  }
+  private updateOrdersView(){
+    this.placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
+    this.payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
+    this.deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
   }
 }

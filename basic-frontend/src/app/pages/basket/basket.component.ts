@@ -99,21 +99,24 @@ export class BasketComponent {
           let productId = this.cartItems.find(item => item.id === itemId)?.productId;
           newCart.articles = newCart.articles.filter((item) => item.productId !== productId);
           // Call the patchCart API to update the cart
-          this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, { cart: newCart })
-            .then((patchData: any) => {
-              this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-              if (this.cartItems.length === 0) {
-                this.isCartEmpty = true;
-                this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(()=>{
-                  console.log('cart deleted');
-                })
-              }
+          if(newCart.articles.length>0){
+            this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, { cart: newCart })
+              .then((patchData: any) => {
+                this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+                this.userDataService.updateCartNumberTest();
+                this.calculateTotal();
+              })
+              .catch((patchError: any) => {
+                console.error('Error patching cart:', patchError);
+              });
+          }else{
+            this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(()=>{
+              console.log('cart deleted');
+              this.isCartEmpty = true;
+              this.cart =undefined;
               this.userDataService.updateCartNumberTest();
-              this.calculateTotal();
             })
-            .catch((patchError: any) => {
-              console.error('Error patching cart:', patchError);
-            });
+          }
         }
       });
       this.updateDisplayCart();
