@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'seller/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
   { path: 'newarticle', loadChildren: () => import('./pages/newarticle/newarticle.module').then(m => m.NewarticleModule) },
   { path: 'searchResults/:searchText', loadChildren: () => import('./pages/search-results/search-results.module').then(m => m.SearchResultsModule) },
+  { path: 'orderDetailed', loadChildren: () => import('./pages/order-detailed/order-detailed.module').then(m => m.OrderDetailedModule) },
   { path: '**', redirectTo: '404'}
 ];
 

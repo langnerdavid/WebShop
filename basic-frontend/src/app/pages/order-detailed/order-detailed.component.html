@@ -1,0 +1,44 @@
+<p-card class="orders-card">
+  <div class="header">
+    <h1>Order Details</h1>
+    <div class="status-dropdown">
+      <span>Status:</span>
+      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus"></p-dropdown>
+    </div>
+    <div class="buttons">
+      <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Bezahlt"></p-button>
+      <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren"></p-button>
+    </div>
+  </div>
+  <div class="order-details">
+    <div class="total-price">
+      <strong>Total Price:</strong> {{ order.total }} €
+    </div>
+  </div>
+  <div class="profile-info">
+    <h3>Customer Details</h3>
+    <p><label>Name: </label> {{ order.customer }}</p>
+    <p><label>Email: </label> {{ order.mail }}</p>
+    <p><label>Address:</label> {{ order.address }}</p>
+    <p><label>IBAN:</label> {{ order.iban }}</p>
+    <p><label>City:</label> {{ order.city }}</p>
+    <p><label>Zipcode:</label> {{ order.zipcode }}</p>
+  </div>
+  <h3>Products</h3>
+  <p-table [value]="order.products" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }} €</td>
+        <td>{{ product.quantity }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
