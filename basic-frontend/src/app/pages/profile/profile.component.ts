@@ -242,4 +242,28 @@ export class ProfileComponent {
       }
     });
   }
+
+  confirmPaid() {
+    this.confirmationService.confirm({
+      message: 'Ist die Bestellung wirklch bezahlt? Falls ja müssen Sie dem Buyer das Geld zurücküberweisen/die Überweisung ablehnen!',
+      accept: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
+      },
+      reject: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
+      }
+    });
+  }
+
+  confirmDeletion() {
+    this.confirmationService.confirm({
+      message: 'Möchten sie die Bestellung wirklich stornieren?',
+      accept: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
+      },
+      reject: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
+      }
+    });
+  }
 }

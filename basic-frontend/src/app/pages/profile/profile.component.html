@@ -117,6 +117,7 @@
               <th>Anzahl Produkte</th>
               <th>Summe</th>
               <th>Bezahlt?</th>
+              <th>Stornieren?</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
@@ -125,13 +126,16 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-checkbox [binary]="true"></p-checkbox>
+                <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmPaid()"></p-button>
+              </td>
+              <td>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
               </td>
             </tr>
           </ng-template>
         </p-table>
       </p-accordionTab>
-
+      <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
       <p-accordionTab header="Bezahlt">
         <p-table [value]="bezahltOrders" dataKey="id">
           <ng-template pTemplate="header">
@@ -139,6 +143,7 @@
               <th>Kunde</th>
               <th>Anzahl Produkte</th>
               <th>Summe</th>
+              <th>Stornieren?</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
@@ -146,6 +151,9 @@
               <td>{{ order.customer }}</td>
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
+              <td>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

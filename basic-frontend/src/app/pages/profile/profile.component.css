@@ -98,3 +98,7 @@ h2 > input{
 p-button{
   margin-right: 5px;
 }
+.pi-check-selected {
+  background-color: #007ad9;
+  border-color: #007ad9;
+}

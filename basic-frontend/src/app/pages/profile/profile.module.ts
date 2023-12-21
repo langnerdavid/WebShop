@@ -12,6 +12,7 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {AccordionModule} from "primeng/accordion";
 import {CheckboxModule} from "primeng/checkbox";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {CheckboxModule} from "primeng/checkbox";
     ToastModule,
     ConfirmPopupModule,
     AccordionModule,
-    CheckboxModule
+    CheckboxModule,
+    ConfirmDialogModule
   ]
 })
 export class ProfileModule {
