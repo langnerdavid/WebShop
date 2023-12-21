@@ -35,7 +35,7 @@ export class SearchResultsComponent {
         console.log(data);
         this.articles = data.filter((item: { searchingKeywords: string[]; visible: boolean }) => {
           const isVisible = item.visible;
-          const hasMatchingKeyword = item.searchingKeywords.some(keyword => keyword.toLowerCase().includes(this.searchText));
+          const hasMatchingKeyword = item.searchingKeywords.some(keyword => keyword.toLowerCase().includes(this.searchText.toLowerCase()));
           return isVisible && hasMatchingKeyword;
         });
         if(this.articles.length > 0){
