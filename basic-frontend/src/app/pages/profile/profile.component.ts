@@ -255,6 +255,10 @@ export class ProfileComponent {
     });
   }
 
+  orderDetail(orderId: string){
+    this.router.navigate(['/orderDetailed', orderId]);
+  }
+
   confirmDeletion() {
     this.confirmationService.confirm({
       message: 'Möchten sie die Bestellung wirklich stornieren?',
@@ -272,8 +276,10 @@ export class ProfileComponent {
     this.apiService.getAllOrders().then((data:any)=>{
       if(!data.error){
         const filteredOrders = data.filter((order:{seller:string|null})=> order.seller === this.userDataService.id);
+        console.log(filteredOrders);
         for(let i = 0; i<filteredOrders.length; i++){
           this.apiService.getOneBuyer(filteredOrders[i].buyer).then((data:any)=>{
+            console.log(data);
             if(!data.error){
               let order={
                 id: i,

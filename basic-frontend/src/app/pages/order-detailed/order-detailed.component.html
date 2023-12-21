@@ -18,11 +18,11 @@
   <div class="profile-info">
     <h3>Customer Details</h3>
     <p><label>Name: </label> {{ order.customer }}</p>
-    <p><label>Email: </label> {{ order.mail }}</p>
+    <p><label>Email: </label> {{ order.email }}</p>
     <p><label>Address:</label> {{ order.address }}</p>
     <p><label>IBAN:</label> {{ order.iban }}</p>
     <p><label>City:</label> {{ order.city }}</p>
-    <p><label>Zipcode:</label> {{ order.zipcode }}</p>
+    <p><label>Zipcode:</label> {{ order.zipCode }}</p>
   </div>
   <h3>Products</h3>
   <p-table [value]="order.products" dataKey="id">

@@ -133,7 +133,7 @@
                 <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
               </td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
               </td>
             </tr>
           </ng-template>
