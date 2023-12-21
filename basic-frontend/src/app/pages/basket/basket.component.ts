@@ -5,32 +5,34 @@ import {ApiService} from "../../core/services/api.service";
 import {updateFullCartSignedIn} from "../../shared/shared.code";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Router} from "@angular/router";
+import { ConfirmationService} from 'primeng/api';
 
 
 @Component({
   selector: 'app-cart',
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.css']
+  styleUrls: ['./basket.component.css'],
+  providers: [ConfirmationService]
 })
 export class BasketComponent {
-  isCartEmpty:boolean = true;
-  cartItems:{id: number, productId:string, name: string, price: number, quantity: number, total:number}[] = [
-  ];
-  cart: Cart|undefined;
+  isCartEmpty = true;
+  cartItems: { id: number, productId: string, name: string, price: number, quantity: number, total: number }[] = [];
+  cart: Cart | undefined;
 
   totalAmount: number | undefined;
-  constructor(private userDataService: userDataService, private apiService:ApiService, private router:Router) {
-  }
-  ngOnInit(){
-    if(this.userDataService.isSignedIn()){
-      this.apiService.getOneCart(this.userDataService.id).then((data:any)=>{
-        if(!data.error){
+
+  constructor(private userDataService: userDataService, private apiService: ApiService, private router: Router, private confirmationService: ConfirmationService) {}
+
+  ngOnInit() {
+    if (this.userDataService.isSignedIn()) {
+      this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
+        if (!data.error) {
           this.cart = data;
-          if(this.cart && this.cart?.articles.length !== 0){
+          if (this.cart && this.cart?.articles.length !== 0) {
             this.isCartEmpty = false;
-            for(let i = 0; <number>this.cart.articles.length > i; i++){
-              this.apiService.getOneArticle(this.cart.articles[i].productId).then((data:any) => {
-                if(data){
+            for (let i = 0; <number>this.cart.articles.length > i; i++) {
+              this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
+                if (data) {
                   let article = {
                     id: i,
                     productId: data._id,
@@ -46,22 +48,22 @@ export class BasketComponent {
                 }
               });
             }
-          }else{
+          } else {
             this.isCartEmpty = true;
           }
-        }else{
+        } else {
           console.log('test');
           //TODO error
         }
       })
 
-    }else{
+    } else {
       this.cart = JSON.parse(<string>this.userDataService.cart);
-      if(this.cart){
+      if (this.cart) {
         this.isCartEmpty = false;
-        for(let i = 0; <number>this.cart?.articles.length > i; i++){
-          this.apiService.getOneArticle(this.cart.articles[i].productId).then((data:any) => {
-            if(data){
+        for (let i = 0; <number>this.cart?.articles.length > i; i++) {
+          this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
+            if (data) {
               let article = {
                 id: i,
                 productId: data._id,
@@ -77,8 +79,8 @@ export class BasketComponent {
             }
           });
         }
-      }else{
-        this.isCartEmpty=true;
+      } else {
+        this.isCartEmpty = true;
       }
     }
   }
@@ -87,6 +89,7 @@ export class BasketComponent {
     const rawTotal = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     this.totalAmount = parseFloat(rawTotal.toFixed(2));
   }
+
   calculateTotalArticle(price: number, quantity: number): number {
     const total = price * quantity;
     return Math.round(total * 100) / 100;
@@ -96,12 +99,12 @@ export class BasketComponent {
     if (this.userDataService.isSignedIn()) {
       this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
         if (!data.error) {
-          let newCart: { articles: { productId: string; quantity: number }[] } = { articles: data.articles };
+          let newCart: { articles: { productId: string; quantity: number }[] } = {articles: data.articles};
           let productId = this.cartItems.find(item => item.id === itemId)?.productId;
           newCart.articles = newCart.articles.filter((item) => item.productId !== productId);
           // Call the patchCart API to update the cart
-          if(newCart.articles.length>0){
-            this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, { cart: newCart })
+          if (newCart.articles.length > 0) {
+            this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: newCart})
               .then((patchData: any) => {
                 this.cartItems = this.cartItems.filter(item => item.id !== itemId);
                 this.userDataService.updateCartNumberTest();
@@ -110,18 +113,18 @@ export class BasketComponent {
               .catch((patchError: any) => {
                 console.error('Error patching cart:', patchError);
               });
-          }else{
-            this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(()=>{
+          } else {
+            this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(() => {
               console.log('cart deleted');
               this.isCartEmpty = true;
-              this.cart =undefined;
+              this.cart = undefined;
               this.userDataService.updateCartNumberTest();
             })
           }
         }
       });
       this.updateDisplayCart();
-    }else {
+    } else {
       let index = this.cartItems.findIndex(item => item.id === itemId);
       let newCart = JSON.parse(<string>this.userDataService.cart);
 
@@ -143,23 +146,23 @@ export class BasketComponent {
     }
   }
 
-  onQuantityChange(quantity:number, itemId: number){
+  onQuantityChange(quantity: number, itemId: number) {
     this.calculateTotal();
-    this.cartItems[itemId].quantity= quantity;
+    this.cartItems[itemId].quantity = quantity;
     this.cartItems[itemId].total = this.calculateTotalArticle(this.cartItems[itemId].price, quantity);
   }
 
   async completeOrder() {
     if (this.userDataService.isSignedIn()) {
-      updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data:any)=>{
-        if(!data.error){
+      updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data: any) => {
+        if (!data.error) {
           this.cartItems = data;
           this.userDataService.updateCartNumberTest();
         }
-      }).catch(()=>{
+      }).catch(() => {
         //TODO error handling
       });
-    }else{
+    } else {
       for (let i = 0; i < this.cartItems.length; i++) {
         this.userDataService.setCartNotSignedIn(this.cartItems[i].productId, this.cartItems[i].quantity, true);
 
@@ -170,11 +173,23 @@ export class BasketComponent {
     }
   }
 
-  private updateDisplayCart(){
+  private updateDisplayCart() {
     if (this.cartItems.length === 0) {
       this.isCartEmpty = true;
     }
     this.userDataService.updateCartNumberTest();
     this.calculateTotal();
+  }
+
+  confirmOrder() {
+    this.confirmationService.confirm({
+      message: 'Do you really want to complete this order? You have to manually pay the requested price!',
+      accept: () => {
+        this.completeOrder();
+      },
+      reject: () => {
+
+      }
+    });
   }
 }

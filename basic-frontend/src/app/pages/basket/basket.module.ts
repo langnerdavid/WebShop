@@ -9,21 +9,23 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import { userDataService } from 'src/app/core/services/userData.service';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 @NgModule({
   declarations: [
     BasketComponent
   ],
-  imports: [
-    CommonModule,
-    BasketRoutingModule,
-    CardModule,
-    TableModule,
-    InputNumberModule,
-    FormsModule,
-    ButtonModule
-  ]
+    imports: [
+        CommonModule,
+        BasketRoutingModule,
+        CardModule,
+        TableModule,
+        InputNumberModule,
+        FormsModule,
+        ButtonModule,
+        ConfirmDialogModule
+    ]
 })
 export class BasketModule {
 
