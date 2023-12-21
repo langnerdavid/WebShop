@@ -9,6 +9,7 @@ export function createOrderLog(orderReq){
         buyer: orderReq.buyer,
         totalAmount: orderReq.totalAmount,
         status: orderReq.status,
+        seller: orderReq.status,
 
         updatedAt: currentTimestamp,
         orderDate: currentTimestamp
@@ -38,6 +39,7 @@ export function updateOrderLog(orderReq, orderId) {
                 const order = {
                     articles: oldOrder.articles,
                     buyer: oldOrder.buyer,
+                    seller: oldOrder.seller,
                     totalAmount: oldOrder.totalAmount,
                     status: orderReq.status,
 

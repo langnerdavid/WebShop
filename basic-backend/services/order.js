@@ -9,10 +9,12 @@ import {updateSellerLog} from "../models/seller.js";
 
 export async function createOrder(order) {
     const result = await calculateTotalAmount(order);
-    if (result.error) {
+    const isOneSeller = await isOneSeller(order);
+    if (result.error || isOneSeller.error) {
         return{error: result.error};
     }
     order.totalAmount = result;
+    order.seller = isOneSeller.seller;
     return createOrderLog(order);
 }
 

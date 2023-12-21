@@ -86,7 +86,6 @@ export class RegisterComponent {
           localStorage.setItem("role","buyer");
           localStorage.setItem("id",data._id);
           localStorage.setItem("password", data.password);
-          //TODO Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
           this.router.navigate(['/profile']);
         }
       })
@@ -109,7 +108,6 @@ export class RegisterComponent {
           localStorage.setItem("role","seller");
           localStorage.setItem("id",data._id);
           localStorage.setItem("password", data.password);
-          //TODO Weiterleitung nach erfolgreichem Registrieren fehlt hier noch
           this.router.navigate(['/profile']);
         }
       })

@@ -45,6 +45,7 @@ export class ArticlepreviewComponent implements OnChanges{
 
 
   addToCart(event: Event) {
+    console.log('add to cart');
     event.stopPropagation();
     if (this.userDataService.isSignedIn()) {
       updateCartSignedIn(this.product.id, 1, false, this.userDataService, this.apiService)
@@ -56,6 +57,7 @@ export class ArticlepreviewComponent implements OnChanges{
           //TODO Handle the error appropriately
         });
     } else {
+      console.log('else');
       this.userDataService.setCartNotSignedIn(this.product.id, 1, false);
     }
   }
