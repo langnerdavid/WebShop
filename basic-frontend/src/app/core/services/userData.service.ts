@@ -81,8 +81,8 @@ export class userDataService {
         ]
       }
       sessionStorage.setItem('cart', JSON.stringify(cart));
-      this.cart = sessionStorage.getItem('cart');
     }
+    this.cart = sessionStorage.getItem('cart');
     this.updateCartNumberTest();
   }
 

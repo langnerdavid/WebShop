@@ -5,6 +5,7 @@ import {shakeAnimation} from "../../shared/animations";
 import {Message} from "primeng/api";
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import {userDataService} from "../../core/services/userData.service";
 
 interface UserData {
   userType: { label: string, value: string } | null;
@@ -30,7 +31,7 @@ interface UserData {
 export class RegisterComponent {
   private apiService = inject(ApiService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userDataService:userDataService) {}
 
   messages: Message[] = [];
   userData: UserData = {
@@ -83,10 +84,24 @@ export class RegisterComponent {
           console.log(data.error);
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText }];
         }else{
-          localStorage.setItem("role","buyer");
-          localStorage.setItem("id",data._id);
-          localStorage.setItem("password", data.password);
-          this.router.navigate(['/profile']);
+          if(this.userDataService.cart){
+            console.log(JSON.parse(this.userDataService.cart));
+            this.apiService.postCart(data._id, data.password, {cart: JSON.parse(this.userDataService.cart)}).then((cart:any)=>{
+              if(!cart.error){
+                console.log(cart);
+                this.userDataService.deleteCartNotSignedIn();
+                localStorage.setItem("role","buyer");
+                localStorage.setItem("id",data._id);
+                localStorage.setItem("password", data.password);
+                this.router.navigate(['/profile']);
+              }
+            });
+          }else{
+            localStorage.setItem("role","buyer");
+            localStorage.setItem("id",data._id);
+            localStorage.setItem("password", data.password);
+            this.router.navigate(['/profile']);
+          }
         }
       })
     }else if (this.userData.userType.value === 'Seller' && this.userData.brandName){

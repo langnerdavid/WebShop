@@ -4,6 +4,7 @@ import {Cart} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
 import {updateFullCartSignedIn} from "../../shared/shared.code";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -18,7 +19,7 @@ export class BasketComponent {
   cart: Cart|undefined;
 
   totalAmount: number | undefined;
-  constructor(private userDataService: userDataService, private apiService:ApiService) {
+  constructor(private userDataService: userDataService, private apiService:ApiService, private router:Router) {
   }
   ngOnInit(){
     if(this.userDataService.isSignedIn()){
@@ -148,7 +149,7 @@ export class BasketComponent {
     this.cartItems[itemId].total = this.calculateTotalArticle(this.cartItems[itemId].price, quantity);
   }
 
-  async updateCartButton() {
+  async completeOrder() {
     if (this.userDataService.isSignedIn()) {
       updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data:any)=>{
         if(!data.error){
@@ -164,6 +165,8 @@ export class BasketComponent {
 
       }
       this.userDataService.updateCartNumberTest();
+      //TODO maybe hier noch ein pop up zum bestätigen
+      this.router.navigate(['/register']);
     }
   }
 
