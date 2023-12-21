@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
 import {Subject} from "rxjs";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root',
@@ -97,10 +98,10 @@ export class userDataService {
           }
           this.updateCartNumber(cartNumber);
           return
-        } else {
-          this.updateCartNumber(0);
-          return
         }
+      }).catch(() => {
+        this.updateCartNumber(0);
+        // Optionally, you can handle the error here if needed.
       });
     } else {
       if (typeof this.cart === "string") {

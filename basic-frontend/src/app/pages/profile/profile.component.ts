@@ -15,7 +15,7 @@ export class ProfileComponent {
   //test article for profile page
   articles:{id:number, name: string, quantity: number, price: number, productId: string}[] = [];
 
-  orderBuyer:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
+  orderBuyer:{id:number, orderDate: Date, status: OrderStatus, seller: string, productCount: number, total: number, orderId: string}[] = [];
 
   toBePayedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'placed');
   payedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'shipped');
@@ -37,7 +37,6 @@ export class ProfileComponent {
   buyer: Buyer | undefined;
   seller: Seller | undefined;
   isBuyer:boolean = true;
-  allOrders: Order[] | undefined;
   buyerId:string ='';
   sellerId:string='';
 
@@ -74,8 +73,7 @@ export class ProfileComponent {
 
   }
 
-  orders:Order[] = [{"articles":[{"productId":"5b5WGEyRbK5urrS2","quantity":2}],"buyer":"w7MuumcIqxDj51ul","totalAmount":1580.02,"status":"placed","orderDate":"2023-12-15T08:06:29.558Z","_id":"JDvJrC2jhssr6kuc"}];
-  ngOnInit(){
+    ngOnInit(){
     this.isBuyer = this.userDataService.isBuyer();
 
     this.userDataService.updateData();
@@ -94,6 +92,7 @@ export class ProfileComponent {
           this.iban = this.buyer?.iban;
 
         });
+        this.getOrdersBuyer();
       }else{
         this.sellerId = <string>this.userDataService.id;
         this.apiService.getOneSeller(this.sellerId).then((data: any) => {
@@ -113,12 +112,6 @@ export class ProfileComponent {
     }else{
       //TODO weiterleitung 404 (sollte nicht auf die Profil Seite können, wenn man nicht angemeldet ist
     }
-
-    this.apiService.getAllOrders().then(((data:Order[])=>{
-      this.allOrders = data;
-      this.orders = this.allOrders.filter(order => order.buyer === this.buyerId);
-
-    }))
   }
 
   onEditProfile() {
@@ -290,16 +283,47 @@ export class ProfileComponent {
                 orderId: filteredOrders[i]._id
               }
               this.ordersSeller.push(order);
-              this.updateOrdersView();
+              this.updateOrdersSellerView();
             }
           });
         }
       }
     });
   }
-  private updateOrdersView(){
+
+  private async getOrdersBuyer(){
+    this.apiService.getAllOrders().then((data:any)=>{
+      if(!data.error){
+        const filteredOrders = data.filter((order:{buyer:string|null})=> order.buyer === this.userDataService.id);
+        console.log(filteredOrders);
+        for(let i = 0; i<filteredOrders.length; i++){
+          this.apiService.getOneSeller(filteredOrders[i].seller).then((seller:any)=>{
+            if(!seller.error){
+              let order={
+                id: i,
+                status: filteredOrders[i].status,
+                seller: seller.brand,
+                orderDate: filteredOrders[i].orderDate,
+                productCount: filteredOrders[i].articles.length,
+                total: filteredOrders[i].totalAmount,
+                orderId: filteredOrders[i]._id
+              }
+              this.orderBuyer.push(order);
+              this.updateOrdersBuyerView();
+            }
+          });
+        }
+      }
+    });
+  }
+  private updateOrdersSellerView(){
     this.placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
     this.payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
     this.deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
+  }
+
+  private updateOrdersBuyerView(){
+    this.toBePayedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'placed');
+    this.payedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'shipped');
   }
 }

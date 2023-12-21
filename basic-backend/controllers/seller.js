@@ -52,6 +52,7 @@ router.get('/:Id',  async (req, res) => {
         if (data?.length === 0) {
             res.status(404).send('Seller doesn\'t exist');
         } else {
+            console.log(data);
             res.json(data);
         }
     } catch (e) {

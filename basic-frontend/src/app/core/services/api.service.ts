@@ -146,10 +146,9 @@ export class ApiService {
     const response = await fetch(`${this.SELLER_URL}`);
     return response.json();
   }
-  async getOneSeller(sellerId:string): Promise<Seller>{
+  async getOneSeller(sellerId:string): Promise<string>{
     const response = await fetch(`${this.SELLER_URL}/${sellerId}`);
-    console.log(response);
-    return response.json();
+    return handleResponse(response);
   }
   async postSeller(seller: { user: SellerPost }): Promise<string> {
     const options: RequestInit = getPostHeader();

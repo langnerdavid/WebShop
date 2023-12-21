@@ -1,5 +1,5 @@
 <p-card class="orders-card">
-  <div class="header">
+  <div class="header" *ngIf="isSeller">
     <h1>Order Details</h1>
     <div class="status-dropdown">
       <span>Status:</span>
@@ -10,14 +10,26 @@
       <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren"></p-button>
     </div>
   </div>
+  <div class="header" *ngIf="!isSeller">
+    <h1>Order Details</h1>
+  </div>
   <div class="order-details">
     <div class="total-price">
       <strong>Total Price:</strong> {{ order.total }} €
     </div>
   </div>
-  <div class="profile-info">
+  <div class="profile-info" *ngIf="isSeller">
     <h3>Customer Details</h3>
     <p><label>Name: </label> {{ order.customer }}</p>
+    <p><label>Email: </label> {{ order.email }}</p>
+    <p><label>Address:</label> {{ order.address }}</p>
+    <p><label>IBAN:</label> {{ order.iban }}</p>
+    <p><label>City:</label> {{ order.city }}</p>
+    <p><label>Zipcode:</label> {{ order.zipCode }}</p>
+  </div>
+  <div class="profile-info" *ngIf="!isSeller">
+    <h3>Seller Details</h3>
+    <p><label>Brand: </label> {{ order.brand }}</p>
     <p><label>Email: </label> {{ order.email }}</p>
     <p><label>Address:</label> {{ order.address }}</p>
     <p><label>IBAN:</label> {{ order.iban }}</p>
