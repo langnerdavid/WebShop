@@ -29,7 +29,7 @@
       <h3>Total: {{totalAmount}}€</h3>
     </div>
     <div class="cart-actions">
-      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success" (click)="updateCartButton()"></button>
+      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success" (click)="completeOrder()"></button>
     </div>
   </p-card>
   <p-card *ngIf="isCartEmpty">

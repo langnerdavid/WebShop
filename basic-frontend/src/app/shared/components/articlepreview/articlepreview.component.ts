@@ -45,10 +45,9 @@ export class ArticlepreviewComponent implements OnChanges{
 
 
   addToCart(event: Event) {
-    console.log('add to cart');
     event.stopPropagation();
     if (this.userDataService.isSignedIn()) {
-      updateCartSignedIn(this.product.id, 1, false, this.userDataService, this.apiService)
+      updateCartSignedIn({articles:[{productId: this.product.id,quantity: 1}]}, false, this.userDataService, this.apiService)
         .then(() => {
           this.userDataService.updateCartNumberTest();
         })

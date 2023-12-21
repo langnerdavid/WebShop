@@ -77,7 +77,7 @@ function validateCart(req, res, next) {
     if (!cart || !cart.articles || cart.articles.length === 0) {
         isValid = false;
     }
-    for(let i = 0; i<cart.articles.length; i++){
+    for(let i = 0; i<cart?.articles.length; i++){
         if(!cart.articles[i]?.productId || !cart.articles[i]?.quantity){
             isValid = false;
             break;

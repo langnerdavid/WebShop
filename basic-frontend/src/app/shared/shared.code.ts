@@ -49,45 +49,50 @@ export async function handleResponse(response: Response): Promise<any> {
   return { error: response.status, errorText };
 }
 
-export async function updateCartSignedIn(productId: string, quantity: number, inCart: boolean, userDataService: userDataService, apiService: ApiService) {
-  let cart: CartPost = {
-    articles: [{
-      productId: productId,
-      quantity: quantity
-    }]
-  };
+export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, userDataService: userDataService, apiService: ApiService) {
+
+  let cart: CartPost|undefined;
 
   try {
     const data: any = await apiService.getOneCart(userDataService.id);
 
     if (data.error === 400) {
-      const postData: any = await apiService.postCart(<string>userDataService.id, <string>userDataService.password, { cart: cart });
+      const postData: any = await apiService.postCart(<string>userDataService.id, <string>userDataService.password, { cart: cartReq });
       console.log(postData);
     } else if (data.error) {
       // TODO: Handle error
     } else {
       cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
-      let isExecuted = false;
-
-      for (let i = 0; i < cart.articles.length; i++) {
-        if (cart.articles[i].productId === productId) {
-          if (inCart) {
-            cart.articles[i].quantity = quantity;
-          } else {
-            cart.articles[i].quantity += quantity;
+      let isExecuted:number[] = [];
+      console.log('cart: ',cart,' data: ', data.articles);
+      for(let j = 0; j<cartReq.articles.length; j++){
+        for (let i = 0; i < cart.articles.length; i++) {
+          if (cart.articles[i].productId === cartReq.articles[j].productId) {
+            if (inCart) {
+              cart.articles[i].quantity = cartReq.articles[j].quantity;
+            } else {
+              cart.articles[i].quantity += cartReq.articles[j].quantity;
+            }
+            isExecuted.push(j);
           }
-          isExecuted = true;
         }
       }
+      console.log('isExecjuted:',isExecuted)
 
       console.log(cart);
 
-      if (!isExecuted) {
-        const cartPatch = {
-          productId: productId,
-          quantity: quantity
-        };
-        cart.articles.push(cartPatch);
+      if (isExecuted.length===0) {
+        for(let i = 0; i<cartReq.articles.length; i++){
+          cart.articles.push(cartReq.articles[i]);
+        }
+      }else{
+        isExecuted.sort((a, b) => b - a);
+        for (let i = 0; i < isExecuted.length; i++) {
+          cartReq.articles.splice(isExecuted[i], 1);
+        }
+        for(let i = 0; i<cartReq.articles.length; i++){
+          cart.articles.push(cartReq.articles[i]);
+        }
       }
 
       console.log(cart);
