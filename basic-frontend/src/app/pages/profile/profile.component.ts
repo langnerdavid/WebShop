@@ -27,8 +27,11 @@ export class ProfileComponent {
   ordersSeller:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
 
   placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
-  payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
+  payedOrders = this.ordersSeller.filter(order => order.status === 'payed');
+  shippedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
   deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
+  canceledOrders = this.ordersSeller.filter(order => order.status === 'canceled');
+
   //testing end
 
   isEditing = false;
@@ -241,10 +244,15 @@ export class ProfileComponent {
     });
   }
 
-  confirmPaid() {
+  confirmPayed(id:string) {
     this.confirmationService.confirm({
-      message: 'Ist die Bestellung wirklch bezahlt? Falls ja müssen Sie dem Buyer das Geld zurücküberweisen/die Überweisung ablehnen!',
+      message: 'Do you really want to confirm the payment of the order',
       accept: () => {
+        this.updateOrderDB(id, 'payed').then((data)=>{
+          const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
+          this.ordersSeller[targetIndex].status = 'payed';
+          this.updateOrdersSellerView();
+        });
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
       },
       reject: () => {
@@ -257,16 +265,55 @@ export class ProfileComponent {
     this.router.navigate(['/orderDetailed', orderId]);
   }
 
-  confirmDeletion() {
+  confirmCancel(id:string) {
     this.confirmationService.confirm({
-      message: 'Möchten sie die Bestellung wirklich stornieren?',
+      message: 'Do you really want to cancel the order',
       accept: () => {
+        this.updateOrderDB(id, 'canceled').then((data)=>{
+          const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
+          this.ordersSeller[targetIndex].status = 'canceled';
+          this.updateOrdersSellerView();
+        });
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
       },
       reject: () => {
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
       }
     });
+  }
+  confirmShipped(id:string){
+    this.confirmationService.confirm({
+      message: 'Do you really want to confirm the shipping of the order',
+      accept: () => {
+        this.updateOrderDB(id, 'shipped').then((data)=>{
+          const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
+          this.ordersSeller[targetIndex].status = 'shipped';
+          this.updateOrdersSellerView();
+        });
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
+      },
+      reject: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
+      }
+    });
+
+  }
+  confirmDelivered(id:string){
+    this.confirmationService.confirm({
+      message: 'Do you really want to confirm the delivery of the order',
+      accept: () => {
+        this.updateOrderDB(id, 'delivered').then((data)=>{
+          const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
+          this.ordersSeller[targetIndex].status = 'delivered';
+          this.updateOrdersSellerView();
+        });
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
+      },
+      reject: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
+      }
+    });
+
   }
 
 
@@ -323,8 +370,11 @@ export class ProfileComponent {
   }
   private updateOrdersSellerView(){
     this.placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
-    this.payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
+    this.payedOrders = this.ordersSeller.filter(order => order.status === 'payed');
+    this.shippedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
     this.deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
+    this.canceledOrders = this.ordersSeller.filter(order => order.status === 'canceled');
+
   }
 
   private updateOrdersBuyerView(){
@@ -336,5 +386,11 @@ export class ProfileComponent {
     this.outOfStockArticles =this.articles.filter(article => article.quantity === 0);
     this.hiddenArticles =this.articles.filter(article => !article.visible);
 
+  }
+
+  private async updateOrderDB(orderId: string, status:OrderStatus){
+    this.apiService.patchOrder(orderId, <string>this.userDataService.id, <string>this.userDataService.password, {order: {status: status}}).then((data:any)=>{
+      console.log(data);
+    });
   }
 }

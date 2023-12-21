@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {CartPatch, Order, OrderStatus} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
@@ -27,13 +27,15 @@ export class OrderDetailedComponent {
 
   statuses = [
     { label: 'Placed', value: 'placed' },
+    { label: 'Payed', value: 'payed' },
     { label: 'Shipped', value: 'shipped' },
     { label: 'Delivered', value: 'delivered' },
+    { label: 'Canceled', value: 'canceled' }
   ];
+  componentLoaded = false;
 
-  selectedStatus: string = this.order.status
-
-  constructor(private route: ActivatedRoute, private apiService:ApiService, private userDataService:userDataService) {
+  selectedStatus: string = this.order.status;
+  constructor(private route: ActivatedRoute, private router:Router, private apiService:ApiService, private userDataService:userDataService) {
   }
 
 
@@ -53,12 +55,23 @@ export class OrderDetailedComponent {
       });
     }
   }
+  ngAfterViewInit() {
+    // Component and view initialization logic here
+    // Set the flag to true once the view has finished initializing
+    this.componentLoaded = true;
+  }
 
-  onStatusChange(newStatus: OrderStatus) {
-    // Handle the change here
-    console.log('Selected Status:', newStatus);
-    this.updateOrderStatus(newStatus);
-    // You can perform additional actions based on the changed status
+  onStatusChange(newStatus: OrderStatus, backToProfile:boolean) {
+    if(this.componentLoaded){
+      this.updateOrderStatus(newStatus).then(()=>{
+        if(backToProfile){
+          this.router.navigate(['/profile']);
+        }else{
+          this.order.status = newStatus;
+          this.selectedStatus = newStatus;
+        }
+      });
+    }
   }
 
 
@@ -77,6 +90,8 @@ export class OrderDetailedComponent {
             this.order.total = order.totalAmount;
             this.order.status = order.status;
             this.order.products =[];
+            console.log(this.order.status);
+            this.selectedStatus = this.order.status;
             for(let i =0; i<order.articles.length; i++){
               this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
                 const product ={
@@ -110,6 +125,8 @@ export class OrderDetailedComponent {
             this.order.total = order.totalAmount;
             this.order.status = order.status;
             this.order.products =[];
+            console.log(this.order.status);
+            this.selectedStatus = this.order.status;
             for(let i =0; i<order.articles.length; i++){
               this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
                 const product ={
@@ -131,7 +148,6 @@ export class OrderDetailedComponent {
     let order: { status: OrderStatus } = {
       status: orderStatus
     };
-    console.log('orderPatch: ', order);
     this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
       console.log(data);
     });

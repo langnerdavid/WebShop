@@ -2,7 +2,7 @@ export interface CreateEchoInput {
   message: string;
 }
 
-export type OrderStatus = "placed" | "shipped" | "canceled" | "delivered";
+export type OrderStatus = "placed" | "payed" | "shipped" | "canceled" | "delivered";
 
 export interface Echo {
   _id: string;

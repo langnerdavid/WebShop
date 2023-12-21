@@ -140,8 +140,8 @@ export class ApiService {
     const response = await fetch(`${this.ORDER_URL}`, options);
     return handleResponse(response);
   }
-  async patchOrder(orderId:string, buyerId: string, password: string, order: { order: { status: OrderStatus } }): Promise<string> {
-    const options: RequestInit = getPatchHeader(buyerId, password);
+  async patchOrder(orderId:string, sellerId: string, password: string, order: { order: { status: OrderStatus } }): Promise<string> {
+    const options: RequestInit = getPatchHeader(sellerId, password);
     options.body = JSON.stringify(order);
 
     const response = await fetch(`${this.ORDER_URL}/${orderId}`, options);

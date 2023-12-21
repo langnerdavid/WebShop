@@ -4,6 +4,8 @@ import {listOneBuyer} from "../services/buyer.js";
 import {listOneSeller} from "../services/seller.js";
 
 const router = express.Router();
+const validStatusValues = ["placed","payed", "shipped", "delivered", "canceled"];
+
 
 router.post('/', validateOrder, authorizeOrder, async (req, res) => {
     const order = req.body.order;
@@ -65,8 +67,6 @@ function validateOrder(req, res, next) {
             return res.status(400).send('Articles in Order not in the given DataForm');
         }
 
-        const validStatusValues = ["placed", "shipped", "delivered", "canceled"];
-
         if (validStatusValues.includes(order.status)) {
             return next();
         } else {
@@ -81,7 +81,7 @@ function validateOrder(req, res, next) {
 function validateOrderPatch(req, res, next) {
     const order = req.body?.order;
     console.log(req.body.order);
-    if(order?.status==="placed"||order?.status==="shipped"||order?.status==="delivered"||order?.status==="canceled"){
+    if(validStatusValues.includes(order?.status)){
         next();
     }else {
         res.status(400).send('Order status out of bounds');

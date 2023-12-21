@@ -3,11 +3,11 @@
     <h1>Order Details</h1>
     <div class="status-dropdown">
       <span>Status:</span>
-      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange($event)"></p-dropdown>
+      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange($event, false)"></p-dropdown>
     </div>
     <div class="buttons">
-      <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Bezahlt"></p-button>
-      <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren"></p-button>
+      <p-button *ngIf="order.status==='placed'" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Bezahlt" (click)="onStatusChange('payed', true)"></p-button>
+      <p-button *ngIf="order.status===('placed'||'payed')" icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren" (click)="onStatusChange('canceled', true)"></p-button>
     </div>
   </div>
   <div class="header" *ngIf="!isSeller">

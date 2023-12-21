@@ -177,10 +177,10 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmPaid()"></p-button>
+                <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmPayed(order.orderId)"></p-button>
               </td>
               <td>
-                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmCancel(order.orderId)"></p-button>
               </td>
               <td>
                 <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
@@ -197,6 +197,9 @@
               <th>Customer</th>
               <th>Product Count</th>
               <th>Total</th>
+              <th>Shipped?</th>
+              <th>Cancel?</th>
+              <th>Details</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
@@ -205,8 +208,60 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
+                <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmShipped(order.orderId)"></p-button>
               </td>
+              <td>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmCancel(order.orderId)"></p-button>
+              </td>
+              <td>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+      <p-accordionTab header="Shipped"  *ngIf="shippedOrders.length!==0">
+      <p-table [value]="shippedOrders" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Customer</th>
+            <th>Product Count</th>
+            <th>Total</th>
+            <th>Delivered?</th>
+            <th>Details</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <tr>
+            <td>{{ order.buyer }}</td>
+            <td>{{ order.productCount }}</td>
+            <td>{{ order.total }}</td>
+            <td>
+              <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmDelivered(order.orderId)"></p-button>
+            </td>
+            <td>
+              <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      </p-accordionTab>
+
+      <p-accordionTab header="Delivered" *ngIf="deliveredOrders.length!==0">
+        <p-table [value]="deliveredOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Customer</th>
+              <th>Product Count</th>
+              <th>Total</th>
+              <th>Details</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.buyer }}</td>
+              <td>{{ order.productCount }}</td>
+              <td>{{ order.total }}</td>
               <td>
                 <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
               </td>
@@ -214,14 +269,14 @@
           </ng-template>
         </p-table>
       </p-accordionTab>
-
-      <p-accordionTab header="Delivered" *ngIf="deliveredOrders.length!==0">
-        <p-table [value]="deliveredOrders" dataKey="id">
+      <p-accordionTab header="Canceled" *ngIf="canceledOrders.length!==0">
+        <p-table [value]="canceledOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th>customer</th>
+              <th>Customer</th>
               <th>Product Count</th>
-              <th>total</th>
+              <th>Total</th>
+              <th>Details</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
