@@ -36,24 +36,49 @@
 
   <p-card class="orders-card" *ngIf="isBuyer">
     <h3>Order History</h3>
-    <p-table [value]="orders" dataKey="id">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Order ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Total</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-order>
-        <tr>
-          <td>{{order._id}}</td>
-          <td>{{order.orderDate}}</td>
-          <td>{{order.status}}</td>
-          <td>{{order.totalAmount}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <p-accordion>
+      <p-accordionTab header="Zu bezahlen">
+        <p-table [value]="eingegangenOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{order.id}}</td>
+              <td>{{order.orderDate}}</td>
+              <td>{{order.status}}</td>
+              <td>{{order.total}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+
+      <p-accordionTab header="Bezahlt">
+        <p-table [value]="bezahltOrders" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{order.id}}</td>
+              <td>{{order.orderDate}}</td>
+              <td>{{order.status}}</td>
+              <td>{{order.total}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-card>
   <p-card class="article-card" *ngIf="!isBuyer">
     <div class="article-heading-button">
@@ -146,5 +171,4 @@
       </p-accordionTab>
     </p-accordion>
   </p-card>
-
 </div>
