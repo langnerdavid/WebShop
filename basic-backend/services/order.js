@@ -4,13 +4,13 @@ import {
     listOrdersLog, updateOrderLog
 } from "../models/order.js";
 import {listOneArticle} from "./article.js";
-import {calculateTotalAmount} from "../shared/shared.js"
+import {calculateTotalAmount, isOneSeller} from "../shared/shared.js"
 import {updateSellerLog} from "../models/seller.js";
 
 export async function createOrder(order) {
     const result = await calculateTotalAmount(order);
-    const isOneSeller = await isOneSeller(order);
-    if (result.error || isOneSeller.error) {
+    const onlyOneSeller = await isOneSeller(order);
+    if (result.error || onlyOneSeller.error) {
         return{error: result.error};
     }
     order.totalAmount = result;

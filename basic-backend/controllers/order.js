@@ -57,16 +57,26 @@ router.patch('/:Id', authorizeSeller, validateOrderPatch, async (req, res) => {
 
 function validateOrder(req, res, next) {
     const order = req.body?.order;
-    if ((order?.articles.length>0) && order?.status) {
-        if(order.status==="placed"||order.status==="shipped"||order.status==="delivered"||order.status==="canceled"){
-            next();
-        }else {
-            res.status(400).send('Order status out of bounds');
+
+    if (order && order.articles?.length > 0 && order.status) {
+        const hasInvalidArticles = order.articles.some(article => !article.productId || !article.quantity);
+
+        if (hasInvalidArticles) {
+            return res.status(400).send('Articles in Order not in the given DataForm');
+        }
+
+        const validStatusValues = ["placed", "shipped", "delivered", "canceled"];
+
+        if (validStatusValues.includes(order.status)) {
+            return next();
+        } else {
+            return res.status(400).send('Order status is out of bounds');
         }
     } else {
-        res.status(400).send('Order Data incomplete');
+        return res.status(400).send('Order Data incomplete');
     }
 }
+
 
 function validateOrderPatch(req, res, next) {
     const order = req.body?.order;

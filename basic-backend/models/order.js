@@ -1,8 +1,24 @@
 import {orderDb, sellerDb} from "./databases.js";
 import {listOneSellerLog} from "./seller.js";
+import {listOneArticle, updateArticle} from "../services/article.js";
+import {listOneArticleLog} from "./article.js";
 
 
-export function createOrderLog(orderReq){
+export async function createOrderLog(orderReq){
+    for (let i = 0; i < orderReq.articles.length; i++) {
+        try {
+            const article = await listOneArticle(orderReq.articles[i].productId);
+            if (article.stockQuantity - orderReq.articles[i].quantity > 0) {
+                console.log({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)});
+                await updateArticle({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)}, orderReq.articles[i].productId);
+            } else {
+                return{error: 'There was a Problem with your Order, Not enough Items left in Stock'};
+            }
+        } catch (error) {
+            console.error('Error updating stock:', error.message);
+            return error.message;
+        }
+    }
     const currentTimestamp = new Date().toISOString();
     const order = {
         articles: orderReq.articles,
