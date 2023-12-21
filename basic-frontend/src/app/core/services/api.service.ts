@@ -66,13 +66,13 @@ export class ApiService {
   }
 
   ////////////////////////////////////////// ALL BUYER API-REQUESTS /////////////////////////////////////////////////////////
-  async getAllBuyers(): Promise<Buyer[]>{
+  async getAllBuyers(): Promise<string>{
     const response = await fetch(`${this.BUYER_URL}`);
-    return response.json();
+    return handleResponse(response);
   }
-  async getOneBuyer(buyerId:string): Promise<Buyer>{
+  async getOneBuyer(buyerId:string): Promise<string>{
     const response = await fetch(`${this.BUYER_URL}/${buyerId}`);
-    return response.json();
+    return handleResponse(response);
   }
   async postBuyer(buyer: { user: BuyerPost }): Promise<string> {
     const options: RequestInit = getPostHeader();
@@ -159,7 +159,6 @@ export class ApiService {
     return handleResponse(response);
   }
   async loginSeller(user: { user: UserLogin }): Promise<string> {
-    console.log(user);
     const options: RequestInit = getPostHeaderAuthorized(user.user.email, user.user.password);
     const response = await fetch(`${this.SELLER_URL}/login`, options);
     return handleResponse(response);
