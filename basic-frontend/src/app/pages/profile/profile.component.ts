@@ -266,6 +266,31 @@ export class ProfileComponent {
       }
     });
   }
+
+
+  private async getOrdersSeller(){
+    this.apiService.getAllOrders().then((data:any)=>{
+      if(!data.error){
+        const filteredOrders = data.filter((order:{seller:string|null})=> order.seller === this.userDataService.id);
+        for(let i = 0; i<filteredOrders.length; i++){
+          this.apiService.getOneBuyer(filteredOrders[i].buyer).then((data:any)=>{
+            if(!data.error){
+              let order={
+                id: i,
+                status: filteredOrders[i].status,
+                buyer: data.firstName+' '+data.lastName,
+                productCount: filteredOrders[i].articles.length,
+                total: filteredOrders[i].totalAmount,
+                orderId: filteredOrders[i]._id
+              }
+              this.ordersSeller.push(order);
+              this.updateOrdersView();
+            }
+          });
+        }
+      }
+    });
+  }
   private updateOrdersView(){
     this.placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
     this.payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
