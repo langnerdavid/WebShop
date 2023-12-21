@@ -17,6 +17,7 @@ export class ProfileComponent {
 
   //also for testing purposes
   ordersSeller:{id:number, status: OrderStatus, buyer: string, productCount: number, total: number, orderId: string}[] = [];
+
   placedOrders = this.ordersSeller.filter(order => order.status === 'placed');
   payedOrders = this.ordersSeller.filter(order => order.status === 'shipped');
   deliveredOrders = this.ordersSeller.filter(order => order.status === 'delivered');
