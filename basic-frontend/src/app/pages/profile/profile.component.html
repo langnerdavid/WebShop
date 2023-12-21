@@ -133,7 +133,7 @@
                 <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
               </td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="navigateToOrderDetails()"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
               </td>
             </tr>
           </ng-template>
@@ -160,7 +160,7 @@
                 <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" (click)="confirmDeletion()"></p-button>
               </td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="navigateToOrderDetails()"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
               </td>
             </tr>
           </ng-template>
@@ -183,7 +183,7 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="navigateToOrderDetails()"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
               </td>
             </tr>
           </ng-template>

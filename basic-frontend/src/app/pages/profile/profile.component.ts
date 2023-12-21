@@ -266,8 +266,4 @@ export class ProfileComponent {
       }
     });
   }
-
-  navigateToOrderDetails() {
-    this.router.navigate(['/orderDetailed']);
-  }
 }
