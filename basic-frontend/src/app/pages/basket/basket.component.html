@@ -29,9 +29,10 @@
       <h3>Total: {{totalAmount}}€</h3>
     </div>
     <div class="cart-actions">
-      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success" (click)="completeOrder()"></button>
+      <button pButton type="button" label="Complete Order" class="p-button-rounded p-button-success" (click)="confirmOrder()"></button>
     </div>
   </p-card>
+  <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
   <p-card *ngIf="isCartEmpty">
     <p>Your Cart is currently empty</p>
   </p-card>
