@@ -49,7 +49,7 @@ router.get('/:Id',  async (req, res) => {
     try {
         const data = await listOneSeller(sellerId);
         console.log(data);
-        if (data.length === 0) {
+        if (data?.length === 0) {
             res.status(404).send('Seller doesn\'t exist');
         } else {
             res.json(data);
