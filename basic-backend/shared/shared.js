@@ -69,7 +69,6 @@ export async function calculateTotalAmount(order) {
 
     for (let i = 0; i < order?.articles.length; i++) {
         const article = await listOneArticle(order.articles[i].productId);
-        console.log(article);
         if (article?.price) {
             totalAmount += article.price * order.articles[i].quantity;
         } else {
@@ -78,4 +77,27 @@ export async function calculateTotalAmount(order) {
     }
     totalAmount = Number(totalAmount.toFixed(2));
     return totalAmount;
+}
+
+export async function isOneSeller(order){
+    const firstArticle = await listOneArticle(order.articles[0].productId);
+    const commonSeller = firstArticle?.seller;
+
+    if (!commonSeller) {
+        return { error: `Product with productId: ${order.articles[0].productId} does not exist or has no seller` };
+    }
+
+    for (let i = 1; i < order.articles.length; i++) {
+        const article = await listOneArticle(order.articles[i].productId);
+
+        if (!article?.seller) {
+            return { error: `Product with productId: ${order.articles[i].productId} does not exist or has no seller` };
+        }
+
+        if (article.seller !== commonSeller) {
+            return { error: `One Order may only be with Articles from one Seller` };
+        }
+    }
+
+    return { isOneSeller: true, seller: commonSeller };
 }

@@ -71,9 +71,9 @@ export class userDataService {
         oldCart.articles.push(newArticle);
       }
       sessionStorage.setItem('cart', JSON.stringify(oldCart));
-    }else{
-      let cart ={
-        articles:[
+    }else {
+      let cart = {
+        articles: [
           {
             productId: productId,
             quantity: quantity
@@ -81,6 +81,7 @@ export class userDataService {
         ]
       }
       sessionStorage.setItem('cart', JSON.stringify(cart));
+      this.cart = sessionStorage.getItem('cart');
     }
     this.updateCartNumberTest();
   }
