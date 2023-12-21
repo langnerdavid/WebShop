@@ -85,26 +85,74 @@
       <h3>Your articles</h3>
       <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
     </div>
-    <p-table [value]="articles" dataKey="id">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Name</th>
-          <th>Anzahl auf Lager</th>
-          <th>Preis</th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-article>
-        <tr>
-          <td>{{ article.name }}</td>
-          <td>{{ article.quantity }}</td>
-          <td>{{ article.price }}</td>
-          <td>
-            <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <p-accordion *ngIf="(placedOrders.length !==0 || payedOrders.length!==0 || deliveredOrders.length!==0) else noArticlesSeller">
+      <p-accordionTab header="Listed" *ngIf="placedOrders.length!==0">
+        <p-table [value]="articles" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Anzahl auf Lager</th>
+              <th>Preis</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-article>
+            <tr>
+              <td>{{ article.name }}</td>
+              <td>{{ article.quantity }}</td>
+              <td>{{ article.price }}</td>
+              <td>
+                <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+      <p-accordionTab header="Out of stock" *ngIf="placedOrders.length!==0">
+        <p-table [value]="articles" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Anzahl auf Lager</th>
+              <th>Preis</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-article>
+            <tr>
+              <td>{{ article.name }}</td>
+              <td>{{ article.quantity }}</td>
+              <td>{{ article.price }}</td>
+              <td>
+                <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+      <p-accordionTab header="Hidden" *ngIf="placedOrders.length!==0">
+        <p-table [value]="articles" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Anzahl auf Lager</th>
+              <th>Preis</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-article>
+            <tr>
+              <td>{{ article.name }}</td>
+              <td>{{ article.quantity }}</td>
+              <td>{{ article.price }}</td>
+              <td>
+                <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
     <h3>Orders</h3>
@@ -192,4 +240,7 @@
 </div>
 <ng-template #noOrdersSeller>
   <p>Currently no existing Orders</p>
+</ng-template>
+<ng-template #noArticlesSeller>
+  <p>Currently no existing Articles</p>
 </ng-template>
