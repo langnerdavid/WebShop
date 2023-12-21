@@ -37,7 +37,7 @@
   <p-card class="orders-card" *ngIf="isBuyer">
     <h3>Order History</h3>
     <p-accordion>
-      <p-accordionTab header="Zu bezahlen">
+      <p-accordionTab header="Placed">
         <p-table [value]="eingegangenOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
@@ -59,7 +59,7 @@
       </p-accordionTab>
 
       <p-accordionTab header="Bezahlt">
-        <p-table [value]="bezahltOrders" dataKey="id">
+        <p-table [value]="bezahlteOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Order ID</th>
@@ -108,22 +108,22 @@
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
     <h3>Orders</h3>
-    <p-accordion>
-      <p-accordionTab header="Eingegangen">
-        <p-table [value]="eingegangenOrders" dataKey="id">
+    <p-accordion *ngIf="(placedOrders.length !==0 || payedOrders.length!==0 || deliveredOrders.length!==0) else noOrdersSeller">
+      <p-accordionTab header="Placed" *ngIf="placedOrders.length!==0">
+        <p-table [value]="placedOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th>Kunde</th>
-              <th>Anzahl Produkte</th>
-              <th>Summe</th>
-              <th>Bezahlt?</th>
-              <th>Stornieren?</th>
+              <th>customer</th>
+              <th>Product Count</th>
+              <th>Total</th>
+              <th>Payed?</th>
+              <th>Cancel?</th>
               <th>Details</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
             <tr>
-              <td>{{ order.customer }}</td>
+              <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
@@ -140,20 +140,18 @@
         </p-table>
       </p-accordionTab>
       <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
-      <p-accordionTab header="Bezahlt">
-        <p-table [value]="bezahltOrders" dataKey="id">
+      <p-accordionTab header="Payed"  *ngIf="payedOrders.length!==0">
+        <p-table [value]="payedOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th>Kunde</th>
-              <th>Anzahl Produkte</th>
-              <th>Summe</th>
-              <th>Stornieren?</th>
-              <th>Details</th>
+              <th>Customer</th>
+              <th>Product Count</th>
+              <th>Total</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
             <tr>
-              <td>{{ order.customer }}</td>
+              <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
@@ -167,19 +165,18 @@
         </p-table>
       </p-accordionTab>
 
-      <p-accordionTab header="Abgeschlossen">
-        <p-table [value]="abgeschlossenOrders" dataKey="id">
+      <p-accordionTab header="Delivered" *ngIf="deliveredOrders.length!==0">
+        <p-table [value]="deliveredOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th>Kunde</th>
-              <th>Anzahl Produkte</th>
-              <th>Summe</th>
-              <th>Details</th>
+              <th>customer</th>
+              <th>Product Count</th>
+              <th>total</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
             <tr>
-              <td>{{ order.customer }}</td>
+              <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
@@ -191,4 +188,8 @@
       </p-accordionTab>
     </p-accordion>
   </p-card>
+
 </div>
+<ng-template #noOrdersSeller>
+  <p>Currently no existing Orders</p>
+</ng-template>
