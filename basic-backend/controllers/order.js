@@ -1,5 +1,5 @@
 import express from 'express';
-import {createOrder, listOneOrder, listOrders} from "../services/order.js";
+import {createOrder, listOneOrder, listOrders, updateOrder} from "../services/order.js";
 import {listOneBuyer} from "../services/buyer.js";
 import {listOneSeller} from "../services/seller.js";
 
@@ -47,7 +47,7 @@ router.get('/:Id', async (req, res) => {
 router.patch('/:Id', authorizeSeller, validateOrderPatch, async (req, res) => {
     const orderId = req.params.Id;
     try {
-        const data = await listOneOrder(orderId);
+        const data = await updateOrder(req.body.order, orderId);
         res.json(data);
     } catch (e) {
         console.error(e);
@@ -70,6 +70,7 @@ function validateOrder(req, res, next) {
 
 function validateOrderPatch(req, res, next) {
     const order = req.body?.order;
+    console.log(req.body.order);
     if(order?.status==="placed"||order?.status==="shipped"||order?.status==="delivered"||order?.status==="canceled"){
         next();
     }else {

@@ -13,7 +13,10 @@ import {ConfirmationService, MessageService} from "primeng/api";
 })
 export class ProfileComponent {
   //test article for profile page
-  articles:{id:number, name: string, quantity: number, price: number, productId: string}[] = [];
+  articles:{id:number, name: string, quantity: number, price: number, productId: string, visible: boolean}[] = [];
+  listedArticles =this.articles.filter(article => (article.quantity !== 0 && article.visible));
+  outOfStockArticles =this.articles.filter(article => article.quantity === 0);
+  hiddenArticles =this.articles.filter(article => !article.visible);
 
   orderBuyer:{id:number, orderDate: Date, status: OrderStatus, seller: string, productCount: number, total: number, orderId: string}[] = [];
 
@@ -229,8 +232,10 @@ export class ProfileComponent {
             price:filteredArticles[i].price,
             quantity:filteredArticles[i].stockQuantity,
             productId: filteredArticles[i]._id,
+            visible: filteredArticles[i].visible
           }
           this.articles.push(article);
+          this.updateArticlesView();
         }
       }
     });
@@ -325,5 +330,11 @@ export class ProfileComponent {
   private updateOrdersBuyerView(){
     this.toBePayedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'placed');
     this.payedOrdersBuyer = this.orderBuyer.filter(order => order.status === 'shipped');
+  }
+  private updateArticlesView(){
+    this.listedArticles =this.articles.filter(article => (article.quantity !== 0 && article.visible));
+    this.outOfStockArticles =this.articles.filter(article => article.quantity === 0);
+    this.hiddenArticles =this.articles.filter(article => !article.visible);
+
   }
 }

@@ -10,7 +10,7 @@ import {
   CreateEchoInput,
   Echo,
   Order,
-  OrderPost,
+  OrderPost, OrderStatus,
   Seller,
   SellerPost,
   UserLogin
@@ -138,6 +138,13 @@ export class ApiService {
     options.body = JSON.stringify(order);
 
     const response = await fetch(`${this.ORDER_URL}`, options);
+    return handleResponse(response);
+  }
+  async patchOrder(orderId:string, buyerId: string, password: string, order: { order: { status: OrderStatus } }): Promise<string> {
+    const options: RequestInit = getPatchHeader(buyerId, password);
+    options.body = JSON.stringify(order);
+
+    const response = await fetch(`${this.ORDER_URL}/${orderId}`, options);
     return handleResponse(response);
   }
 

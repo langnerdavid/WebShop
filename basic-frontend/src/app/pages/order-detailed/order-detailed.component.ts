@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
-import {OrderStatus} from "../../core/types/echo.type";
+import {CartPatch, Order, OrderStatus} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 
 @Component({
@@ -53,6 +53,14 @@ export class OrderDetailedComponent {
       });
     }
   }
+
+  onStatusChange(newStatus: OrderStatus) {
+    // Handle the change here
+    console.log('Selected Status:', newStatus);
+    this.updateOrderStatus(newStatus);
+    // You can perform additional actions based on the changed status
+  }
+
 
   async getBuyer(){
     this.apiService.getOneOrder(this.orderId).then((order:any)=>{
@@ -116,6 +124,16 @@ export class OrderDetailedComponent {
           }
         })
       }
+    });
+  }
+
+  async updateOrderStatus(orderStatus: OrderStatus) {
+    let order: { status: OrderStatus } = {
+      status: orderStatus
+    };
+    console.log('orderPatch: ', order);
+    this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
+      console.log(data);
     });
   }
 }

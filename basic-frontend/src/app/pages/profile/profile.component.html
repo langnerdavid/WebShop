@@ -87,9 +87,9 @@
       <h3>Your articles</h3>
       <p-button [rounded]="true" [routerLink]="['/newarticle']" severity="success">New article</p-button>
     </div>
-    <p-accordion *ngIf="(placedOrders.length !==0 || payedOrders.length!==0 || deliveredOrders.length!==0) else noOrders">
-      <p-accordionTab header="Listed" *ngIf="placedOrders.length!==0">
-        <p-table [value]="articles" dataKey="id">
+    <p-accordion *ngIf="(listedArticles.length !==0 || outOfStockArticles.length!==0 || deliveredOrders.length!==0) else noArticles">
+      <p-accordionTab header="Listed" *ngIf="listedArticles.length!==0">
+        <p-table [value]="listedArticles" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
@@ -110,8 +110,8 @@
           </ng-template>
         </p-table>
       </p-accordionTab>
-      <p-accordionTab header="Out of stock" *ngIf="placedOrders.length!==0">
-        <p-table [value]="articles" dataKey="id">
+      <p-accordionTab header="Out of stock" *ngIf="outOfStockArticles.length!==0">
+        <p-table [value]="outOfStockArticles" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
@@ -132,8 +132,8 @@
           </ng-template>
         </p-table>
       </p-accordionTab>
-      <p-accordionTab header="Hidden" *ngIf="placedOrders.length!==0">
-        <p-table [value]="articles" dataKey="id">
+      <p-accordionTab header="Hidden" *ngIf="hiddenArticles.length!==0">
+        <p-table [value]="hiddenArticles" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
@@ -243,6 +243,6 @@
 <ng-template #noOrders>
   <p>Currently no existing Orders</p>
 </ng-template>
-<ng-template #noArticlesSeller>
+<ng-template #noArticles>
   <p>Currently no existing Articles</p>
 </ng-template>

@@ -3,7 +3,7 @@
     <h1>Order Details</h1>
     <div class="status-dropdown">
       <span>Status:</span>
-      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus"></p-dropdown>
+      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange($event)"></p-dropdown>
     </div>
     <div class="buttons">
       <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Bezahlt"></p-button>
