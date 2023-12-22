@@ -184,7 +184,6 @@ export class ProfileComponent {
 
   logOut():void{
     this.userDataService.deleteAll();
-    this.userDataService.updateData();
     this.router.navigate(['']);
   }
 
