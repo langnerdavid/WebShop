@@ -157,7 +157,7 @@
   </p-card>
   <p-card class="orders-card" *ngIf="!isBuyer">
     <h3>Orders</h3>
-    <p-accordion *ngIf="(placedOrders.length !==0 || payedOrders.length!==0 || deliveredOrders.length!==0) else noOrders">
+    <p-accordion *ngIf="(placedOrders.length !==0 || shippedOrders.length!==0 || payedOrders.length!==0 || deliveredOrders.length!==0) else noOrders">
       <p-accordionTab header="Placed" *ngIf="placedOrders.length!==0">
         <p-table [value]="placedOrders" dataKey="id">
           <ng-template pTemplate="header">
