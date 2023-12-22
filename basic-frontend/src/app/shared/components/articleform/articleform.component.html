@@ -1,0 +1,55 @@
+<div *ngIf="isEdit else newarticle">
+  <h2>Edit Article</h2>
+</div>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="article-form">
+  <div class="p-field">
+    <label for="title">Titel</label>
+    <input id="title" type="text" pInputText [(ngModel)]="articleData.title" name="title" required>
+  </div>
+
+  <div class="p-field">
+    <label for="description">Description</label>
+    <textarea rows="5" cols="30" pInputTextarea id="description" [(ngModel)]="articleData.description" name="description" required></textarea>
+  </div>
+
+  <div class="p-field">
+    <label for="price">Price</label>
+    <p-inputNumber name="price" id="price" [(ngModel)]="articleData.price" mode="currency" inputId="currency-germany" currency="EUR" locale="de-DE" [min]="0" [required]="true" [showButtons]="true"></p-inputNumber>
+  </div>
+
+  <div class="p-field">
+    <label for="stockQuantity">Stock Quantity</label>
+    <p-inputNumber name="stockQuantity" id="stockQuantity" [(ngModel)]="articleData.stockQuantity" [min]="0" [required]="true" [showButtons]="true"></p-inputNumber>
+  </div>
+
+  <div class="p-field">
+    <label for="brand">Brand</label>
+    <input id="brand" type="text" pInputText [(ngModel)]="articleData.brand" name="brand" required>
+  </div>
+
+  <div class="p-field">
+    <label for="searchingKeywords">Searching Keywords</label>
+    <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Searching Keywords seperated by comma"required>
+  </div>
+
+  <div class="p-field">
+    <label for="visible" >Visible</label>
+    <p-checkbox id="visible" [(ngModel)]="articleData.visible" [binary]="true" inputId="binary"></p-checkbox>
+  </div>
+
+  <div *ngIf="isEdit else newarticlebutton">
+    <p-button label="Save changes" [disabled]="!form.valid" severity="success"></p-button>
+  </div>
+</form>
+
+<ng-template #newarticle>
+  <h2>Neuer Artikel</h2>
+</ng-template>
+
+<ng-template #newarticlebutton>
+  <div *ngIf="!form.valid" class="error-message">
+    Please complete Input!
+  </div>
+  <p-button type="submit" label="Create article" [disabled]="!form.valid" severity="success"></p-button>
+</ng-template>
+
