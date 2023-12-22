@@ -16,7 +16,7 @@ import { ConfirmationService} from 'primeng/api';
 })
 export class BasketComponent {
   isCartEmpty = true;
-  cartItems: { id: number, productId: string, name: string, price: number, quantity: number, total: number }[] = [];
+  cartItems: { id: number, productId: string, name: string, price: number, quantity: number, total: number , max:number}[] = [];
   cart: Cart | undefined;
 
   totalAmount: number | undefined;
@@ -39,7 +39,8 @@ export class BasketComponent {
                     name: data.title,
                     price: data.price,
                     quantity: this.cart?.articles[i].quantity ?? 1,
-                    total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1)
+                    total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1),
+                    max: data.stockQuantity
                   };
                   this.cartItems.push(article);
                 }
@@ -70,7 +71,8 @@ export class BasketComponent {
                 name: data.title,
                 price: data.price,
                 quantity: this.cart?.articles[i].quantity ?? 1,
-                total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1)
+                total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1),
+                max: data.stockQuantity
               };
               this.cartItems.push(article);
             }
@@ -123,6 +125,10 @@ export class BasketComponent {
           }
         }
       });
+      this.cartItems.forEach((item, index) => {
+        item.id = index;
+      });
+      console.log(this.cartItems);
       this.updateDisplayCart();
     } else {
       let index = this.cartItems.findIndex(item => item.id === itemId);
@@ -141,15 +147,22 @@ export class BasketComponent {
         this.userDataService.deleteCartNotSignedIn();
         this.isCartEmpty = true;
       }
+      this.cartItems.forEach((item, index) => {
+        item.id = index;
+      });
+      console.log(this.cartItems);
       // Set the updated cart object in the user data service
       this.updateDisplayCart();
     }
   }
 
   onQuantityChange(quantity: number, itemId: number) {
+    console.log(quantity, itemId, this.cartItems);
     this.calculateTotal();
     this.cartItems[itemId].quantity = quantity;
+    this.completeOrder();
     this.cartItems[itemId].total = this.calculateTotalArticle(this.cartItems[itemId].price, quantity);
+    this.updateDisplayCart();
   }
 
   async completeOrder() {
@@ -169,7 +182,7 @@ export class BasketComponent {
       }
       this.userDataService.updateCartNumberTest();
       //TODO maybe hier noch ein pop up zum bestätigen
-      this.router.navigate(['/register']);
+      //this.router.navigate(['/register']);
     }
   }
 
