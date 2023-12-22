@@ -8,8 +8,16 @@
   </div>
   <div class="actions-container">
     <h3>Preis: {{productPrice}} €</h3>
-    <p-inputNumber [(ngModel)]="selectedQuantity" [showButtons]="true" [min]="1" [max]=productStockQuantity inputId="quantity" class="quantity-input"> </p-inputNumber>
-    <p-button label="In den Warenkorb" (click)="addToCart()" class="p-mb-2 add-to-cart-button"></p-button>
+    <div *ngIf="isBuyer else SignInAsBuyer" class="add-to-cart">
+      <p-inputNumber [(ngModel)]="selectedQuantity" [showButtons]="true" [min]="1" [max]=productStockQuantity inputId="quantity" class="quantity-input"> </p-inputNumber>
+      <p-button label="In den Warenkorb" (click)="addToCart()" class="p-mb-2"></p-button>
+    </div>
     <p-button label="Zum Verkäuferprofil" (click)="goToSellerProfile()"></p-button>
   </div>
+
+  <ng-template #SignInAsBuyer>
+    <div>
+      <p>Sign in as buyer to add the product to the basket</p>
+    </div>
+  </ng-template>
 </div>

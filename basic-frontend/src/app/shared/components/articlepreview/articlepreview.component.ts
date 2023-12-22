@@ -11,6 +11,7 @@ import { updateCartSignedIn} from "../../shared.code";
   styleUrls: ['./articlepreview.component.css']
 })
 export class ArticlepreviewComponent implements OnChanges{
+  isBuyer = this.userDataService.isBuyer();
   @Input()
   articleInfo: Article | undefined;
 
@@ -68,6 +69,7 @@ export class ArticlepreviewComponent implements OnChanges{
   }
 
   protected readonly event = event;
+
 }
 
 
