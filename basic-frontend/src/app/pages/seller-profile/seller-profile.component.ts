@@ -8,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-seller-profile',
   templateUrl: './seller-profile.component.html',
-  styleUrls: ['../profile/profile.component.css', './seller-profile.component.css']
+  styleUrls: ['../profile/profile.component.css', '../welcome/welcome-page/welcome-page.component.css','./seller-profile.component.css']
 })
 export class SellerProfileComponent {
   brand = "Brand" ;

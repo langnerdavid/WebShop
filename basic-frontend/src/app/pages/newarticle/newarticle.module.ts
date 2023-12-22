@@ -10,22 +10,24 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {MessagesModule} from "primeng/messages";
 import {InputTextModule} from "primeng/inputtext";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
   declarations: [
     NewarticleComponent
   ],
-  imports: [
-    CommonModule,
-    NewarticleRoutingModule,
-    FormsModule,
-    CheckboxModule,
-    ButtonModule,
-    InputNumberModule,
-    InputTextareaModule,
-    MessagesModule,
-    InputTextModule
-  ]
+    imports: [
+        CommonModule,
+        NewarticleRoutingModule,
+        FormsModule,
+        CheckboxModule,
+        ButtonModule,
+        InputNumberModule,
+        InputTextareaModule,
+        MessagesModule,
+        InputTextModule,
+        SharedModule
+    ]
 })
 export class NewarticleModule { }

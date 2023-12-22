@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'searchResults/:searchText', loadChildren: () => import('./pages/search-results/search-results.module').then(m => m.SearchResultsModule) },
   { path: 'orderDetailed/:orderId', loadChildren: () => import('./pages/order-detailed/order-detailed.module').then(m => m.OrderDetailedModule) },
   { path: 'sellerProfile/:sellerId', loadChildren: () => import('./pages/seller-profile/seller-profile.module').then(m => m.SellerProfileModule) },
+  { path: 'editArticle', loadChildren: () => import('./pages/edit-article/edit-article.module').then(m => m.EditArticleModule) },
   { path: '**', redirectTo: '404'}
 ];
 
