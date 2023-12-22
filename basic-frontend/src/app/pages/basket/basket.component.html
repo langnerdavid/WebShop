@@ -16,7 +16,7 @@
           <td>{{cartItem.name}}</td>
           <td>{{cartItem.price}}€</td>
           <td>
-            <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" [max]="stockQuantity" (ngModelChange)="onQuantityChange($event, cartItem.id)"></p-inputNumber>
+            <p-inputNumber [(ngModel)]="cartItem.quantity" [min]="1" [max]=1 (ngModelChange)="onQuantityChange($event, cartItem.id)"></p-inputNumber>
           </td>
           <td>{{cartItem.total}}€</td>
           <td>
