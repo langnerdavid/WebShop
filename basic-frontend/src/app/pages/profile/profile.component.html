@@ -230,7 +230,7 @@
               <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmDelivered(order.orderId)"></p-button>
             </td>
             <td>
-              <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
+              <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
             </td>
           </tr>
         </ng-template>
@@ -253,7 +253,7 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
               </td>
             </tr>
           </ng-template>
@@ -275,7 +275,7 @@
               <td>{{ order.productCount }}</td>
               <td>{{ order.total }}</td>
               <td>
-                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" routerLink="/orderDetailed"></p-button>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
               </td>
             </tr>
           </ng-template>
