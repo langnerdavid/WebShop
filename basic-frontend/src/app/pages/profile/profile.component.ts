@@ -246,6 +246,8 @@ export class ProfileComponent {
   confirmPayed(id:string) {
     this.confirmationService.confirm({
       message: 'Do you really want to confirm the payment of the order',
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
         this.updateOrderDB(id, 'payed').then((data)=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
@@ -267,6 +269,8 @@ export class ProfileComponent {
   confirmCancel(id:string) {
     this.confirmationService.confirm({
       message: 'Do you really want to cancel the order',
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
         this.updateOrderDB(id, 'canceled').then((data)=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
@@ -283,6 +287,8 @@ export class ProfileComponent {
   confirmShipped(id:string){
     this.confirmationService.confirm({
       message: 'Do you really want to confirm the shipping of the order',
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
         this.updateOrderDB(id, 'shipped').then((data)=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
@@ -300,6 +306,8 @@ export class ProfileComponent {
   confirmDelivered(id:string){
     this.confirmationService.confirm({
       message: 'Do you really want to confirm the delivery of the order',
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
         this.updateOrderDB(id, 'delivered').then((data)=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
