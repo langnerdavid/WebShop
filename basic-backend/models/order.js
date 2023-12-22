@@ -25,7 +25,7 @@ export async function createOrderLog(orderReq){
         buyer: orderReq.buyer,
         totalAmount: orderReq.totalAmount,
         status: orderReq.status,
-        seller: orderReq.status,
+        seller: orderReq.seller,
 
         updatedAt: currentTimestamp,
         orderDate: currentTimestamp
