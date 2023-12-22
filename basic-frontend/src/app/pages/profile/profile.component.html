@@ -17,16 +17,7 @@
       <p><label>IBAN:</label> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
     </div>
     <div class="profile-actions">
-      <p-toast></p-toast>
-      <p-confirmPopup>
-        <ng-template pTemplate="content" let-message>
-          <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
-            <p>{{ message.message }}</p>
-          </div>
-        </ng-template>
-      </p-confirmPopup>
-
-      <p-button (click)="confirm($event)" label="Delete" [rounded]="true" severity="danger"></p-button>
+      <p-button (click)="confirmDeleteAccount($event)" label="Delete" [rounded]="true" severity="danger"></p-button>
       <p-button (onClick)="logOut()" label="Log Out" [rounded]="true" severity="warning"></p-button>
       <p-button label="{{editLabel}}" (onClick)="isEditing ? onSaveChanges() : onEditProfile()" [rounded]="true"></p-button>
 

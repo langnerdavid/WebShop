@@ -187,7 +187,7 @@ export class ProfileComponent {
     this.router.navigate(['']);
   }
 
-  confirm(event: Event) {
+  confirmDeleteAccount(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure you want to delete your account?',
