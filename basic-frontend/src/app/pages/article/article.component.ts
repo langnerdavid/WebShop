@@ -56,7 +56,7 @@ export class ArticleComponent {
 
   goToSellerProfile() {
     //TODO: Logik, um zum Verkäuferprofil zu navigieren
-    this.router.navigate(['/seller', this.productSellerId]);
+    this.router.navigate(['/sellerProfile']); //, this.productSellerId]);
   }
 
   async setCartSignedIn(articleId:string, quantity: number){
