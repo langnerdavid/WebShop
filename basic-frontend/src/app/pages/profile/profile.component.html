@@ -1,7 +1,7 @@
 <div class="profile-container">
   <p-card class="profile-card">
     <div class="profile-header">
-      <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
+      <img src="../../../assets/ProfilePic.png" alt="Profile Picture" class="profile-image">
       <div class="profile-name-email">
         <h2 *ngIf="isBuyer"><input [(ngModel)]="firstName" name="firstName" [readonly]="!isEditing"><input [(ngModel)]="lastName" name="lastName" [readonly]="!isEditing"></h2>
         <h2 *ngIf="!isBuyer"><input [(ngModel)]="brand" name="brand" [readonly]="!isEditing"></h2>

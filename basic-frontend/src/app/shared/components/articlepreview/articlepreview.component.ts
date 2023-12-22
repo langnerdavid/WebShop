@@ -20,7 +20,7 @@ export class ArticlepreviewComponent implements OnChanges{
     name: 'Beispielprodukt',
     price: 19.99,
     description: 'Dies ist ein Beispielprodukt.',
-    image: '../../../../assets/ProfilPic.png',
+    image: '../../../../assets/ProductPic.png',
   };
   stockQuantity: number | undefined;
 
