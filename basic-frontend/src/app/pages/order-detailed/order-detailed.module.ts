@@ -8,20 +8,22 @@ import {DropdownModule} from "primeng/dropdown";
 import {TableModule} from "primeng/table";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 @NgModule({
   declarations: [
     OrderDetailedComponent
   ],
-  imports: [
-    CommonModule,
-    OrderDetailedRoutingModule,
-    CardModule,
-    DropdownModule,
-    TableModule,
-    FormsModule,
-    ButtonModule
-  ]
+    imports: [
+        CommonModule,
+        OrderDetailedRoutingModule,
+        CardModule,
+        DropdownModule,
+        TableModule,
+        FormsModule,
+        ButtonModule,
+        ConfirmDialogModule
+    ]
 })
 export class OrderDetailedModule { }

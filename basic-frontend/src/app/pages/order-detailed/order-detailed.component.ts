@@ -3,11 +3,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {CartPatch, Order, OrderStatus} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-order-detailed',
   templateUrl: './order-detailed.component.html',
-  styleUrls: ['./order-detailed.component.css']
+  styleUrls: ['./order-detailed.component.css'],
+  providers: [ConfirmationService, MessageService]
 })
 export class OrderDetailedComponent {
   isSeller: boolean = true;
@@ -25,17 +27,8 @@ export class OrderDetailedComponent {
     status:'placed'
   };
 
-  statuses = [
-    { label: 'Placed', value: 'placed' },
-    { label: 'Payed', value: 'payed' },
-    { label: 'Shipped', value: 'shipped' },
-    { label: 'Delivered', value: 'delivered' },
-    { label: 'Canceled', value: 'canceled' }
-  ];
-  componentLoaded = false;
-
   selectedStatus: string = this.order.status;
-  constructor(private route: ActivatedRoute, private router:Router, private apiService:ApiService, private userDataService:userDataService) {
+  constructor(private confirmationService: ConfirmationService, private route: ActivatedRoute, private router:Router, private apiService:ApiService, private userDataService:userDataService) {
   }
 
 
@@ -55,24 +48,7 @@ export class OrderDetailedComponent {
       });
     }
   }
-  ngAfterViewInit() {
-    // Component and view initialization logic here
-    // Set the flag to true once the view has finished initializing
-    this.componentLoaded = true;
-  }
 
-  onStatusChange(newStatus: OrderStatus, backToProfile:boolean) {
-    if(this.componentLoaded){
-      this.updateOrderStatus(newStatus).then(()=>{
-        if(backToProfile){
-          this.router.navigate(['/profile']);
-        }else{
-          this.order.status = newStatus;
-          this.selectedStatus = newStatus;
-        }
-      });
-    }
-  }
 
 
   async getBuyer(){
@@ -90,7 +66,6 @@ export class OrderDetailedComponent {
             this.order.total = order.totalAmount;
             this.order.status = order.status;
             this.order.products =[];
-            console.log(this.order.status);
             this.selectedStatus = this.order.status;
             for(let i =0; i<order.articles.length; i++){
               this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
@@ -150,6 +125,26 @@ export class OrderDetailedComponent {
     };
     this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
       console.log(data);
+    });
+  }
+
+  confirmStatusChange(newStatus: OrderStatus){
+    this.confirmationService.confirm({
+      message: 'Do you really want to confirm that the order' + newStatus,
+      rejectButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        let order:{status: OrderStatus}={
+          status: newStatus
+        };
+        this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
+          this.router.navigate(['/profile']);
+        });
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
+      },
+      reject: () => {
+        // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
+      }
     });
   }
 }

@@ -2,13 +2,14 @@
   <div class="header" *ngIf="isSeller">
     <h1>Order Details</h1>
     <div class="status-dropdown">
-      <span>Status:</span>
-      <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange($event, false)"></p-dropdown>
+      <p>Status: {{selectedStatus}}</p>
     </div>
+    <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
     <div class="buttons">
-      <p-button *ngIf="order.status==='placed'" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Bezahlt" (click)="onStatusChange('payed', true)"></p-button>
-      <p-button *ngIf="order.status===('placed'||'payed')" icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren" (click)="onStatusChange('canceled', true)"></p-button>
-    </div>
+      <p-button *ngIf="order.status==='placed'" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Payed" (click)="confirmStatusChange('payed')"></p-button>
+      <p-button *ngIf="order.status===('placed'||'payed')" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Shipped" (click)="confirmStatusChange('shipped')"></p-button>
+      <p-button *ngIf="order.status==='shipped'" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Delivered" (click)="confirmStatusChange('delivered')"></p-button>
+      <p-button *ngIf="order.status===('placed'||'payed')" icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" label="Order stornieren" (click)="confirmStatusChange('canceled')"></p-button></div>
   </div>
   <div class="header" *ngIf="!isSeller">
     <h1>Order Details</h1>
