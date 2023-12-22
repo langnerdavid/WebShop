@@ -8,7 +8,7 @@
   </div>
   <div class="product-price-add">
     <p class="product-price">{{product.price}}€</p>
-    <div *ngIf="isBuyer else SignInAsBuyer">
+    <div *ngIf="!isSeller else SignInAsBuyer">
       <div *ngIf="stockQuantity!==0 else OutOfStock">
         <p-button label="In den Warenkorb" class="p-button-rounded p-button-success add-to-cart-btn" (onClick)="addToCart($event)"></p-button>
       </div>

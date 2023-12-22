@@ -121,6 +121,7 @@ export class userDataService {
   }
 
   updateCartNumber(cartNumber: number) {
+    console.log('cartNumber update: ', cartNumber);
     this.cartNumberSubject.next(cartNumber);
   }
 

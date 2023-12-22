@@ -40,6 +40,7 @@ export class HeaderComponent {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(() => {
+        console.log('subscribechange')
         // Execute code every time the route changes (component is shown)
         this.userDataService.updateData();
         this.signedIn = this.userDataService.isSignedIn();
@@ -49,6 +50,7 @@ export class HeaderComponent {
     }
   }
   ngOnDestroy() {
+    console.log('onDestroy')
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

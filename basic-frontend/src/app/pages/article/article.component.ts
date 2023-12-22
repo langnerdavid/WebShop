@@ -11,6 +11,7 @@ import {userDataService} from "../../core/services/userData.service";
 })
 export class ArticleComponent {
   isBuyer = this.userDataSerivce.isBuyer();
+  isSeller = this.userDataSerivce.isSeller();
   productName: string = 'Mustername';
   productDescription:string = 'Musterbeschreibung';
   productPrice:number = 0;
