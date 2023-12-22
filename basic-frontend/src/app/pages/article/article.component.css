@@ -28,11 +28,11 @@
   margin-bottom: 1rem;
 }
 
-.add-to-cart-button {
-  margin-bottom: 2rem;
-}
-
 img {
   max-width: 100%;
   height: auto;
+}
+
+.add-to-cart{
+  margin-bottom: 1rem;
 }
