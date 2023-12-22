@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./articleform.component.css']
 })
 export class ArticleformComponent {
+  isEdit = true;
+
   articleData = {
     title: '',
     description: '',

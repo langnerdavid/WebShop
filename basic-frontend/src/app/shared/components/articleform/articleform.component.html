@@ -1,4 +1,6 @@
-<h2>Neuer Artikel</h2>
+<div *ngIf="isEdit else newarticle">
+  <h2>Edit Article</h2>
+</div>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="article-form">
   <div class="p-field">
     <label for="title">Titel</label>
@@ -35,9 +37,19 @@
     <p-checkbox id="visible" [(ngModel)]="articleData.visible" [binary]="true" inputId="binary"></p-checkbox>
   </div>
 
+  <div *ngIf="isEdit else newarticlebutton">
+    <p-button label="Save changes" [disabled]="!form.valid" severity="success"></p-button>
+  </div>
+</form>
+
+<ng-template #newarticle>
+  <h2>Neuer Artikel</h2>
+</ng-template>
+
+<ng-template #newarticlebutton>
   <div *ngIf="!form.valid" class="error-message">
     Please complete Input!
   </div>
-  <p-button type="submit" label="Artikel erstellen" [disabled]="!form.valid" severity="success"></p-button>
-</form>
+  <p-button type="submit" label="Create article" [disabled]="!form.valid" severity="success"></p-button>
+</ng-template>
 
