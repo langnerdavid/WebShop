@@ -34,7 +34,7 @@
 
   <div class="p-field">
     <label for="visible" >Visible</label>
-    <p-checkbox id="visible" [(ngModel)]="articleData.visible" [binary]="true" inputId="binary"></p-checkbox>
+    <p-checkbox id="visible" [(ngModel)]="articleData.visible" name="visible" [binary]="true" inputId="binary"></p-checkbox>
   </div>
 
   <div *ngIf="isEdit else newarticlebutton">
