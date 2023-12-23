@@ -40,3 +40,10 @@ h2, .article-form {
   margin-top: 5px;
 }
 
+.save-button{
+  margin-right: 1rem;
+}
+
+.keywords-label{
+  width: 120px;
+}

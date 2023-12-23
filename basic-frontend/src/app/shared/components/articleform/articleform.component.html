@@ -28,17 +28,18 @@
   </div>
 
   <div class="p-field">
-    <label for="searchingKeywords">Searching Keywords</label>
+    <label for="searchingKeywords" class="keywords-label">Searching Keywords</label>
     <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Searching Keywords seperated by comma"required>
   </div>
 
   <div class="p-field">
-    <label for="visible" >Visible</label>
+    <label for="visible">Visible</label>
     <p-checkbox id="visible" [(ngModel)]="articleData.visible" name="visible" [binary]="true" inputId="binary"></p-checkbox>
   </div>
 
   <div *ngIf="isEdit else newarticlebutton">
-    <p-button label="Save changes" type="submit" [disabled]="!form.valid" severity="success"></p-button>
+    <p-button label="Save changes" type="submit" [disabled]="!form.valid" severity="success" class="save-button"></p-button>
+    <p-button label="Delete Article" severity="danger"></p-button>
   </div>
 </form>
 <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
