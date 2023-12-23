@@ -1,4 +1,4 @@
-import {inject, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BasketRoutingModule } from './basket-routing.module';
@@ -8,7 +8,6 @@ import {TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
-import { userDataService } from 'src/app/core/services/userData.service';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessagesModule} from "primeng/messages";
 import {RippleModule} from "primeng/ripple";

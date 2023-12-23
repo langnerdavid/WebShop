@@ -4,11 +4,7 @@ import {
   ArticlePatch,
   ArticlePost,
   Buyer,
-  BuyerPost, Cart,
-  CartPatch,
-  CartPost,
-  CreateEchoInput,
-  Echo,
+  BuyerPost, CartPost,
   Order,
   OrderPost, OrderStatus,
   Seller,
@@ -27,7 +23,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly BASE_URL = 'http://localhost:3000/api';
+
   private readonly ARTICLE_URL = 'http://localhost:3000/api/article';
   private readonly BUYER_URL = 'http://localhost:3000/api/buyer';
   private readonly CART_URL = 'http://localhost:3000/api/cart';
@@ -70,10 +66,6 @@ export class ApiService {
   }
 
   ////////////////////////////////////////// ALL BUYER API-REQUESTS /////////////////////////////////////////////////////////
-  async getAllBuyers(): Promise<string> {
-    const response = await fetch(`${this.BUYER_URL}`);
-    return handleResponse(response);
-  }
 
   async getOneBuyer(buyerId: string): Promise<string> {
     const response = await fetch(`${this.BUYER_URL}/${buyerId}`);
@@ -165,10 +157,6 @@ export class ApiService {
   }
 
   ////////////////////////////////////////// ALL SELLER API-REQUESTS /////////////////////////////////////////////////////////
-  async getAllSellers(): Promise<Seller[]> {
-    const response = await fetch(`${this.SELLER_URL}`);
-    return response.json();
-  }
 
   async getOneSeller(sellerId: string): Promise<string> {
     const response = await fetch(`${this.SELLER_URL}/${sellerId}`);

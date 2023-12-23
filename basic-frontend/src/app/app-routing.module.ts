@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule) },
   { path: 'basket', loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketModule) },
   { path: 'article/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
-  //TODO Seller geöns anlegen
+
   { path: 'seller/:id', loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule) },
   { path: 'newarticle', loadChildren: () => import('./pages/newarticle/newarticle.module').then(m => m.NewarticleModule) },
   { path: 'searchResults/:searchText', loadChildren: () => import('./pages/search-results/search-results.module').then(m => m.SearchResultsModule) },

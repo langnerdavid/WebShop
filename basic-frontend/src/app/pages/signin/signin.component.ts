@@ -4,7 +4,7 @@ import {UserLogin} from "../../core/types/echo.type";
 import {Message} from "primeng/api";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {Router} from "@angular/router";
-import {updateCartSignedIn, updateFullCartSignedIn} from "../../shared/shared.code";
+import {updateCartSignedIn} from "../../shared/shared.code";
 
 @Component({
   selector: 'app-signin',
@@ -54,7 +54,7 @@ export class SigninComponent {
           this.userDataService.updateData();
           if(this.userDataService.cart){
             let cart = JSON.parse(this.userDataService.cart);
-            updateCartSignedIn(cart, false, this.userDataService, this.apiService).then((data:any)=>{
+            updateCartSignedIn(cart, false, this.userDataService, this.apiService).then(()=>{
               this.router.navigate(['']);
             });
           }else{

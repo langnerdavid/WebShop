@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {userDataService} from "../services/userData.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {filter, Subject, takeUntil} from "rxjs";

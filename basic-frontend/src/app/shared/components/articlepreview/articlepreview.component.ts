@@ -1,5 +1,5 @@
-import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Article, CartPost} from "../../../core/types/echo.type";
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Article} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service"
 import {Router} from "@angular/router";
 import {userDataService} from "../../../core/services/userData.service";

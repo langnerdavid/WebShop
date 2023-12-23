@@ -1,8 +1,7 @@
 import {Component, DestroyRef, inject, Input, OnInit} from '@angular/core';
-import {BehaviorSubject, debounceTime, skip} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Article, Echo} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {Message} from "primeng/api";
 
 @Component({

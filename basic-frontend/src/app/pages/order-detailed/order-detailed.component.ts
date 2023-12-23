@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
-import {CartPatch, Order, OrderStatus} from "../../core/types/echo.type";
+import {OrderStatus} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 
@@ -58,7 +58,7 @@ export class OrderDetailedComponent {
       if(!order.error){
         this.apiService.getOneBuyer(order.buyer).then((buyer:any)=>{
           if(!buyer.error){
-            this.order.customer = buyer.firstName + ' ' + buyer.lastName,
+            this.order.customer = buyer.firstName + ' ' + buyer.lastName;
             this.order.email = buyer.email;
             this.order.address = buyer.address;
             this.order.iban = buyer.iban;

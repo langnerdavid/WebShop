@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Message, SelectItem} from "primeng/api";
+import {Message} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {userDataService} from "../../core/services/userData.service";
@@ -10,8 +10,8 @@ import {userDataService} from "../../core/services/userData.service";
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent {
-  isBuyer = this.userDataSerivce.isBuyer();
-  isSeller = this.userDataSerivce.isSeller();
+  isBuyer = this.userDataService.isBuyer();
+  isSeller = this.userDataService.isSeller();
   productName: string = 'Mustername';
   productDescription:string = 'Musterbeschreibung';
   productPrice:number = 0;
@@ -22,7 +22,7 @@ export class ArticleComponent {
 
   messages: Message[] = [];
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private userDataSerivce: userDataService) {}
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private userDataService: userDataService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -45,14 +45,14 @@ export class ArticleComponent {
   }
 
   addToCart() {
-    if (this.userDataSerivce.isSignedIn()&&this.userDataSerivce.isBuyer()) {
+    if (this.userDataService.isSignedIn()&&this.userDataService.isBuyer()) {
       this.setCartSignedIn(this.articleId, this.selectedQuantity).then((data:any)=>{
         if(data.error){
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
         }
       });
     } else {
-      this.userDataSerivce.setCartNotSignedIn(this.articleId, this.selectedQuantity, true);
+      this.userDataService.setCartNotSignedIn(this.articleId, this.selectedQuantity, true);
     }
   }
 
@@ -61,13 +61,13 @@ export class ArticleComponent {
   }
 
   async setCartSignedIn(articleId:string, quantity: number){
-    this.apiService.getOneCart(this.userDataSerivce.id).then((data:any)=>{
+    this.apiService.getOneCart(this.userDataService.id).then((data:any)=>{
       if(data.error === 400){
-        this.apiService.postCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart:{articles:[{productId: articleId, quantity: quantity}]}}).then((data:any)=>{
+        this.apiService.postCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart:{articles:[{productId: articleId, quantity: quantity}]}}).then((data:any)=>{
           if(data.error){
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }else {
-            this.userDataSerivce.updateCartNumberTest();
+            this.userDataService.updateCartNumberTest();
           }
         });
       }else if (!data.error){
@@ -82,9 +82,9 @@ export class ArticleComponent {
         if(!isExecuted){
           cart.push({productId: articleId, quantity: quantity});
         }
-        this.apiService.patchCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart: cart}).then((data: any)=>{
+        this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: cart}).then((data: any)=>{
           if(!data.error){
-            this.userDataSerivce.updateCartNumberTest();
+            this.userDataService.updateCartNumberTest();
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }

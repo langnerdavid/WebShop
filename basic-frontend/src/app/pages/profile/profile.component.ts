@@ -1,10 +1,9 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {ApiService} from "../../core/services/api.service";
-import {Buyer, BuyerPatch, Order, OrderStatus, Seller, SellerPatch} from "../../core/types/echo.type";
+import {Buyer, BuyerPatch, OrderStatus, Seller, SellerPatch} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 import {Router} from "@angular/router";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
-import {Messages} from "primeng/messages";
 
 @Component({
   selector: 'app-profile',
@@ -263,7 +262,7 @@ export class ProfileComponent {
       rejectButtonStyleClass: 'p-button-danger p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-        this.updateOrderDB(id, 'payed').then((data)=>{
+        this.updateOrderDB(id, 'payed').then(()=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
           this.ordersSeller[targetIndex].status = 'payed';
           this.updateOrdersSellerView();
@@ -286,7 +285,7 @@ export class ProfileComponent {
       rejectButtonStyleClass: 'p-button-danger p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-        this.updateOrderDB(id, 'canceled').then((data)=>{
+        this.updateOrderDB(id, 'canceled').then(()=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
           this.ordersSeller[targetIndex].status = 'canceled';
           this.updateOrdersSellerView();
@@ -304,7 +303,7 @@ export class ProfileComponent {
       rejectButtonStyleClass: 'p-button-danger p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-        this.updateOrderDB(id, 'shipped').then((data)=>{
+        this.updateOrderDB(id, 'shipped').then(()=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
           this.ordersSeller[targetIndex].status = 'shipped';
           this.updateOrdersSellerView();
@@ -323,7 +322,7 @@ export class ProfileComponent {
       rejectButtonStyleClass: 'p-button-danger p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-        this.updateOrderDB(id, 'delivered').then((data)=>{
+        this.updateOrderDB(id, 'delivered').then(()=>{
           const targetIndex = this.ordersSeller.findIndex(order => order.orderId === id);
           this.ordersSeller[targetIndex].status = 'delivered';
           this.updateOrdersSellerView();
