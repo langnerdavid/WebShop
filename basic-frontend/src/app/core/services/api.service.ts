@@ -7,7 +7,6 @@ import {
   BuyerPost, CartPost,
   Order,
   OrderPost, OrderStatus,
-  Seller,
   SellerPost,
   UserLogin
 } from "../types/echo.type";
