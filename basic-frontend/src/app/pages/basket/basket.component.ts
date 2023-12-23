@@ -166,7 +166,7 @@ export class BasketComponent {
   onQuantityChange(quantity: number, itemId: number) {
     this.calculateTotal();
     this.cartItems[itemId].quantity = quantity;
-    this.updateOrder();
+    this.updateOrder().then();
     this.cartItems[itemId].total = this.calculateTotalArticle(this.cartItems[itemId].price, quantity);
     this.updateDisplayCart();
   }
@@ -212,7 +212,7 @@ export class BasketComponent {
         }
       });
     }else{
-      this.router.navigate(['/profile'])
+      this.router.navigate(['/profile']).then();
     }
   }
 
@@ -226,7 +226,7 @@ export class BasketComponent {
         this.apiService.deleteCart(<string>this.userDataService.id, <string>this.userDataService.password).then((data:any)=>{
           if(!data.error){
             this.userDataService.updateCartNumberTest();
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/profile']).then();
           }
         })
       }else{

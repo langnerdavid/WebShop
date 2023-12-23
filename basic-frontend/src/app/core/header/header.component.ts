@@ -58,7 +58,7 @@ export class HeaderComponent {
     //TODO
     // SuchLogik -> beim drücken des Icons soll Suche abgeschlossen werden
     // mit BE/DB diie Artikel anzeigen
-    this.router.navigate(['/searchResults', this.searchText]);
+    this.router.navigate(['/searchResults', this.searchText]).then();
     console.log('Suche nach:', this.searchText);
   }
 }

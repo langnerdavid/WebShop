@@ -34,7 +34,7 @@ export class ArticleformComponent {
       if(params['articleId']!==undefined){
         this.articleData.articleId = params['articleId'];
         this.isEdit = true;
-        this.initializeInputs();
+        this.initializeInputs().then();
       }else{
         this.isEdit = false;
       }
@@ -54,7 +54,7 @@ export class ArticleformComponent {
       if(!this.isEdit){
         this.apiService.postArticle(<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
           if(!data.error){
-            this.router.navigate(['profile']);
+            this.router.navigate(['profile']).then();
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }
@@ -62,7 +62,7 @@ export class ArticleformComponent {
       }else{
         this.apiService.patchArticle(this.articleData.articleId ,<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
           if(!data.error){
-            this.router.navigate(['profile']);
+            this.router.navigate(['profile']).then();
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }

@@ -104,7 +104,7 @@ export class ProfileComponent {
           }
 
         });
-        this.getOrdersBuyer();
+        this.getOrdersBuyer().then();
       }else{
         this.sellerId = <string>this.userDataService.id;
         this.apiService.getOneSeller(this.sellerId).then((data: any) => {
@@ -122,8 +122,8 @@ export class ProfileComponent {
           }
 
         });
-        this.getArticlesSeller();
-        this.getOrdersSeller();
+        this.getArticlesSeller().then();
+        this.getOrdersSeller().then();
       }
     }else{
       //TODO weiterleitung 404 (sollte nicht auf die Profil Seite können, wenn man nicht angemeldet ist
@@ -193,7 +193,7 @@ export class ProfileComponent {
 
   logOut():void{
     this.userDataService.deleteAll();
-    this.router.navigate(['']);
+    this.router.navigate(['']).then();
   }
 
   confirmDeleteAccount(event: Event) {
@@ -207,7 +207,7 @@ export class ProfileComponent {
           this.apiService.deleteBuyer(this.buyerId, this.password).then((data:any)=>{
             if(!data.error){
               this.userDataService.deleteAll();
-              this.router.navigate(['']);
+              this.router.navigate(['']).then();
             }else{
               this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
               return
@@ -217,7 +217,7 @@ export class ProfileComponent {
           this.apiService.deleteSeller(this.sellerId, this.password).then((data:any)=>{
             if(!data.error){
               this.userDataService.deleteAll();
-              this.router.navigate(['']);
+              this.router.navigate(['']).then();
             }else{
               this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
               return;
@@ -276,7 +276,7 @@ export class ProfileComponent {
   }
 
   orderDetail(orderId: string){
-    this.router.navigate(['/orderDetailed', orderId]);
+    this.router.navigate(['/orderDetailed', orderId]).then();
   }
 
   confirmCancel(id:string) {

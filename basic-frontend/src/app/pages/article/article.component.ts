@@ -57,7 +57,7 @@ export class ArticleComponent {
   }
 
   goToSellerProfile() {
-    this.router.navigate(['/sellerProfile', this.productSellerId]); //, this.productSellerId]);
+    this.router.navigate(['/sellerProfile', this.productSellerId]).then(); //, this.productSellerId]);
   }
 
   async setCartSignedIn(articleId:string, quantity: number){

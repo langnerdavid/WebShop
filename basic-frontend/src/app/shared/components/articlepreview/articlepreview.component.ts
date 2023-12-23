@@ -64,7 +64,7 @@ export class ArticlepreviewComponent implements OnChanges{
 
 
   onTitleClicked(){
-    this.router.navigate(['/article', this.product.id]);
+    this.router.navigate(['/article', this.product.id]).then();
   }
 
   protected readonly event = event;

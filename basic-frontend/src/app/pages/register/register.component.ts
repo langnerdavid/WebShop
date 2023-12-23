@@ -90,14 +90,14 @@ export class RegisterComponent {
                 localStorage.setItem("role","buyer");
                 localStorage.setItem("id",data._id);
                 localStorage.setItem("password", data.password);
-                this.router.navigate(['/profile']);
+                this.router.navigate(['/profile']).then();
               }
             });
           }else{
             localStorage.setItem("role","buyer");
             localStorage.setItem("id",data._id);
             localStorage.setItem("password", data.password);
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/profile']).then();
           }
         }
       })
@@ -118,7 +118,7 @@ export class RegisterComponent {
           localStorage.setItem("role","seller");
           localStorage.setItem("id",data._id);
           localStorage.setItem("password", data.password);
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/profile']).then();
         }
       })
 

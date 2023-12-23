@@ -146,7 +146,7 @@ export class OrderDetailedComponent {
           if(data.error){
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }else {
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/profile']).then();
           }
         });
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt

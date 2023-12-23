@@ -55,10 +55,10 @@ export class SigninComponent {
           if(this.userDataService.cart){
             let cart = JSON.parse(this.userDataService.cart);
             updateCartSignedIn(cart, false, this.userDataService, this.apiService).then(()=>{
-              this.router.navigate(['']);
+              this.router.navigate(['']).then();
             });
           }else{
-            this.router.navigate(['']);
+            this.router.navigate(['']).then();
           }
 
         }
@@ -80,7 +80,7 @@ export class SigninComponent {
             sessionStorage.setItem("password", data.password);
           }
           this.userDataService.updateData();
-          this.router.navigate(['']);
+          this.router.navigate(['']).then();
 
 
         }

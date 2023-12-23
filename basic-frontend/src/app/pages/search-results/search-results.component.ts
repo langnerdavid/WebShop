@@ -30,7 +30,7 @@ export class SearchResultsComponent {
   private subscribeToRouteParams() {
     this.route.params.subscribe(params => {
       this.searchText = params['searchText'];
-      this.getSeatchResults();
+      this.getSeatchResults().then();
       // You can perform any additional logic here based on the route params
     });
   }
