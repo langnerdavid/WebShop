@@ -11,6 +11,7 @@ import {ButtonModule} from "primeng/button";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessagesModule} from "primeng/messages";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MessagesModule} from "primeng/messages";
         FormsModule,
         ButtonModule,
         ConfirmDialogModule,
-        MessagesModule
+        MessagesModule,
+        RippleModule
     ]
 })
 export class BasketModule {

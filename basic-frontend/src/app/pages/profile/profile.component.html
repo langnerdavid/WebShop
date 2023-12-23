@@ -188,7 +188,7 @@
           </ng-template>
         </p-table>
       </p-accordionTab>
-      <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+      <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle"></p-confirmDialog>
       <p-accordionTab header="Payed"  *ngIf="payedOrders.length!==0">
         <p-table [value]="payedOrders" dataKey="id">
           <ng-template pTemplate="header">

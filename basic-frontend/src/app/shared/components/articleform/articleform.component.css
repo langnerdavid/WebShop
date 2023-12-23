@@ -34,28 +34,9 @@ h2, .article-form {
   border-color: red;
 }
 
-.input-container {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
 .error-message {
   color: red;
   font-size: 12px;
   margin-top: 5px;
 }
-:host ::ng-deep .article-form .p-inputnumber {
-  width: 300px !important;
-}
 
-:host ::ng-deep .article-form .p-inputnumber .p-inputnumber-inputwrapper {
-  width: 100% !important;
-}
-
-:host ::ng-deep .article-form .p-inputnumber .p-inputnumber-input {
-  width: 100% !important;
-}
-:host ::ng-deep .article-form .p-inputnumber .p-button.p-inputnumber-button {
-  background-color: #32CD32 !important;
-  border-color: #32CD32 !important;
-}

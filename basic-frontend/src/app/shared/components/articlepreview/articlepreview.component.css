@@ -42,10 +42,10 @@
 }
 
 .product-description, .product-name{
-  margin-top: 0px;
+  margin-top: 0;
 }
 .product-description, .product-name {
-  margin-top: 0px;
+  margin-top: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

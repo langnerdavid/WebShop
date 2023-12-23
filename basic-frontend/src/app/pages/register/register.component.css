@@ -34,11 +34,6 @@ h2, .registration-form {
   border-color: red;
 }
 
-.input-container {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
 .error-message {
   color: red;
   font-size: 12px;

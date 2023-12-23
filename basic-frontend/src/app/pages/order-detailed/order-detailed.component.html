@@ -4,7 +4,7 @@
     <div class="status-dropdown">
       <p>Status: {{selectedStatus}}</p>
     </div>
-    <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+    <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle"></p-confirmDialog>
     <div class="buttons">
       <p-button *ngIf="order.status==='placed'" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Payed" (click)="confirmStatusChange('payed')"></p-button>
       <p-button *ngIf="order.status===('placed'||'payed')" icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" label="Shipped" (click)="confirmStatusChange('shipped')"></p-button>

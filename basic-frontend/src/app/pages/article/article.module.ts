@@ -1,5 +1,5 @@
 import {inject, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import { ArticleRoutingModule } from './article-routing.module';
 import { ArticleComponent } from './article.component';
@@ -20,7 +20,8 @@ import {MessagesModule} from "primeng/messages";
         InputNumberModule,
         ButtonModule,
         FormsModule,
-        MessagesModule
+        MessagesModule,
+        NgOptimizedImage
     ]
 })
 export class ArticleModule {

@@ -18,12 +18,6 @@ button {
   margin-top: 1em;
 }
 
-h2, .registration-form, .signin-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 input{
   width: 53.5%;
 }
