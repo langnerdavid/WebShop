@@ -94,7 +94,6 @@ export class userDataService {
           let cartNumber = 0;
           for (let i = 0; i < data.articles.length; i++) {
             cartNumber += data.articles[i].quantity;
-            console.log(cartNumber);
           }
           this.updateCartNumber(cartNumber);
           return

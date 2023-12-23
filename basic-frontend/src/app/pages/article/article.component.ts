@@ -45,8 +45,6 @@ export class ArticleComponent {
   }
 
   addToCart() {
-    //TODO:  Logik, um Artikel zum Warenkorb hinzuzufügen
-    console.log('Menge:', this.selectedQuantity);
     if (this.userDataSerivce.isSignedIn()&&this.userDataSerivce.isBuyer()) {
       this.setCartSignedIn(this.articleId, this.selectedQuantity).then((data:any)=>{
         if(data.error){
@@ -59,7 +57,6 @@ export class ArticleComponent {
   }
 
   goToSellerProfile() {
-    //TODO: Logik, um zum Verkäuferprofil zu navigieren
     this.router.navigate(['/sellerProfile', this.productSellerId]); //, this.productSellerId]);
   }
 
@@ -85,7 +82,6 @@ export class ArticleComponent {
         if(!isExecuted){
           cart.push({productId: articleId, quantity: quantity});
         }
-        console.log(cart);
         this.apiService.patchCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart: cart}).then((data: any)=>{
           if(!data.error){
             this.userDataSerivce.updateCartNumberTest();

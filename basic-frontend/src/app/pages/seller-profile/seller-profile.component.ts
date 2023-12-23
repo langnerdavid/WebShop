@@ -25,7 +25,6 @@ export class SellerProfileComponent {
     let sellerId='';
     this.route.params.subscribe(params => {
       sellerId = params['sellerId'];
-      console.log(sellerId)
     });
     this.apiService.getOneSeller(sellerId).then((seller:any)=>{
       if(!seller.error){
@@ -35,7 +34,6 @@ export class SellerProfileComponent {
         this.sellerResult = true;
         this.apiService.getAllArticles().then((data:any)=>{
           if(!data.error){
-            console.log(data);
             const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === sellerId);
             for(let i = 0; i<filteredArticles.length; i++){
               this.articles.push(filteredArticles[i]);

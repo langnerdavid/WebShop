@@ -153,7 +153,6 @@ export class ProfileComponent {
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           return
         }else{
-          console.log(data);
           this.buyer = data;
           this.firstName = this.buyer?.firstName;
           this.lastName = this.buyer?.lastName;
@@ -238,7 +237,6 @@ export class ProfileComponent {
   private async getArticlesSeller(){
     this.apiService.getAllArticles().then((data:any)=>{
       if(!data.error){
-        console.log(data);
         const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === this.userDataService.id);
         for(let i = 0; i<filteredArticles.length; i++){
           let article ={
@@ -344,10 +342,8 @@ export class ProfileComponent {
     this.apiService.getAllOrders().then((data:any)=>{
       if(!data.error){
         const filteredOrders = data.filter((order:{seller:string|null})=> order.seller === this.userDataService.id);
-        console.log(filteredOrders);
         for(let i = 0; i<filteredOrders.length; i++){
           this.apiService.getOneBuyer(filteredOrders[i].buyer).then((data:any)=>{
-            console.log(data);
             if(!data.error){
               let order={
                 id: i,
@@ -373,7 +369,6 @@ export class ProfileComponent {
     this.apiService.getAllOrders().then((data:any)=>{
       if(!data.error){
         const filteredOrders = data.filter((order:{buyer:string|null})=> order.buyer === this.userDataService.id);
-        console.log(filteredOrders);
         for(let i = 0; i<filteredOrders.length; i++){
           this.apiService.getOneSeller(filteredOrders[i].seller).then((seller:any)=>{
             if(!seller.error){

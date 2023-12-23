@@ -56,8 +56,7 @@ export class BasketComponent {
             this.isCartEmpty = true;
           }
         } else {
-          console.log('test');
-          //TODO error
+          this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
         }
       })
 
@@ -139,7 +138,6 @@ export class BasketComponent {
       this.cartItems.forEach((item, index) => {
         item.id = index;
       });
-      console.log(this.cartItems);
       this.updateDisplayCart();
     } else {
       let index = this.cartItems.findIndex(item => item.id === itemId);
@@ -161,14 +159,12 @@ export class BasketComponent {
       this.cartItems.forEach((item, index) => {
         item.id = index;
       });
-      console.log(this.cartItems);
       // Set the updated cart object in the user data service
       this.updateDisplayCart();
     }
   }
 
   onQuantityChange(quantity: number, itemId: number) {
-    console.log(quantity, itemId, this.cartItems);
     this.calculateTotal();
     this.cartItems[itemId].quantity = quantity;
     this.updateOrder();

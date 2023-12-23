@@ -21,7 +21,9 @@ export class SearchResultsComponent {
   ngOnInit() {
     // Move the route subscription logic inside a method
     this.subscribeToRouteParams();
-    this.getSeatchResults().then(r => console.log('yes'));
+    this.getSeatchResults().then(() => {
+
+    });
 
   }
 
@@ -35,7 +37,6 @@ export class SearchResultsComponent {
   private async getSeatchResults(){
     this.apiService.getAllArticles().then((data:any)=>{
       if(!data.error){
-        console.log(data);
         this.articles = data.filter((item: { searchingKeywords: string[]; visible: boolean }) => {
           const isVisible = item.visible;
           const hasMatchingKeyword = item.searchingKeywords.some(keyword => keyword.toLowerCase().includes(this.searchText.toLowerCase()));

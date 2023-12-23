@@ -95,11 +95,9 @@ export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, use
         }
       }
 
-      console.log(cart);
 
       // TODO: Handle the case when 'patchCart' fails
       const patchData: any = await apiService.patchCart(<string>userDataService.id, <string>userDataService.password, { cart: cart });
-      console.log(patchData);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -122,7 +120,6 @@ export async function updateFullCartSignedIn(cartItems:{id: number, productId:st
       }
       newCart.articles.push(<{productId: string, quantity: number}>existingCartItem);
     });
-    console.log(newCart);
     apiService.patchCart(<string>userDataService.id, <string>userDataService.password, {cart: newCart}).then((data:any)=>{
       console.log(data);
       return data;

@@ -41,12 +41,12 @@ export class OrderDetailedComponent {
     if(this.userDataService.isSeller()){
       this.isSeller = true;
       this.getBuyer().then(()=>{
-        console.log('buyer Data aktualisiert');
+
       });
     }else{
       this.isSeller = false;
       this.getSeller().then(()=>{
-        console.log('Seller Data aktualisiert');
+
       });
     }
   }
@@ -91,7 +91,6 @@ export class OrderDetailedComponent {
     this.apiService.getOneOrder(this.orderId).then((order:any)=>{
       if(!order.error){
         this.apiService.getOneSeller(order.seller).then((seller:any)=>{
-          console.log('seller: ', seller)
           if(!seller.error){
             this.order.brand = seller.brand;
             this.order.email = seller.email;
@@ -102,7 +101,7 @@ export class OrderDetailedComponent {
             this.order.total = order.totalAmount;
             this.order.status = order.status;
             this.order.products =[];
-            console.log(this.order.status);
+
             this.selectedStatus = this.order.status;
             for(let i =0; i<order.articles.length; i++){
               this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{

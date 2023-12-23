@@ -32,7 +32,6 @@ export class WelcomePageComponent implements OnInit {
         let countInvis = 0;
         for (let i = 0; i < data.length; i++) {
           if (data[i].visible) {
-            console.log(data[i]);
             this.articles[i - countInvis] = data[i];
           } else {
             countInvis += 1;

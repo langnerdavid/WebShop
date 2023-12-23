@@ -84,7 +84,6 @@ export class RegisterComponent {
           return;
         }else{
           if(this.userDataService.cart){
-            console.log(JSON.parse(this.userDataService.cart));
             this.apiService.postCart(data._id, data.password, {cart: JSON.parse(this.userDataService.cart)}).then((cart:any)=>{
               if(!cart.error){
                 this.userDataService.deleteCartNotSignedIn();

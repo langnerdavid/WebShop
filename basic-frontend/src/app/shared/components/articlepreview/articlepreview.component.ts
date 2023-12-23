@@ -58,14 +58,12 @@ export class ArticlepreviewComponent implements OnChanges{
           //TODO Handle the error appropriately
         });
     } else {
-      console.log('else');
       this.userDataService.setCartNotSignedIn(this.product.id, 1, false);
     }
   }
 
 
   onTitleClicked(){
-    console.log(this.product.id)
     this.router.navigate(['/article', this.product.id]);
   }
 

@@ -41,7 +41,6 @@ export class ArticleformComponent {
     });
   }
   onSubmit(form: NgForm) {
-    console.log(this.articleData.searchingKeywords);
     if (form.valid) {
       let articlePost = {
         title: this.articleData.title,
@@ -52,7 +51,6 @@ export class ArticleformComponent {
         brand: this.articleData.brand,
         searchingKeywords: this.articleData.searchingKeywords.split(',').map(keyword => keyword.trim())
       };
-      console.log(articlePost);
       if(!this.isEdit){
         this.apiService.postArticle(<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
           if(!data.error){
@@ -71,7 +69,7 @@ export class ArticleformComponent {
         });
       }
     } else {
-      console.log('error creating article');
+      this.messages = [{ severity: 'error', summary: 'Error', detail: 'The Article Data is not valid'}];
     }
   }
 
