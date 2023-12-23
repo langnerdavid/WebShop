@@ -1,14 +1,17 @@
-<div *ngIf="searchResult else notFound">
-  <h2>Search Results for {{searchText}}</h2>
-  <div class="article-container">
-    <div class="article-row" *ngFor="let item of articles; let i = index">
-      <app-articlepreview [articleInfo]="item"></app-articlepreview>
-      <ng-container *ngIf="(i + 1) % 3 === 0">
-        <div class="clearfix"></div>
-      </ng-container>
+<div>
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+  <div *ngIf="searchResult else notFound">
+    <h2>Search Results for {{searchText}}</h2>
+    <div class="article-container">
+      <div class="article-row" *ngFor="let item of articles; let i = index">
+        <app-articlepreview [articleInfo]="item"></app-articlepreview>
+        <ng-container *ngIf="(i + 1) % 3 === 0">
+          <div class="clearfix"></div>
+        </ng-container>
+      </div>
     </div>
   </div>
+  <ng-template #notFound>
+    <h2>No Search Results for: {{searchText}}</h2>
+  </ng-template>
 </div>
-<ng-template #notFound>
-  <h2>No Search Results for: {{searchText}}</h2>
-</ng-template>

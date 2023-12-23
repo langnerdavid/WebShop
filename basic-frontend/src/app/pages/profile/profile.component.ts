@@ -3,7 +3,8 @@ import {ApiService} from "../../core/services/api.service";
 import {Buyer, BuyerPatch, Order, OrderStatus, Seller, SellerPatch} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
 import {Router} from "@angular/router";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
+import {Messages} from "primeng/messages";
 
 @Component({
   selector: 'app-profile',
@@ -79,6 +80,8 @@ export class ProfileComponent {
 
   }
 
+  messages: Message[]=[];
+
     ngOnInit(){
     this.isBuyer = this.userDataService.isBuyer();
 
@@ -87,29 +90,37 @@ export class ProfileComponent {
       if(this.isBuyer){
         this.buyerId = <string>this.userDataService.id;
         this.apiService.getOneBuyer(this.buyerId).then((data: any) => {
-          this.buyer = data;
-          this.firstName = this.buyer?.firstName;
-          this.lastName = this.buyer?.lastName;
-          this.email = this.buyer?.email;
-          this.password = <string>this.buyer?.password;
-          this.zipCode = this.buyer?.zipCode;
-          this.city = this.buyer?.city;
-          this.address = this.buyer?.address;
-          this.iban = this.buyer?.iban;
+          if(!data.error) {
+            this.buyer = data;
+            this.firstName = this.buyer?.firstName;
+            this.lastName = this.buyer?.lastName;
+            this.email = this.buyer?.email;
+            this.password = <string>this.buyer?.password;
+            this.zipCode = this.buyer?.zipCode;
+            this.city = this.buyer?.city;
+            this.address = this.buyer?.address;
+            this.iban = this.buyer?.iban;
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }
 
         });
         this.getOrdersBuyer();
       }else{
         this.sellerId = <string>this.userDataService.id;
         this.apiService.getOneSeller(this.sellerId).then((data: any) => {
-          this.seller = data;
-          this.brand = this.seller?.brand;
-          this.email = this.seller?.email;
-          this.password = <string>this.seller?.password;
-          this.zipCode = this.seller?.zipCode;
-          this.city = this.seller?.city;
-          this.address = this.seller?.address;
-          this.iban = this.seller?.iban;
+          if(!data.error) {
+            this.seller = data;
+            this.brand = this.seller?.brand;
+            this.email = this.seller?.email;
+            this.password = <string>this.seller?.password;
+            this.zipCode = this.seller?.zipCode;
+            this.city = this.seller?.city;
+            this.address = this.seller?.address;
+            this.iban = this.seller?.iban;
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }
 
         });
         this.getArticlesSeller();
@@ -139,7 +150,7 @@ export class ProfileComponent {
 
       this.apiService.patchBuyer(this.buyerId, this.password, {user: <Buyer>this.buyerPatch}).then((data:any) => {
         if(data.error){
-          console.log(data.errorText);
+          this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           return
         }else{
           console.log(data);
@@ -165,7 +176,7 @@ export class ProfileComponent {
 
       this.apiService.patchSeller(this.sellerId, this.password, {user: <Seller>this.sellerPatch}).then((data:any) => {
         if(data.error){
-          console.log(data.errorText);
+          this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           return
         }else{
           this.seller = data;
@@ -196,20 +207,22 @@ export class ProfileComponent {
       accept: () => {
         if(this.isBuyer){
           this.apiService.deleteBuyer(this.buyerId, this.password).then((data:any)=>{
-            if(data.ok){
+            if(!data.error){
               this.userDataService.deleteAll();
               this.router.navigate(['']);
             }else{
-              console.log(data);
+              this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+              return
             }
           });
         }else{
           this.apiService.deleteSeller(this.sellerId, this.password).then((data:any)=>{
-            if(data.ok){
+            if(!data.error){
               this.userDataService.deleteAll();
               this.router.navigate(['']);
             }else{
-              console.log(data);
+              this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+              return;
             }
 
           });
@@ -239,6 +252,9 @@ export class ProfileComponent {
           this.articles.push(article);
           this.updateArticlesView();
         }
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+        return;
       }
     });
   }
@@ -346,6 +362,9 @@ export class ProfileComponent {
             }
           });
         }
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+        return;
       }
     });
   }
@@ -372,6 +391,9 @@ export class ProfileComponent {
             }
           });
         }
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+        return;
       }
     });
   }
@@ -397,7 +419,10 @@ export class ProfileComponent {
 
   private async updateOrderDB(orderId: string, status:OrderStatus){
     this.apiService.patchOrder(orderId, <string>this.userDataService.id, <string>this.userDataService.password, {order: {status: status}}).then((data:any)=>{
-      console.log(data);
+      if(data.error){
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+        return;
+      }
     });
   }
 }

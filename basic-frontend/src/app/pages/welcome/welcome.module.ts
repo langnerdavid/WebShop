@@ -5,6 +5,7 @@ import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {SharedModule} from "../../shared/shared.module";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {ButtonModule} from "primeng/button";
+import {MessagesModule} from "primeng/messages";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {ButtonModule} from "primeng/button";
     imports: [
         SharedModule,
         WelcomeRoutingModule,
-        ButtonModule
+        ButtonModule,
+        MessagesModule
     ]
 })
 export class WelcomeModule {

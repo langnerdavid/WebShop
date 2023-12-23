@@ -1,5 +1,6 @@
 <h2>Willkommen auf der Startseite</h2>
 <div>
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <div class="article-container">
     <div class="article-row" *ngFor="let item of articles; let i = index">
       <app-articlepreview [articleInfo]="item"></app-articlepreview>

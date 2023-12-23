@@ -23,6 +23,7 @@
 
     </div>
   </p-card>
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
 
   <p-card class="orders-card" *ngIf="isBuyer">
     <h3>Order History</h3>
@@ -35,6 +36,7 @@
               <th>Date</th>
               <th>Status</th>
               <th>Total</th>
+              <th>Details</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
@@ -43,6 +45,9 @@
               <td>{{order.orderDate|date}}</td>
               <td>{{order.status}}</td>
               <td>{{order.total}}</td>
+              <td>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
+              </td>
             </tr>
           </ng-template>
         </p-table>
@@ -56,6 +61,7 @@
               <th>Date</th>
               <th>Status</th>
               <th>Total</th>
+              <th>Details</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-order>
@@ -64,6 +70,9 @@
               <td>{{order.orderDate| date}}</td>
               <td>{{order.status}}</td>
               <td>{{order.total}}</td>
+              <td>
+                <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
+              </td>
             </tr>
           </ng-template>
         </p-table>
@@ -94,7 +103,7 @@
               <td>{{ article.quantity }}</td>
               <td>{{ article.price }}</td>
               <td>
-                <p-button icon="pi pi-pencil" [routerLink]="['/editArticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
+                <p-button icon="pi pi-pencil" [routerLink]="['/editArticle', article.productId]" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
               </td>
             </tr>
           </ng-template>

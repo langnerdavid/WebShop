@@ -8,7 +8,7 @@ export async function createOrderLog(orderReq){
     for (let i = 0; i < orderReq.articles.length; i++) {
         try {
             const article = await listOneArticle(orderReq.articles[i].productId);
-            if (article.stockQuantity - orderReq.articles[i].quantity > 0) {
+            if (article.stockQuantity - orderReq.articles[i].quantity >= 0) {
                 console.log({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)});
                 await updateArticle({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)}, orderReq.articles[i].productId);
             } else {

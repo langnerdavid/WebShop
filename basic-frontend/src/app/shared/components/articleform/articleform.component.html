@@ -38,9 +38,10 @@
   </div>
 
   <div *ngIf="isEdit else newarticlebutton">
-    <p-button label="Save changes" [disabled]="!form.valid" severity="success"></p-button>
+    <p-button label="Save changes" type="submit" [disabled]="!form.valid" severity="success"></p-button>
   </div>
 </form>
+<p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
 
 <ng-template #newarticle>
   <h2>Neuer Artikel</h2>
@@ -50,6 +51,6 @@
   <div *ngIf="!form.valid" class="error-message">
     Please complete Input!
   </div>
-  <p-button type="submit" label="Create article" [disabled]="!form.valid" severity="success"></p-button>
+  <p-button type="submit" label="Create article" type="submit"  [disabled]="!form.valid" severity="success"></p-button>
 </ng-template>
 

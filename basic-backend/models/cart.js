@@ -51,8 +51,8 @@ export function listOneCartLog(buyerId, callback) {
     cartDb.find({buyer : buyerId}, callback);
 }
 
-export function deleteOneCartLog(cartId, callback) {
-    cartDb.remove({_id : cartId}, callback);
+export function deleteOneCartLog(buyerId, callback) {
+    cartDb.remove({buyer : buyerId}, callback);
 }
 /*export function createEchoLog(message) {
     const currentTimestamp = new Date().toISOString();

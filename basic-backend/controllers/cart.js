@@ -61,9 +61,9 @@ router.patch('/:Id',validateCart, authorizeCart, async (req, res) => {
 });
 
 router.delete('/:Id', authorizeCartDelete, async (req, res) => {
-    const cartId = req.params.Id;
+    const buyerId = req.params.Id;
     try {
-        const data = await deleteOneCart(cartId);
+        const data = await deleteOneCart(buyerId);
         res.json(data);
     } catch (e) {
         console.error(e);

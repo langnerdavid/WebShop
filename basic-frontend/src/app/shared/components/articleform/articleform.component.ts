@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {ApiService} from "../../../core/services/api.service";
 import {userDataService} from "../../../core/services/userData.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-articleform',
@@ -13,6 +14,7 @@ export class ArticleformComponent {
   isEdit = true;
 
   articleData = {
+    articleId:'',
     title: '',
     description: '',
     price: 0,
@@ -22,11 +24,24 @@ export class ArticleformComponent {
     searchingKeywords: ''
   };
 
-  messages = [];
+  messages:Message[] = [];
 
-  constructor(private apiService: ApiService, private userDataService: userDataService, private router: Router) {
+  constructor(private route:ActivatedRoute, private apiService: ApiService, private userDataService: userDataService, private router: Router) {
+  }
+
+  ngOnInit(){
+    this.route.params.subscribe(params => {
+      if(params['articleId']!==undefined){
+        this.articleData.articleId = params['articleId'];
+        this.isEdit = true;
+        this.initializeInputs();
+      }else{
+        this.isEdit = false;
+      }
+    });
   }
   onSubmit(form: NgForm) {
+    console.log(this.articleData.searchingKeywords);
     if (form.valid) {
       let articlePost = {
         title: this.articleData.title,
@@ -37,11 +52,42 @@ export class ArticleformComponent {
         brand: this.articleData.brand,
         searchingKeywords: this.articleData.searchingKeywords.split(',').map(keyword => keyword.trim())
       };
-      this.apiService.postArticle(<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
-        this.router.navigate(['profile']);
-      });
+      console.log(articlePost);
+      if(!this.isEdit){
+        this.apiService.postArticle(<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
+          if(!data.error){
+            this.router.navigate(['profile']);
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }
+        });
+      }else{
+        this.apiService.patchArticle(this.articleData.articleId ,<string>this.userDataService.id, <string>this.userDataService.password, {article: articlePost}).then((data:any)=>{
+          if(!data.error){
+            this.router.navigate(['profile']);
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }
+        });
+      }
     } else {
       console.log('error creating article');
     }
+  }
+
+  async initializeInputs(){
+    this.apiService.getOneArticle(this.articleData.articleId).then((article:any)=>{
+      if(!article.error){
+        this.articleData.visible = article.visible;
+        this.articleData.brand = article.brand;
+        this.articleData.title = article.title;
+        this.articleData.price = article.price;
+        this.articleData.description = article.description;
+        this.articleData.searchingKeywords = article.searchingKeywords.join(', ');
+        this.articleData.stockQuantity = article.stockQuantity
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: article.errorText}];
+      }
+    });
   }
 }

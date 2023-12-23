@@ -118,10 +118,10 @@ export class ApiService {
     const response = await fetch(`${this.CART_URL}/${buyerId}`, options);
     return handleResponse(response);
   }
-  async deleteCart(cartId: string, buyerId:string, password: string): Promise<string> {
+  async deleteCart(buyerId:string, password: string): Promise<string> {
     const options: RequestInit = getDeleteHeader(buyerId, password);
 
-    const response = await fetch(`${this.CART_URL}/${cartId}`, options);
+    const response = await fetch(`${this.CART_URL}/${buyerId}`, options);
     return handleResponse(response);
   }
   ////////////////////////////////////////// ALL ORDER API-REQUESTS /////////////////////////////////////////////////////////

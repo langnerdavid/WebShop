@@ -9,6 +9,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {MessagesModule} from "primeng/messages";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
         CheckboxModule,
         InputNumberModule,
         InputTextModule,
-        InputTextareaModule
+        InputTextareaModule,
+        MessagesModule
     ],
   exports: [
     CommonModule,

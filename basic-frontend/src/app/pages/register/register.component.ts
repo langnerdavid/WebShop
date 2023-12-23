@@ -79,16 +79,14 @@ export class RegisterComponent {
         city: this.userData.city,
       }
       this.apiService.postBuyer({user: buyer}).then((data:any)=>{
-        console.log(data);
         if(data.error){
-          console.log(data.error);
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText }];
+          return;
         }else{
           if(this.userDataService.cart){
             console.log(JSON.parse(this.userDataService.cart));
             this.apiService.postCart(data._id, data.password, {cart: JSON.parse(this.userDataService.cart)}).then((cart:any)=>{
               if(!cart.error){
-                console.log(cart);
                 this.userDataService.deleteCartNotSignedIn();
                 localStorage.setItem("role","buyer");
                 localStorage.setItem("id",data._id);
@@ -115,9 +113,7 @@ export class RegisterComponent {
         city: this.userData.city,
       }
       this.apiService.postSeller({user: seller}).then((data:any)=>{
-        console.log(data);
         if(data.error){
-          console.log(data.error);
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText }];
         }else{
           localStorage.setItem("role","seller");

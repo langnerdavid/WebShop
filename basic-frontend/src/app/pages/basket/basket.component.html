@@ -1,4 +1,5 @@
 <div class="cart-container">
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <p-card class="cart-card" *ngIf="!isCartEmpty">
     <h2>Cart</h2>
     <p-table [value]="cartItems" dataKey="id">

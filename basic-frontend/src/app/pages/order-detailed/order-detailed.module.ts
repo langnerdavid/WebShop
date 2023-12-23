@@ -9,6 +9,7 @@ import {TableModule} from "primeng/table";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         TableModule,
         FormsModule,
         ButtonModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        MessagesModule
     ]
 })
 export class OrderDetailedModule { }

@@ -37,6 +37,7 @@
     <p><label>City:</label> {{ order.city }}</p>
     <p><label>Zipcode:</label> {{ order.zipCode }}</p>
   </div>
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <h3>Products</h3>
   <p-table [value]="order.products" dataKey="id">
     <ng-template pTemplate="header">

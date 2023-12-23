@@ -13,25 +13,27 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {AccordionModule} from "primeng/accordion";
 import {CheckboxModule} from "primeng/checkbox";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
   declarations: [
     ProfileComponent
   ],
-  imports: [
-    CommonModule,
-    ProfileRoutingModule,
-    CardModule,
-    TableModule,
-    ButtonModule,
-    FormsModule,
-    ToastModule,
-    ConfirmPopupModule,
-    AccordionModule,
-    CheckboxModule,
-    ConfirmDialogModule
-  ]
+    imports: [
+        CommonModule,
+        ProfileRoutingModule,
+        CardModule,
+        TableModule,
+        ButtonModule,
+        FormsModule,
+        ToastModule,
+        ConfirmPopupModule,
+        AccordionModule,
+        CheckboxModule,
+        ConfirmDialogModule,
+        MessagesModule
+    ]
 })
 export class ProfileModule {
   private userDataService = inject(userDataService);

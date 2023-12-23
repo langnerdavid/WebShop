@@ -12,10 +12,11 @@ export async function createOrder(order) {
     const onlyOneSeller = await isOneSeller(order);
     if (result.error || onlyOneSeller.error) {
         return{error: result.error};
+    }else{
+        order.totalAmount = result;
+        order.seller = isOneSeller.seller;
+        return createOrderLog(order);
     }
-    order.totalAmount = result;
-    order.seller = isOneSeller.seller;
-    return createOrderLog(order);
 }
 
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {userDataService} from "../../core/services/userData.service";
-import {Cart} from "../../core/types/echo.type";
+import {Cart, OrderPost} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
 import {updateFullCartSignedIn} from "../../shared/shared.code";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Router} from "@angular/router";
-import { ConfirmationService} from 'primeng/api';
+import {ConfirmationService, Message} from 'primeng/api';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class BasketComponent {
   isCartEmpty = true;
   cartItems: { id: number, productId: string, name: string, price: number, quantity: number, total: number , max:number}[] = [];
   cart: Cart | undefined;
+  messages: Message[]=[];
 
   totalAmount: number | undefined;
 
@@ -32,7 +33,7 @@ export class BasketComponent {
             this.isCartEmpty = false;
             for (let i = 0; <number>this.cart.articles.length > i; i++) {
               this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
-                if (data) {
+                if (!data.error) {
                   let article = {
                     id: i,
                     productId: data._id,
@@ -43,6 +44,8 @@ export class BasketComponent {
                     max: data.stockQuantity
                   };
                   this.cartItems.push(article);
+                }else{
+                  this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
                 }
                 if (i === <number>this.cart?.articles.length - 1) {
                   this.calculateTotal();
@@ -64,7 +67,7 @@ export class BasketComponent {
         this.isCartEmpty = false;
         for (let i = 0; <number>this.cart?.articles.length > i; i++) {
           this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
-            if (data) {
+            if (!data.error) {
               let article = {
                 id: i,
                 productId: data._id,
@@ -75,6 +78,8 @@ export class BasketComponent {
                 max: data.stockQuantity
               };
               this.cartItems.push(article);
+            }else{
+              this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
             }
             if (i === <number>this.cart?.articles.length - 1) {
               this.calculateTotal();
@@ -108,21 +113,27 @@ export class BasketComponent {
           if (newCart.articles.length > 0) {
             this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: newCart})
               .then((patchData: any) => {
-                this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-                this.userDataService.updateCartNumberTest();
-                this.calculateTotal();
-              })
-              .catch((patchError: any) => {
-                console.error('Error patching cart:', patchError);
+                if(!patchData.error) {
+                  this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+                  this.userDataService.updateCartNumberTest();
+                  this.calculateTotal();
+                }else{
+                  this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+                }
               });
           } else {
-            this.apiService.deleteCart(data._id, <string>this.userDataService.id, <string>this.userDataService.password).then(() => {
-              console.log('cart deleted');
-              this.isCartEmpty = true;
-              this.cart = undefined;
-              this.userDataService.updateCartNumberTest();
+            this.apiService.deleteCart(<string>this.userDataService.id, <string>this.userDataService.password).then((data:any) => {
+              if(!data.error){
+                this.isCartEmpty = true;
+                this.cart = undefined;
+                this.userDataService.updateCartNumberTest();
+              }else{
+                this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+              }
             })
           }
+        }else{
+          this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
         }
       });
       this.cartItems.forEach((item, index) => {
@@ -160,12 +171,12 @@ export class BasketComponent {
     console.log(quantity, itemId, this.cartItems);
     this.calculateTotal();
     this.cartItems[itemId].quantity = quantity;
-    this.completeOrder();
+    this.updateOrder();
     this.cartItems[itemId].total = this.calculateTotalArticle(this.cartItems[itemId].price, quantity);
     this.updateDisplayCart();
   }
 
-  async completeOrder() {
+  async updateOrder() {
     if (this.userDataService.isSignedIn()) {
       updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data: any) => {
         if (!data.error) {
@@ -195,13 +206,36 @@ export class BasketComponent {
   }
 
   confirmOrder() {
-    this.confirmationService.confirm({
-      message: 'Do you really want to complete this order? You have to manually pay the requested price!',
-      accept: () => {
-        this.completeOrder();
-      },
-      reject: () => {
+    if(this.userDataService.isSignedIn()){
+      this.confirmationService.confirm({
+        message: 'Do you really want to complete this order? You have to manually pay the requested price!',
+        accept: () => {
+          this.completeOrder();
+        },
+        reject: () => {
 
+        }
+      });
+    }else{
+      this.router.navigate(['/profile'])
+    }
+  }
+
+  completeOrder(){
+    let order: OrderPost = { articles: [] , status:'placed'};
+    for(let i = 0; i< this.cartItems.length; i++){
+      order.articles.push({productId: this.cartItems[i].productId, quantity:this.cartItems[i].quantity});
+    }
+    this.apiService.postOrder(<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((order:any)=>{
+      if(!order.error){
+        this.apiService.deleteCart(<string>this.userDataService.id, <string>this.userDataService.password).then((data:any)=>{
+          if(!data.error){
+            this.userDataService.updateCartNumberTest();
+            this.router.navigate(['/profile']);
+          }
+        })
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: order.errorText}];
       }
     });
   }

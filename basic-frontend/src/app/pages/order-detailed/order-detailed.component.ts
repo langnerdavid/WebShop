@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {CartPatch, Order, OrderStatus} from "../../core/types/echo.type";
 import {userDataService} from "../../core/services/userData.service";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-order-detailed',
@@ -26,6 +26,8 @@ export class OrderDetailedComponent {
     products:[],
     status:'placed'
   };
+
+  messages: Message[]=[];
 
   selectedStatus: string = this.order.status;
   constructor(private confirmationService: ConfirmationService, private route: ActivatedRoute, private router:Router, private apiService:ApiService, private userDataService:userDataService) {
@@ -53,7 +55,6 @@ export class OrderDetailedComponent {
 
   async getBuyer(){
     this.apiService.getOneOrder(this.orderId).then((order:any)=>{
-      console.log(order);
       if(!order.error){
         this.apiService.getOneBuyer(order.buyer).then((buyer:any)=>{
           if(!buyer.error){
@@ -80,13 +81,14 @@ export class OrderDetailedComponent {
             }
           }
         })
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: order.errorText}];
       }
     });
   }
 
   async getSeller(){
     this.apiService.getOneOrder(this.orderId).then((order:any)=>{
-      console.log(order);
       if(!order.error){
         this.apiService.getOneSeller(order.seller).then((seller:any)=>{
           console.log('seller: ', seller)
@@ -115,6 +117,8 @@ export class OrderDetailedComponent {
             }
           }
         })
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: order.errorText}];
       }
     });
   }
@@ -124,7 +128,9 @@ export class OrderDetailedComponent {
       status: orderStatus
     };
     this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
-      console.log(data);
+      if(data.error){
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+      }
     });
   }
 
@@ -138,7 +144,11 @@ export class OrderDetailedComponent {
           status: newStatus
         };
         this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
-          this.router.navigate(['/profile']);
+          if(data.error){
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }else {
+            this.router.navigate(['/profile']);
+          }
         });
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Ja" klickt
       },

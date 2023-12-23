@@ -3,6 +3,7 @@ import {BehaviorSubject, debounceTime, skip} from "rxjs";
 import {Article, Echo} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-welcome-page',
@@ -22,59 +23,24 @@ export class WelcomePageComponent implements OnInit {
   echos = new BehaviorSubject<Echo[]>([]);
 
   articles: Article[] =[];
+  messages: Message[]=[];
 
   ngOnInit(): void {
-      // Assuming getAllArticles is an asynchronous function (returns Promise)
+    // Assuming getAllArticles is an asynchronous function (returns Promise)
     this.apiService.getAllArticles().then((data: any) => {
-      if(!data.error){
+      if (!data.error) {
         let countInvis = 0;
-        for(let i = 0; i<data.length; i++){
-          if(data[i].visible){
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].visible) {
             console.log(data[i]);
-            this.articles[i-countInvis] = data[i];
-          }else{
-            countInvis +=1;
+            this.articles[i - countInvis] = data[i];
+          } else {
+            countInvis += 1;
           }
         }
+      } else {
+        this.messages = [{severity: 'error', summary: 'Error', detail: data.errorText}];
       }
     });
-
-    void this.loadEchos(this.contains);
-
-    if (this.contains) {
-      this.filterInput.next(this.contains);
-    }
-
-    this.filterInput.pipe(
-      skip(1),
-      debounceTime(400),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe((next) => {
-      void this.loadEchos(next);
-    });
-  }
-
-  async addEcho(): Promise<void> {
-    const newEcho = await this.apiService.createEcho({
-      message: this.createInput
-    });
-    const newEchoList = [...this.echos.value, newEcho];
-    newEchoList.sort((a, b) => a.message.localeCompare(b.message));
-    this.echos.next(newEchoList);
-  }
-
-  async loadEchos(filter?: string): Promise<void> {
-    const echos = await this.apiService.getEchos(filter);
-    echos.sort((a, b) => a.message.localeCompare(b.message));
-    this.echos.next(echos);
-  }
-
-  async error(): Promise<void> {
-    try {
-      await this.apiService.doError();
-      console.log('This will never trigger.')
-    } catch (err) {
-      console.log('Error caught in Component:', err);
-    }
   }
 }

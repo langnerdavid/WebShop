@@ -108,8 +108,6 @@ export interface Order {
 }
 export interface OrderPost {
   articles: {productId:string, quantity:number}[],
-  buyer: string,
-  totalAmount: number,
   status: OrderStatus
 }
 export interface Seller {

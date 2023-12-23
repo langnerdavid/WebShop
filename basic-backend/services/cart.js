@@ -54,9 +54,9 @@ export function listOneCart(buyerId) {
     });
 }
 
-export function deleteOneCart(cartId) {
+export function deleteOneCart(buyerId) {
     return new Promise((resolve, reject) => {
-        deleteOneCartLog(cartId, (err, doc) => {
+        deleteOneCartLog(buyerId, (err, doc) => {
             if (err) {
                 console.error(err);
                 reject(err);

@@ -3,6 +3,8 @@ import {Article} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
 import {userDataService} from "../../core/services/userData.service";
 import {ActivatedRoute} from "@angular/router";
+import {Messages} from "primeng/messages";
+import {Message} from "primeng/api";
 
 
 @Component({
@@ -16,6 +18,7 @@ export class SellerProfileComponent {
   iban = "DE134";
   articles: Article[] =[];
   sellerResult = false;
+  messages: Message[]=[];
   constructor(private route: ActivatedRoute, private apiService: ApiService, private userDataService: userDataService) {
   }
   ngOnInit(){
@@ -25,20 +28,25 @@ export class SellerProfileComponent {
       console.log(sellerId)
     });
     this.apiService.getOneSeller(sellerId).then((seller:any)=>{
-      console.log(seller);
-      this.brand = seller.brand;
-      this.email = seller.email;
-      this.iban = seller.iban;
-      this.sellerResult = true;
-      this.apiService.getAllArticles().then((data:any)=>{
-        if(!data.error){
-          console.log(data);
-          const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === sellerId);
-          for(let i = 0; i<filteredArticles.length; i++){
-            this.articles.push(filteredArticles[i]);
+      if(!seller.error){
+        this.brand = seller.brand;
+        this.email = seller.email;
+        this.iban = seller.iban;
+        this.sellerResult = true;
+        this.apiService.getAllArticles().then((data:any)=>{
+          if(!data.error){
+            console.log(data);
+            const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === sellerId);
+            for(let i = 0; i<filteredArticles.length; i++){
+              this.articles.push(filteredArticles[i]);
+            }
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }
-        }
-      });
+        });
+      }else {
+        this.messages = [{ severity: 'error', summary: 'Error', detail: seller.errorText}];
+      }
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {SelectItem} from "primeng/api";
+import {Message, SelectItem} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {userDataService} from "../../core/services/userData.service";
@@ -20,6 +20,8 @@ export class ArticleComponent {
   selectedQuantity = 1;
   private articleId: string='';
 
+  messages: Message[] = [];
+
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private userDataSerivce: userDataService) {}
 
   ngOnInit() {
@@ -28,9 +30,8 @@ export class ArticleComponent {
     });
 
     this.apiService.getOneArticle(this.articleId).then((data:any)=>{
-      console.log(data);
       if(data.error){
-        console.log(data.error);
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
         return
       }else {
         this.productName = data.title;
@@ -48,7 +49,9 @@ export class ArticleComponent {
     console.log('Menge:', this.selectedQuantity);
     if (this.userDataSerivce.isSignedIn()&&this.userDataSerivce.isBuyer()) {
       this.setCartSignedIn(this.articleId, this.selectedQuantity).then((data:any)=>{
-        console.log('ja');
+        if(data.error){
+          this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+        }
       });
     } else {
       this.userDataSerivce.setCartNotSignedIn(this.articleId, this.selectedQuantity, true);
@@ -64,7 +67,11 @@ export class ArticleComponent {
     this.apiService.getOneCart(this.userDataSerivce.id).then((data:any)=>{
       if(data.error === 400){
         this.apiService.postCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart:{articles:[{productId: articleId, quantity: quantity}]}}).then((data:any)=>{
-          this.userDataSerivce.updateCartNumberTest();
+          if(data.error){
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+          }else {
+            this.userDataSerivce.updateCartNumberTest();
+          }
         });
       }else if (!data.error){
         let cart = data;
@@ -82,8 +89,12 @@ export class ArticleComponent {
         this.apiService.patchCart(<string>this.userDataSerivce.id, <string>this.userDataSerivce.password, {cart: cart}).then((data: any)=>{
           if(!data.error){
             this.userDataSerivce.updateCartNumberTest();
+          }else{
+            this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }
         });
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
       }
     });
   }

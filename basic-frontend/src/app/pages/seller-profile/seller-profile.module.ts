@@ -9,22 +9,24 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AccordionModule} from "primeng/accordion";
 import {TableModule} from "primeng/table";
 import {SharedModule} from "../../shared/shared.module";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
   declarations: [
     SellerProfileComponent
   ],
-  imports: [
-    CommonModule,
-    SellerProfileRoutingModule,
-    ButtonModule,
-    CardModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AccordionModule,
-    TableModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        SellerProfileRoutingModule,
+        ButtonModule,
+        CardModule,
+        ReactiveFormsModule,
+        FormsModule,
+        AccordionModule,
+        TableModule,
+        SharedModule,
+        MessagesModule
+    ]
 })
 export class SellerProfileModule { }

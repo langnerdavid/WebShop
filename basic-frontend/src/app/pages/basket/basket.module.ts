@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import { userDataService } from 'src/app/core/services/userData.service';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         InputNumberModule,
         FormsModule,
         ButtonModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        MessagesModule
     ]
 })
 export class BasketModule {

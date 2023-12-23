@@ -7,19 +7,21 @@ import { userDataService } from 'src/app/core/services/userData.service';
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
 import {FormsModule} from "@angular/forms";
+import {MessagesModule} from "primeng/messages";
 
 
 @NgModule({
   declarations: [
     ArticleComponent
   ],
-  imports: [
-    CommonModule,
-    ArticleRoutingModule,
-    InputNumberModule,
-    ButtonModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        ArticleRoutingModule,
+        InputNumberModule,
+        ButtonModule,
+        FormsModule,
+        MessagesModule
+    ]
 })
 export class ArticleModule {
   private userDataService = inject(userDataService);

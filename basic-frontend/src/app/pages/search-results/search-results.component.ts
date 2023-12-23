@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../core/services/api.service";
 import {Article} from "../../core/types/echo.type";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-search-results',
@@ -12,6 +13,8 @@ export class SearchResultsComponent {
   searchText = '';
   articles: Article[] =[];
   searchResult = false;
+
+  messages: Message[]=[];
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {}
 
@@ -41,6 +44,8 @@ export class SearchResultsComponent {
         if(this.articles.length > 0){
           this.searchResult = true;
         }
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
       }
     });
   }
