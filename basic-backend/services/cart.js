@@ -61,7 +61,7 @@ export function deleteOneCart(buyerId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve('Erfolgreich deleted');
+                resolve('Successfully deleted');
             }
         });
     });

@@ -54,7 +54,7 @@ export function deleteOneArticle(articleId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve('Erfolgreich deleted');
+                resolve('Successfully deleted');
             }
         });
     });

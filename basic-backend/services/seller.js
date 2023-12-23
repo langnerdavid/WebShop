@@ -66,7 +66,7 @@ export function deleteOneSeller(sellerId) {
                 console.error(err);
                 reject(err);
             } else {
-                resolve('Erfolgreich deleted');
+                resolve('Successfully deleted');
             }
         });
     });

@@ -10,7 +10,7 @@
     <p class="product-price">{{product.price}}€</p>
     <div *ngIf="!isSeller else SignInAsBuyer">
       <div *ngIf="stockQuantity!==0 else OutOfStock">
-        <p-button label="Add to baskket" class="p-button-rounded p-button-success add-to-cart-btn" (onClick)="addToCart($event)"></p-button>
+        <p-button label="Add to basket" class="p-button-rounded p-button-success add-to-cart-btn" (onClick)="addToCart($event)"></p-button>
       </div>
     </div>
 

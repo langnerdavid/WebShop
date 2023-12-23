@@ -61,7 +61,7 @@ export class RegisterComponent {
     }
 
     if (!this.userData.userType) {
-      console.error('Bitte wählen Sie eine Nutzerrolle aus.');
+      console.error('Please select a user role!');
       this.messages = [{ severity: 'error', summary: 'Error', detail: 'please select role' }];
       return;
 

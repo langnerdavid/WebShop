@@ -77,7 +77,7 @@ export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, use
           }
         }
       }
-      console.log('isExecjuted:',isExecuted)
+      console.log('isExecuted:',isExecuted)
 
       console.log(cart);
 
