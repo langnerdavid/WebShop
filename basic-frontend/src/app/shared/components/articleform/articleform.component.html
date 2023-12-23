@@ -3,7 +3,7 @@
 </div>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="article-form">
   <div class="p-field">
-    <label for="title">Titel</label>
+    <label for="title">Title</label>
     <input id="title" type="text" pInputText [(ngModel)]="articleData.title" name="title" required>
   </div>
 
@@ -45,7 +45,7 @@
 <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
 
 <ng-template #newarticle>
-  <h2>Neuer Artikel</h2>
+  <h2>New Article</h2>
 </ng-template>
 
 <ng-template #newarticlebutton>

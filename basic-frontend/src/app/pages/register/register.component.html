@@ -2,7 +2,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="registration-form">
   <div class="p-field">
     <label for="userType">Role</label>
-    <p-dropdown id="userType" [(ngModel)]="userData.userType" [options]="userTypes" optionLabel="label" placeholder="Wählen Sie eine Rolle" [ngModelOptions]="{ standalone: true }"></p-dropdown>
+    <p-dropdown id="userType" [(ngModel)]="userData.userType" [options]="userTypes" optionLabel="label" placeholder="Select a role" [ngModelOptions]="{ standalone: true }"></p-dropdown>
   </div>
 
   <div class="p-field">
@@ -57,7 +57,7 @@
     <input id="iban" type="text" pInputText [(ngModel)]="userData.iban" name="iban" required #ibanField="ngModel" [ngClass]="{'error': ibanField.invalid && ibanField.touched}">
   </div>
   <div *ngIf="!form.valid" class="error-message">
-    Bitte füllen Sie alle Felder aus.
+    Please fill in all fields.
   </div>
   <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <p-button type="submit" label="Registration" [disabled]="!form.valid"></p-button>

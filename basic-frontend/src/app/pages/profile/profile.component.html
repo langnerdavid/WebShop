@@ -92,8 +92,8 @@
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
-              <th>Anzahl auf Lager</th>
-              <th>Preis</th>
+              <th>Quantity in stock</th>
+              <th>Price</th>
               <th></th>
             </tr>
           </ng-template>
@@ -114,8 +114,8 @@
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
-              <th>Anzahl auf Lager</th>
-              <th>Preis</th>
+              <th>Quantity in stock</th>
+              <th>Price</th>
               <th></th>
             </tr>
           </ng-template>
@@ -136,8 +136,8 @@
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
-              <th>Anzahl auf Lager</th>
-              <th>Preis</th>
+              <th>Quantity in stock</th>
+              <th>Price</th>
               <th></th>
             </tr>
           </ng-template>
@@ -162,7 +162,7 @@
         <p-table [value]="placedOrders" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th>customer</th>
+              <th>Customer</th>
               <th>Product Count</th>
               <th>Total</th>
               <th>Payed?</th>
@@ -188,7 +188,7 @@
           </ng-template>
         </p-table>
       </p-accordionTab>
-      <p-confirmDialog header="Bestätigung" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+      <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
       <p-accordionTab header="Payed"  *ngIf="payedOrders.length!==0">
         <p-table [value]="payedOrders" dataKey="id">
           <ng-template pTemplate="header">
