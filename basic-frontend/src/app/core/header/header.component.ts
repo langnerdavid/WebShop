@@ -13,9 +13,9 @@ export class HeaderComponent {
   constructor(private userDataService: userDataService, private router: Router) {}
 
   searchText: string | undefined;
-  signedIn:boolean = false;
-  isBuyer:boolean = false;
-  isSeller: boolean = true;
+  signedIn = false;
+  isBuyer = false;
+  isSeller = true;
   shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
   ngOnInit(){

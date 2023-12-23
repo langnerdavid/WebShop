@@ -42,15 +42,15 @@ export class ProfileComponent {
   constructor(private router: Router, private userDataService:userDataService, private apiService:ApiService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
   buyer: Buyer | undefined;
   seller: Seller | undefined;
-  isBuyer:boolean = true;
-  buyerId:string ='';
-  sellerId:string='';
+  isBuyer = true;
+  buyerId ='';
+  sellerId='';
 
   firstName:string | undefined = 'Max';
   lastName:string | undefined = 'Mustermann';
   brand:string | undefined = 'Musterfirma';
   email:string | undefined = 'musterman@max.de';
-  password: string  = 'Test#1234';
+  password  = 'Test#1234';
 
   zipCode:number | undefined = 12345;
   city:string | undefined = 'Musterort';
@@ -238,7 +238,7 @@ export class ProfileComponent {
       if(!data.error){
         const filteredArticles = data.filter((article: { seller: string | null; }) => article.seller === this.userDataService.id);
         for(let i = 0; i<filteredArticles.length; i++){
-          let article ={
+          const article ={
             id: i,
             name:filteredArticles[i].title,
             price:filteredArticles[i].price,
@@ -344,7 +344,7 @@ export class ProfileComponent {
         for(let i = 0; i<filteredOrders.length; i++){
           this.apiService.getOneBuyer(filteredOrders[i].buyer).then((data:any)=>{
             if(!data.error){
-              let order={
+              const order={
                 id: i,
                 status: filteredOrders[i].status,
                 buyer: data.firstName+' '+data.lastName,
@@ -371,7 +371,7 @@ export class ProfileComponent {
         for(let i = 0; i<filteredOrders.length; i++){
           this.apiService.getOneSeller(filteredOrders[i].seller).then((seller:any)=>{
             if(!seller.error){
-              let order={
+              const order={
                 id: i,
                 status: filteredOrders[i].status,
                 seller: seller.brand,

@@ -12,8 +12,8 @@ import {ConfirmationService, Message, MessageService} from "primeng/api";
   providers: [ConfirmationService, MessageService]
 })
 export class OrderDetailedComponent {
-  isSeller: boolean = true;
-  orderId:string='';
+  isSeller = true;
+  orderId='';
   order: { customer?: string; brand?:string, email: string; address: string; iban: string; city: string; zipCode: string; total: number; products: { id: number; name: string; price: number; quantity: number; }[]; status: OrderStatus; }={
     customer:'Max Mustermann',
     brand: 'Musterfirma',
@@ -123,7 +123,7 @@ export class OrderDetailedComponent {
   }
 
   async updateOrderStatus(orderStatus: OrderStatus) {
-    let order: { status: OrderStatus } = {
+    const order: { status: OrderStatus } = {
       status: orderStatus
     };
     this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
@@ -139,7 +139,7 @@ export class OrderDetailedComponent {
       rejectButtonStyleClass: 'p-button-danger p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-        let order:{status: OrderStatus}={
+        const order:{status: OrderStatus}={
           status: newStatus
         };
         this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{

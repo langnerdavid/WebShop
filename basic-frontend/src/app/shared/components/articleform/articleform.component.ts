@@ -42,7 +42,7 @@ export class ArticleformComponent {
   }
   onSubmit(form: NgForm) {
     if (form.valid) {
-      let articlePost = {
+      const articlePost = {
         title: this.articleData.title,
         description: this.articleData.description,
         price: this.articleData.price,

@@ -12,13 +12,13 @@ import {userDataService} from "../../core/services/userData.service";
 export class ArticleComponent {
   isBuyer = this.userDataService.isBuyer();
   isSeller = this.userDataService.isSeller();
-  productName: string = 'Mustername';
-  productDescription:string = 'Musterbeschreibung';
-  productPrice:number = 0;
-  productStockQuantity: number = 1;
-  productSellerId:string = '';
+  productName = 'Mustername';
+  productDescription = 'Musterbeschreibung';
+  productPrice = 0;
+  productStockQuantity = 1;
+  productSellerId = '';
   selectedQuantity = 1;
-  private articleId: string='';
+  private articleId='';
 
   messages: Message[] = [];
 
@@ -71,7 +71,7 @@ export class ArticleComponent {
           }
         });
       }else if (!data.error){
-        let cart = data;
+        const cart = data;
         let isExecuted = false;
         for(let i = 0; i<cart.articles.length; i++){
           if(cart.articles[i].productId === articleId){

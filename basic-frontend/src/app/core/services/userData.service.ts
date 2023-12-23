@@ -14,7 +14,7 @@ export class userDataService {
   id: string | null = null;
   password: string | null = null;
   cart: string | null = null;
-  shoppingCartNumber$: number = 0;
+  shoppingCartNumber$ = 0;
   constructor(private apiService: ApiService) {
     this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
     this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
@@ -48,13 +48,13 @@ export class userDataService {
     sessionStorage.setItem('cart', JSON.stringify(cart));
   }
   setCartNotSignedIn(productId:string, quantity:number, inCart: boolean){
-    let newArticle = {
+    const newArticle = {
       productId: productId,
       quantity: quantity
     }
     let oldCart:any = sessionStorage.getItem('cart');
     if(oldCart){
-      let conditionMet:boolean = false;
+      let conditionMet = false;
       oldCart = JSON.parse(oldCart);
       for (let i = 0; i<oldCart.articles.length; i++){
         if(oldCart.articles[i].productId === productId){
@@ -72,7 +72,7 @@ export class userDataService {
       }
       sessionStorage.setItem('cart', JSON.stringify(oldCart));
     }else {
-      let cart = {
+      const cart = {
         articles: [
           {
             productId: productId,
@@ -104,7 +104,7 @@ export class userDataService {
     } else {
       if (typeof this.cart === "string") {
         this.updateData();
-        let cartReq = JSON.parse(this.cart);
+        const cartReq = JSON.parse(this.cart);
         let cartNumber = 0;
         for (let i = 0; i < cartReq.articles.length; i++) {
           cartNumber += cartReq.articles[i].quantity;
