@@ -11,10 +11,10 @@
     </div>
     <div class="profile-info">
       <h3>Additional Information</h3>
-      <p><label>Zip Code:</label> <input [(ngModel)]="zipCode" name="zipCode" [readonly]="!isEditing"></p>
-      <p><label>City:</label> <input [(ngModel)]="city" name="city" [readonly]="!isEditing"></p>
-      <p><label>Address:</label> <input [(ngModel)]="address" name="address" [readonly]="!isEditing"></p>
-      <p><label>IBAN:</label> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
+      <p><span>Zip Code:</span> <input [(ngModel)]="zipCode" name="zipCode" [readonly]="!isEditing"></p>
+      <p><span>City:</span> <input [(ngModel)]="city" name="city" [readonly]="!isEditing"></p>
+      <p><span>Address:</span> <input [(ngModel)]="address" name="address" [readonly]="!isEditing"></p>
+      <p><span>IBAN:</span> <input [(ngModel)]="iban" name="iban" [readonly]="!isEditing"></p>
     </div>
     <div class="profile-actions">
       <p-button (click)="confirmDeleteAccount($event)" label="Delete" [rounded]="true" severity="danger"></p-button>
