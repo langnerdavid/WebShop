@@ -39,7 +39,7 @@
 
   <div *ngIf="isEdit else newarticlebutton">
     <p-button label="Save changes" type="submit" [disabled]="!form.valid" severity="success" class="save-button"></p-button>
-    <p-button label="Delete Article" severity="danger"></p-button>
+    <p-button label="Delete Article" severity="danger" (click)="deleteArticle()"></p-button>
   </div>
 </form>
 <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>

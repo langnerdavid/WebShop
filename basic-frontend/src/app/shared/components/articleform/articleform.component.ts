@@ -73,6 +73,16 @@ export class ArticleformComponent {
     }
   }
 
+  deleteArticle(){
+    this.apiService.deleteArticle(this.articleData.articleId, <string>this.userDataService.id, <string>this.userDataService.password).then((data:any)=>{
+      if(!data.error){
+        this.router.navigate(['profile']).then();
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+      }
+    });
+  }
+
   async initializeInputs(){
     this.apiService.getOneArticle(this.articleData.articleId).then((article:any)=>{
       if(!article.error){
