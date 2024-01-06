@@ -63,7 +63,7 @@ export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, use
       // TODO: Handle error
     } else {
       cart = { articles: [...(data.articles as { productId: string; quantity: number }[])] };
-      let isExecuted:number[] = [];
+      const isExecuted:number[] = [];
       console.log('cart: ',cart,' data: ', data.articles);
       for(let j = 0; j<cartReq.articles.length; j++){
         for (let i = 0; i < cart.articles.length; i++) {
@@ -109,11 +109,11 @@ export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, use
 export async function updateFullCartSignedIn(cartItems:{id: number, productId:string, name: string, price: number, quantity: number, total:number}[],userDataService: userDataService, apiService: ApiService):Promise<any>{
   apiService.getOneCart(userDataService.id).then((data: any) => {
   if (!data.error) {
-    let oldCart: { articles: { productId: string; quantity: number }[] } = data;
-    let newCart: { articles: { productId: string; quantity: number }[] }={articles:[]};
+    const oldCart: { articles: { productId: string; quantity: number }[] } = data;
+    const newCart: { articles: { productId: string; quantity: number }[] }={articles:[]};
 
     cartItems.forEach((cartItem) => {
-      let existingCartItem = oldCart.articles.find((item) => item.productId === cartItem.productId);
+      const existingCartItem = oldCart.articles.find((item) => item.productId === cartItem.productId);
 
       if (existingCartItem) {
         existingCartItem.quantity = cartItem.quantity;

@@ -35,5 +35,8 @@ img {
 
 .add-to-cart{
   margin-bottom: 1rem;
-  width: 185px;
+}
+
+.common-width {
+  width: 100%;
 }

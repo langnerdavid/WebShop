@@ -33,7 +33,7 @@ export class BasketComponent {
             for (let i = 0; <number>this.cart.articles.length > i; i++) {
               this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
                 if (!data.error) {
-                  let article = {
+                  const article = {
                     id: i,
                     productId: data._id,
                     name: data.title,
@@ -66,7 +66,7 @@ export class BasketComponent {
         for (let i = 0; <number>this.cart?.articles.length > i; i++) {
           this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
             if (!data.error) {
-              let article = {
+              const article = {
                 id: i,
                 productId: data._id,
                 name: data.title,
@@ -104,8 +104,8 @@ export class BasketComponent {
     if (this.userDataService.isSignedIn()) {
       this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
         if (!data.error) {
-          let newCart: { articles: { productId: string; quantity: number }[] } = {articles: data.articles};
-          let productId = this.cartItems.find(item => item.id === itemId)?.productId;
+          const newCart: { articles: { productId: string; quantity: number }[] } = {articles: data.articles};
+          const productId = this.cartItems.find(item => item.id === itemId)?.productId;
           newCart.articles = newCart.articles.filter((item) => item.productId !== productId);
           // Call the patchCart API to update the cart
           if (newCart.articles.length > 0) {
@@ -139,8 +139,8 @@ export class BasketComponent {
       });
       this.updateDisplayCart();
     } else {
-      let index = this.cartItems.findIndex(item => item.id === itemId);
-      let newCart = JSON.parse(<string>this.userDataService.cart);
+      const index = this.cartItems.findIndex(item => item.id === itemId);
+      const newCart = JSON.parse(<string>this.userDataService.cart);
 
       // Create a new cart object with updated articles
       const updatedCart = {
@@ -217,7 +217,7 @@ export class BasketComponent {
   }
 
   completeOrder(){
-    let order: OrderPost = { articles: [] , status:'placed'};
+    const order: OrderPost = { articles: [] , status:'placed'};
     for(let i = 0; i< this.cartItems.length; i++){
       order.articles.push({productId: this.cartItems[i].productId, quantity:this.cartItems[i].quantity});
     }
