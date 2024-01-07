@@ -50,7 +50,7 @@ export class ArticlepreviewComponent implements OnChanges{
     if (this.userDataService.isSignedIn()) {
       updateCartSignedIn({articles:[{productId: this.product.id,quantity: 1}]}, false, this.userDataService, this.apiService)
         .then(() => {
-          this.userDataService.updateCartNumberTest();
+          this.userDataService.updateCartNumber();
         })
         .catch((error) => {
           console.error('Error updating cart:', error);

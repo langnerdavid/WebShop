@@ -24,10 +24,12 @@ export class ArticleComponent {
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private userDataService: userDataService) {}
 
   ngOnInit() {
+    //get Article ID
     this.route.params.subscribe(params => {
       this.articleId = params['id'];
     });
 
+    //get the Article Details
     this.apiService.getOneArticle(this.articleId).then((data:any)=>{
       if(data.error){
         this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
@@ -66,7 +68,7 @@ export class ArticleComponent {
           if(data.error){
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }else {
-            this.userDataService.updateCartNumberTest();
+            this.userDataService.updateCartNumber();
           }
         });
       }else if (!data.error){
@@ -83,7 +85,7 @@ export class ArticleComponent {
         }
         this.apiService.patchCart(<string>this.userDataService.id, <string>this.userDataService.password, {cart: cart}).then((data: any)=>{
           if(!data.error){
-            this.userDataService.updateCartNumberTest();
+            this.userDataService.updateCartNumber();
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }

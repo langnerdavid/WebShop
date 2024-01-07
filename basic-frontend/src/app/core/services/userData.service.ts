@@ -26,6 +26,7 @@ export class userDataService {
     this.setStorageDetail();
   }
 
+  //delete local/session Storage information, e.g. when loged out
   deleteAll(){
     localStorage.removeItem("role");
     localStorage.removeItem("id");
@@ -76,10 +77,11 @@ export class userDataService {
       sessionStorage.setItem('cart', JSON.stringify(cart));
     }
     this.cart = sessionStorage.getItem('cart');
-    this.updateCartNumberTest();
+    this.updateCartNumber();
   }
 
-  updateCartNumberTest(): void{
+
+  updateCartNumber(): void{
     if (this.isSignedIn()) {
       this.apiService.getOneCart(this.id).then((data: any) => {
         if (!data.error) {
@@ -87,12 +89,11 @@ export class userDataService {
           for (let i = 0; i < data.articles.length; i++) {
             cartNumber += data.articles[i].quantity;
           }
-          this.updateCartNumber(cartNumber);
+          this.updateCartNumberLog(cartNumber);
           return
         }
       }).catch(() => {
-        this.updateCartNumber(0);
-        // Optionally, you can handle the error here if needed.
+        this.updateCartNumberLog(0);
       });
     } else {
       if (typeof this.cart === "string") {
@@ -102,16 +103,16 @@ export class userDataService {
         for (let i = 0; i < cartReq.articles.length; i++) {
           cartNumber += cartReq.articles[i].quantity;
         }
-        this.updateCartNumber(cartNumber);
+        this.updateCartNumberLog(cartNumber);
         return;
       } else {
-        this.updateCartNumber(0);
+        this.updateCartNumberLog(0);
         return;
       }
     }
   }
 
-  updateCartNumber(cartNumber: number) {
+  updateCartNumberLog(cartNumber: number) {
     console.log('cartNumber update: ', cartNumber);
     this.cartNumberSubject.next(cartNumber);
   }

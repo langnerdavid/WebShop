@@ -1,12 +1,5 @@
 export type OrderStatus = "placed" | "payed" | "shipped" | "canceled" | "delivered";
 
-export interface Echo {
-  _id: string;
-  message: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface Article {
   _id: string;
   title: string;
@@ -88,15 +81,6 @@ export interface CartPost {
   articles: {productId:string, quantity:number}[]
 }
 
-export interface Order {
-  _id: string;
-  articles: {productId:string, quantity:number}[],
-  buyer: string,
-  totalAmount: number,
-  status: OrderStatus,
-
-  orderDate: string;
-}
 export interface OrderPost {
   articles: {productId:string, quantity:number}[],
   status: OrderStatus

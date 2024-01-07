@@ -33,6 +33,7 @@ export class SigninComponent {
   ];
 
   onSignIn() {
+    //validate User Input
     if (!this.userType) {
       this.error='Choose a role!';
     }else if(this.userType.value === 'Buyer'){
@@ -88,25 +89,3 @@ export class SigninComponent {
     }
   }
 }
-/*[Log] Response (default-src_app_core_services_api_service_ts.js, line 207)
-
-body: ReadableStream {locked: true, cancel: function, getReader: function, pipeTo: function, pipeThrough: function, …}
-
-bodyUsed: true
-
-headers: Headers {append: function, delete: function, get: function, getSetCookie: function, has: function, …}
-
-ok: true
-
-redirected: false
-
-status: 200
-
-statusText: "OK"
-
-type: "cors"
-
-url: "http://localhost:3000/api/seller/login"
-
-Response Prototyp
-*/

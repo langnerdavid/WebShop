@@ -18,17 +18,19 @@ export class HeaderComponent {
   shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
   ngOnInit(){
+    // Initialize UserData depending on whether the user is signed in or not
+
     if(!this.userDataService.isSeller()){
-      this.userDataService.updateCartNumberTest();
+      this.userDataService.updateCartNumber();
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(() => {
-        // Execute code every time the route changes (component is shown)
+        // Execute code every time the route changes (component is shown) to make sure that login/logout process is executed properly
         this.userDataService.updateData();
         this.signedIn = this.userDataService.isSignedIn();
         this.isSeller = this.userDataService.isSeller();
 
-        this.userDataService.updateCartNumberTest();
+        this.userDataService.updateCartNumber();
       });
       this.userDataService.cartNumber$
         .pipe(takeUntil(this.unsubscribe$))
@@ -39,7 +41,7 @@ export class HeaderComponent {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(() => {
-        // Execute code every time the route changes (component is shown)
+        // Execute code every time the route changes (component is shown) to make sure that login/logout process is executed properly
         this.userDataService.updateData();
         this.signedIn = this.userDataService.isSignedIn();
         this.isSeller = this.userDataService.isSeller();

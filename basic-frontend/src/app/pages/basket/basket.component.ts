@@ -24,6 +24,7 @@ export class BasketComponent {
   constructor(private userDataService: userDataService, private apiService: ApiService, private router: Router, private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
+    // Initialize Cart Data depending on whether the user is signed in or not
     if (this.userDataService.isSignedIn()) {
       this.apiService.getOneCart(this.userDataService.id).then((data: any) => {
         if (!data.error) {
@@ -54,11 +55,13 @@ export class BasketComponent {
     }
   }
 
+  //calculates Total of Order
   calculateTotal() {
     const rawTotal = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     this.totalAmount = parseFloat(rawTotal.toFixed(2));
   }
 
+  //calculates Total of one Article
   calculateTotalArticle(price: number, quantity: number): number {
     const total = price * quantity;
     return Math.round(total * 100) / 100;
@@ -77,7 +80,11 @@ export class BasketComponent {
               .then((patchData: any) => {
                 if(!patchData.error) {
                   this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-                  this.userDataService.updateCartNumberTest();
+                  this.cartItems.forEach((item, index) => {
+                    item.id = index;
+                  });
+                  console.log(this.cartItems);
+                  this.userDataService.updateCartNumber();
                   this.calculateTotal();
                 }else{
                   this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
@@ -88,7 +95,7 @@ export class BasketComponent {
               if(!data.error){
                 this.isCartEmpty = true;
                 this.cart = undefined;
-                this.userDataService.updateCartNumberTest();
+                this.userDataService.updateCartNumber();
               }else{
                 this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
               }
@@ -140,19 +147,17 @@ export class BasketComponent {
       updateFullCartSignedIn(this.cartItems, this.userDataService, this.apiService).then((data: any) => {
         if (!data.error) {
           this.cartItems = data;
-          this.userDataService.updateCartNumberTest();
+          this.userDataService.updateCartNumber();
         }
-      }).catch(() => {
-        //TODO error handling
+      }).catch((e) => {
+        console.log(e);
       });
     } else {
       for (let i = 0; i < this.cartItems.length; i++) {
         this.userDataService.setCartNotSignedIn(this.cartItems[i].productId, this.cartItems[i].quantity, true);
 
       }
-      this.userDataService.updateCartNumberTest();
-      //TODO maybe hier noch ein pop up zum bestätigen
-      //this.router.navigate(['/register']);
+      this.userDataService.updateCartNumber();
     }
   }
 
@@ -160,7 +165,7 @@ export class BasketComponent {
     if (this.cartItems.length === 0) {
       this.isCartEmpty = true;
     }
-    this.userDataService.updateCartNumberTest();
+    this.userDataService.updateCartNumber();
     this.calculateTotal();
   }
 
@@ -218,7 +223,7 @@ export class BasketComponent {
                     .then((data: any) => {
                       if (!data.error) {
                         this.router.navigate(['/profile']).then(()=>{
-                          this.userDataService.updateCartNumber(0);
+                          this.userDataService.updateCartNumberLog(0);
                         });
                       }
                     });

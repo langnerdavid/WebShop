@@ -10,5 +10,5 @@ Autoren: Tarek Buerner (Matrikelnummer: 2039556), David Langner (Matrikelnummer:
 2. `npm run-script start`
 
 ## Hinweise
-Sometimes there are occurring problems with the number above the cart item. If that happens a reload should fix it. Alternatively you can try to add a item to the cart.
+Sometimes there are occurring problems with the number above the cart item. If that happens a reload should fix it. Alternatively you can try to add an item to the cart.
 
