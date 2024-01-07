@@ -97,7 +97,11 @@ export async function updateCartSignedIn(cartReq: CartPost, inCart: boolean, use
 
 
       // TODO: Handle the case when 'patchCart' fails
-      const patchData: any = await apiService.patchCart(<string>userDataService.id, <string>userDataService.password, { cart: cart });
+      await apiService.patchCart(<string>userDataService.id, <string>userDataService.password, { cart: cart }).then((data:any)=>{
+        if(data.error){
+          console.log("Error: ", data.error);
+        }
+      });
     }
   } catch (error) {
     console.error('Error:', error);
