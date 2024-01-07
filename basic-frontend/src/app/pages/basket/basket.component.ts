@@ -212,27 +212,63 @@ export class BasketComponent {
         }
       });
     }else{
-      this.router.navigate(['/profile']).then();
+      this.router.navigate(['/signin']).then();
     }
   }
 
-  completeOrder(){
-    const order: OrderPost = { articles: [] , status:'placed'};
-    for(let i = 0; i< this.cartItems.length; i++){
-      order.articles.push({productId: this.cartItems[i].productId, quantity:this.cartItems[i].quantity});
-    }
-    this.apiService.postOrder(<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((order:any)=>{
-      if(!order.error){
-        this.apiService.deleteCart(<string>this.userDataService.id, <string>this.userDataService.password).then((data:any)=>{
-          if(!data.error){
-            this.userDataService.updateCartNumberTest();
-            this.router.navigate(['/profile']).then();
-          }
-        })
-      }else{
-        this.messages = [{ severity: 'error', summary: 'Error', detail: order.errorText}];
+  completeOrder() {
+    const orderMap = new Map();
+
+    // Use Promise.all to wait for all asynchronous calls to complete
+    const promises = this.cartItems.map(async (cartItem) => {
+      const data:any = await this.apiService.getOneArticle(cartItem.productId);
+      if (!data.error) {
+        console.log(data);
+        const seller = data.seller;
+        // Wenn der Seller noch nicht in der Map ist, füge ihn hinzu
+        if (!orderMap.has(seller)) {
+          orderMap.set(seller, { articles: [] });
+        }
+        // Füge den Artikel zur entsprechenden Bestellung hinzu
+        orderMap.get(seller).articles.push({
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+        });
       }
     });
+
+    // Wait for all promises to resolve
+    Promise.all(promises)
+        .then(() => {
+          orderMap.forEach((order, seller) => {
+            console.log(`Seller: ${seller}, Order: `, order);
+            order.status = 'placed';
+            this.apiService.postOrder(
+                <string>this.userDataService.id,
+                <string>this.userDataService.password,
+                { order: order }
+            ).then((order: any) => {
+              if (!order.error) {
+                this.apiService
+                    .deleteCart(<string>this.userDataService.id, <string>this.userDataService.password)
+                    .then((data: any) => {
+                      if (!data.error) {
+                        this.userDataService.updateCartNumberTest();
+                        this.router.navigate(['/profile']).then();
+                      }
+                    });
+              } else {
+                this.messages = [
+                  { severity: 'error', summary: 'Error', detail: order.errorText },
+                ];
+              }
+            });
+          });
+        })
+        .catch((error) => {
+          console.error('Error fetching articles:', error);
+        });
   }
+
 
 }
