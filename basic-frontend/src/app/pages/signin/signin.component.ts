@@ -20,7 +20,7 @@ export class SigninComponent {
   messages: Message[] = [];
   userType: any;
   staySignedIn: boolean | undefined;
-  error:string = 'User does not exist';
+  error = 'User does not exist';
 
   userData: UserLogin = {
     email: '',
@@ -53,7 +53,7 @@ export class SigninComponent {
           }
           this.userDataService.updateData();
           if(this.userDataService.cart){
-            let cart = JSON.parse(this.userDataService.cart);
+            const cart = JSON.parse(this.userDataService.cart);
             updateCartSignedIn(cart, false, this.userDataService, this.apiService).then(()=>{
               this.router.navigate(['']).then();
             });

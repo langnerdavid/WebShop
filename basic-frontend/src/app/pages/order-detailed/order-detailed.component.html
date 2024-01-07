@@ -21,21 +21,21 @@
   </div>
   <div class="profile-info" *ngIf="isSeller">
     <h3>Customer Details</h3>
-    <p><label>Name: </label> {{ order.customer }}</p>
-    <p><label>Email: </label> {{ order.email }}</p>
-    <p><label>Address:</label> {{ order.address }}</p>
-    <p><label>IBAN:</label> {{ order.iban }}</p>
-    <p><label>City:</label> {{ order.city }}</p>
-    <p><label>Zipcode:</label> {{ order.zipCode }}</p>
+    <p><span>Name: </span> {{ order.customer }}</p>
+    <p><span>Email: </span> {{ order.email }}</p>
+    <p><span>Address:</span> {{ order.address }}</p>
+    <p><span>IBAN:</span> {{ order.iban }}</p>
+    <p><span>City:</span> {{ order.city }}</p>
+    <p><span>Zipcode:</span> {{ order.zipCode }}</p>
   </div>
   <div class="profile-info" *ngIf="!isSeller">
     <h3>Seller Details</h3>
-    <p><label>Brand: </label> {{ order.brand }}</p>
-    <p><label>Email: </label> {{ order.email }}</p>
-    <p><label>Address:</label> {{ order.address }}</p>
-    <p><label>IBAN:</label> {{ order.iban }}</p>
-    <p><label>City:</label> {{ order.city }}</p>
-    <p><label>Zipcode:</label> {{ order.zipCode }}</p>
+    <p><span>Brand: </span> {{ order.brand }}</p>
+    <p><span>Email: </span> {{ order.email }}</p>
+    <p><span>Address:</span> {{ order.address }}</p>
+    <p><span>IBAN:</span> {{ order.iban }}</p>
+    <p><span>City:</span> {{ order.city }}</p>
+    <p><span>Zipcode:</span> {{ order.zipCode }}</p>
   </div>
   <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   <h3>Products</h3>
