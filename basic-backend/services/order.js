@@ -12,7 +12,8 @@ export async function createOrder(order) {
         return{error: result.error};
     }else{
         order.totalAmount = result;
-        order.seller = isOneSeller.seller;
+        order.seller = onlyOneSeller.seller;
+        console.log('Seller der Order: ', order.seller);
         return createOrderLog(order);
     }
 }
