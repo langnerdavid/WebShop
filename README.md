@@ -1,5 +1,5 @@
 # WebShop 24
-Autoren: Tarek Buerner, David Langner
+Autoren: Tarek Buerner (Matrikelnummer: 2039556), David Langner (Matrikelnummer: 6401236)
 
 ## FE ausführen
 1. `npm i`
