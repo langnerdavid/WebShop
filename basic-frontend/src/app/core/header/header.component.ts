@@ -39,7 +39,6 @@ export class HeaderComponent {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(() => {
-        console.log('subscribechange')
         // Execute code every time the route changes (component is shown)
         this.userDataService.updateData();
         this.signedIn = this.userDataService.isSignedIn();
@@ -54,9 +53,6 @@ export class HeaderComponent {
     this.unsubscribe$.complete();
   }
   onSearch(){
-    //TODO
-    // SuchLogik -> beim drücken des Icons soll Suche abgeschlossen werden
-    // mit BE/DB diie Artikel anzeigen
     this.router.navigate(['/searchResults', this.searchText]).then();
     console.log('Suche nach:', this.searchText);
   }

@@ -90,15 +90,7 @@ export class ProfileComponent {
         this.buyerId = <string>this.userDataService.id;
         this.apiService.getOneBuyer(this.buyerId).then((data: any) => {
           if(!data.error) {
-            this.buyer = data;
-            this.firstName = this.buyer?.firstName;
-            this.lastName = this.buyer?.lastName;
-            this.email = this.buyer?.email;
-            this.password = <string>this.buyer?.password;
-            this.zipCode = this.buyer?.zipCode;
-            this.city = this.buyer?.city;
-            this.address = this.buyer?.address;
-            this.iban = this.buyer?.iban;
+            this.setBuyerDetail(data);
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }
@@ -109,14 +101,7 @@ export class ProfileComponent {
         this.sellerId = <string>this.userDataService.id;
         this.apiService.getOneSeller(this.sellerId).then((data: any) => {
           if(!data.error) {
-            this.seller = data;
-            this.brand = this.seller?.brand;
-            this.email = this.seller?.email;
-            this.password = <string>this.seller?.password;
-            this.zipCode = this.seller?.zipCode;
-            this.city = this.seller?.city;
-            this.address = this.seller?.address;
-            this.iban = this.seller?.iban;
+            this.setSellerDetail(data);
           }else{
             this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           }
@@ -152,14 +137,7 @@ export class ProfileComponent {
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           return
         }else{
-          this.buyer = data;
-          this.firstName = this.buyer?.firstName;
-          this.lastName = this.buyer?.lastName;
-          this.email = this.buyer?.email;
-          this.password = <string>this.buyer?.password;
-          this.zipCode = this.buyer?.zipCode;
-          this.city = this.buyer?.city;
-          this.address = this.buyer?.address;
+          this.setBuyerDetail(data);
         }
 
       });
@@ -177,13 +155,7 @@ export class ProfileComponent {
           this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
           return
         }else{
-          this.seller = data;
-          this.brand = this.seller?.brand;
-          this.email = this.seller?.email;
-          this.password = <string>this.seller?.password;
-          this.zipCode = this.seller?.zipCode;
-          this.city = this.seller?.city;
-          this.address = this.seller?.address;
+          this.setSellerDetail(data);
         }
 
       });
@@ -418,5 +390,28 @@ export class ProfileComponent {
         return;
       }
     });
+  }
+
+  setBuyerDetail(data:any){
+    this.buyer = data;
+    this.firstName = this.buyer?.firstName;
+    this.lastName = this.buyer?.lastName;
+    this.email = this.buyer?.email;
+    this.password = <string>this.buyer?.password;
+    this.zipCode = this.buyer?.zipCode;
+    this.city = this.buyer?.city;
+    this.address = this.buyer?.address;
+    this.iban = this.buyer?.iban;
+  }
+
+  setSellerDetail(data:any){
+    this.seller = data;
+    this.brand = this.seller?.brand;
+    this.email = this.seller?.email;
+    this.password = <string>this.seller?.password;
+    this.zipCode = this.seller?.zipCode;
+    this.city = this.seller?.city;
+    this.address = this.seller?.address;
+    this.iban = this.seller?.iban;
   }
 }

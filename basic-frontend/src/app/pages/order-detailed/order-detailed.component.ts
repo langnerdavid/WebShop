@@ -64,21 +64,7 @@ export class OrderDetailedComponent {
             this.order.iban = buyer.iban;
             this.order.city = buyer.city;
             this.order.zipCode = buyer.zipCode;
-            this.order.total = order.totalAmount;
-            this.order.status = order.status;
-            this.order.products =[];
-            this.selectedStatus = this.order.status;
-            for(let i =0; i<order.articles.length; i++){
-              this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
-                const product ={
-                  id: i,
-                  name: article.title,
-                  price: article.price,
-                  quantity: order.articles[i].quantity
-                }
-                this.order.products.push(product);
-              });
-            }
+            this.setOrderDetails(order);
           }
         })
       }else{
@@ -98,22 +84,8 @@ export class OrderDetailedComponent {
             this.order.iban = seller.iban;
             this.order.city = seller.city;
             this.order.zipCode = seller.zipCode;
-            this.order.total = order.totalAmount;
-            this.order.status = order.status;
-            this.order.products =[];
 
-            this.selectedStatus = this.order.status;
-            for(let i =0; i<order.articles.length; i++){
-              this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
-                const product ={
-                  id: i,
-                  name: article.title,
-                  price: article.price,
-                  quantity: order.articles[i].quantity
-                }
-                this.order.products.push(product);
-              });
-            }
+            this.setOrderDetails(order);
           }
         })
       }else{
@@ -144,5 +116,24 @@ export class OrderDetailedComponent {
         // Logik zum Ausführen der Aktion, wenn der Benutzer auf "Nein" klickt
       }
     });
+  }
+
+
+  setOrderDetails(order:any){
+    this.order.total = order.totalAmount;
+    this.order.status = order.status;
+    this.order.products =[];
+    this.selectedStatus = this.order.status;
+    for(let i =0; i<order.articles.length; i++){
+      this.apiService.getOneArticle(order.articles[i].productId).then((article:any)=>{
+        const product ={
+          id: i,
+          name: article.title,
+          price: article.price,
+          quantity: order.articles[i].quantity
+        }
+        this.order.products.push(product);
+      });
+    }
   }
 }

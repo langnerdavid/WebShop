@@ -29,7 +29,7 @@
 
   <div class="p-field">
     <label for="searchingKeywords" class="keywords-label">Searching Keywords</label>
-    <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Searching Keywords seperated by comma"required>
+    <input id="searchingKeywords" type="text" pInputText [(ngModel)]="articleData.searchingKeywords" name="searchingKeywords" placeholder="Searching Keywords seperated by comma" required>
   </div>
 
   <div class="p-field">
@@ -52,6 +52,6 @@
   <div *ngIf="!form.valid" class="error-message">
     Please complete Input!
   </div>
-  <p-button type="submit" label="Create article" type="submit"  [disabled]="!form.valid" severity="success"></p-button>
+  <p-button type="submit" label="Create article" [disabled]="!form.valid" severity="success"></p-button>
 </ng-template>
 

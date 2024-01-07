@@ -3,19 +3,11 @@
   "info": {
     "title": "WebShop24",
     "description": "This is the best WebShop you can find.\n",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "apiteam@swagger.io"
-    },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
     "version": "1.0.0"
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   },
   "servers": [
     {
@@ -25,43 +17,23 @@
   "tags": [
     {
       "name": "buyer",
-      "description": "Everything about buyers",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "description": "Everything about buyers"
     },
     {
       "name": "seller",
-      "description": "Everything about sellers",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "description": "Everything about sellers"
     },
     {
       "name": "article",
-      "description": "Everything about articles",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "description": "Everything about articles"
     },
     {
       "name": "order",
-      "description": "Everything about orders",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "description": "Everything about orders"
     },
     {
       "name": "cart",
-      "description": "Everything about shopping carts",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "description": "Everything about shopping carts"
     }
   ],
   "paths": {
@@ -70,7 +42,8 @@
         "tags": [
           "buyer"
         ],
-        "summary": "Create a new buyer (registration)",
+        "summary": "Create a new buyer",
+        "description": "The Post request registrates a new buyer",
         "operationId": "createBuyer",
         "requestBody": {
           "$ref": "#/components/requestBodies/Buyer"
@@ -111,7 +84,8 @@
         "tags": [
           "buyer"
         ],
-        "summary": "Get all buyers, not used in the frontend application",
+        "summary": "Get all buyers",
+        "description": "Not used in the frontend application, but supported in the backend",
         "operationId": "getBuyers",
         "responses": {
           "500": {
@@ -252,7 +226,7 @@
           "401": {
             "description": "Wrong Password"
           },
-          "404": {
+          "403": {
             "description": "Wrong Username"
           },
           "500": {
@@ -269,12 +243,41 @@
         ]
       }
     },
+    "/buyer/login": {
+      "post": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Login as Buyer",
+        "operationId": "loginBuyer",
+        "responses": {
+          "401": {
+            "description": "Authorization Header missing.\nWrong Password"
+          },
+          "403": {
+            "description": "Wrong Username"
+          },
+          "500": {
+            "description": "Internal Server Error."
+          },
+          "200": {
+            "description": "Login succesfull"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+        }
+      },
     "/seller": {
       "post": {
         "tags": [
           "seller"
         ],
-        "summary": "Create a new seller (registration)",
+        "summary": "Create a new seller",
+        "description": "The Post Request registrates a new seller",
         "operationId": "createSeller",
         "requestBody": {
           "$ref": "#/components/requestBodies/Seller"
@@ -311,7 +314,8 @@
         "tags": [
           "seller"
         ],
-        "summary": "Get all sellers, not used in the frontend application",
+        "summary": "Get all sellers",
+        "description": "Not used in the frontend application, but supported in the backend",
         "operationId": "getSellers",
         "responses": {
           "500": {
@@ -410,7 +414,7 @@
           "401": {
             "description": "Wrong Password"
           },
-          "404": {
+          "403": {
             "description": "Wrong Username"
           },
           "200": {
@@ -452,7 +456,7 @@
           "401": {
             "description": "Wrong Password"
           },
-          "404": {
+          "403": {
             "description": "Wrong Username"
           },
           "500": {
@@ -460,6 +464,34 @@
           },
           "200": {
             "description": "Seller deleted"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/seller/login": {
+      "post": {
+        "tags": [
+          "buyer"
+        ],
+        "summary": "Login as Seller",
+        "operationId": "loginSeller",
+        "responses": {
+          "401": {
+            "description": "Authorization Header missing.\nWrong Password"
+          },
+          "403": {
+            "description": "Wrong Username"
+          },
+          "500": {
+            "description": "Internal Server Error."
+          },
+          "200": {
+            "description": "Login succesfull"
           }
         },
         "security": [
@@ -1506,7 +1538,7 @@
         }
       },
       "Article": {
-        "description": "Seller, that should be updated",
+        "description": "Article, that should be created",
         "content": {
           "application/json": {
             "schema": {
@@ -1516,7 +1548,7 @@
         }
       },
       "ArticlePatch": {
-        "description": "Seller, that should be updated",
+        "description": "Article, that should be updated",
         "content": {
           "application/json": {
             "schema": {
@@ -1526,7 +1558,7 @@
         }
       },
       "Order": {
-        "description": "Seller, that should be updated",
+        "description": "Order, that should be created",
         "content": {
           "application/json": {
             "schema": {
@@ -1536,7 +1568,7 @@
         }
       },
       "OrderPatch": {
-        "description": "Seller, that should be updated",
+        "description": "Order, that should be updated",
         "content": {
           "application/json": {
             "schema": {
@@ -1546,7 +1578,7 @@
         }
       },
       "Cart": {
-        "description": "Seller, that should be updated",
+        "description": "Cart, that should be created",
         "content": {
           "application/json": {
             "schema": {

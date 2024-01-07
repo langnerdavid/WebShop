@@ -5,7 +5,6 @@ import {
   ArticlePost,
   Buyer,
   BuyerPost, CartPost,
-  Order,
   OrderPost, OrderStatus,
   SellerPost,
   UserLogin

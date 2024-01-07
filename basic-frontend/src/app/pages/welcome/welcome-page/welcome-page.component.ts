@@ -1,6 +1,5 @@
-import {Component, DestroyRef, inject, Input, OnInit} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {Article, Echo} from "../../../core/types/echo.type";
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {Article} from "../../../core/types/echo.type";
 import {ApiService} from "../../../core/services/api.service";
 import {Message} from "primeng/api";
 

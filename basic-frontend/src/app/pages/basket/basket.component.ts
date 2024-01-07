@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {userDataService} from "../../core/services/userData.service";
-import {Cart, OrderPost} from "../../core/types/echo.type";
+import {Cart} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
 import {updateFullCartSignedIn} from "../../shared/shared.code";
 import {Router} from "@angular/router";
@@ -31,25 +31,7 @@ export class BasketComponent {
           if (this.cart && this.cart?.articles.length !== 0) {
             this.isCartEmpty = false;
             for (let i = 0; <number>this.cart.articles.length > i; i++) {
-              this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
-                if (!data.error) {
-                  const article = {
-                    id: i,
-                    productId: data._id,
-                    name: data.title,
-                    price: data.price,
-                    quantity: this.cart?.articles[i].quantity ?? 1,
-                    total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1),
-                    max: data.stockQuantity
-                  };
-                  this.cartItems.push(article);
-                }else{
-                  this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
-                }
-                if (i === <number>this.cart?.articles.length - 1) {
-                  this.calculateTotal();
-                }
-              });
+              this.setArticleData(i);
             }
           } else {
             this.isCartEmpty = true;
@@ -64,25 +46,7 @@ export class BasketComponent {
       if (this.cart) {
         this.isCartEmpty = false;
         for (let i = 0; <number>this.cart?.articles.length > i; i++) {
-          this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
-            if (!data.error) {
-              const article = {
-                id: i,
-                productId: data._id,
-                name: data.title,
-                price: data.price,
-                quantity: this.cart?.articles[i].quantity ?? 1,
-                total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1),
-                max: data.stockQuantity
-              };
-              this.cartItems.push(article);
-            }else{
-              this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
-            }
-            if (i === <number>this.cart?.articles.length - 1) {
-              this.calculateTotal();
-            }
-          });
+          this.setArticleData(i)
         }
       } else {
         this.isCartEmpty = true;
@@ -272,4 +236,27 @@ export class BasketComponent {
   }
 
 
+
+  setArticleData(i:number){
+    // @ts-ignore
+    this.apiService.getOneArticle(this.cart.articles[i].productId).then((data: any) => {
+      if (!data.error) {
+        const article = {
+          id: i,
+          productId: data._id,
+          name: data.title,
+          price: data.price,
+          quantity: this.cart?.articles[i].quantity ?? 1,
+          total: this.calculateTotalArticle(data.price, this.cart?.articles[i].quantity ?? 1),
+          max: data.stockQuantity
+        };
+        this.cartItems.push(article);
+      }else{
+        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
+      }
+      if (i === <number>this.cart?.articles.length - 1) {
+        this.calculateTotal();
+      }
+    });
+  }
 }

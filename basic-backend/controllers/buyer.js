@@ -160,7 +160,7 @@ async function authorizeBuyerLogin(req, res, next) {
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 
 }

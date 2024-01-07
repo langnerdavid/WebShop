@@ -16,21 +16,14 @@ export class userDataService {
   cart: string | null = null;
   shoppingCartNumber$ = 0;
   constructor(private apiService: ApiService) {
-    this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
-    this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
-    this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
-    this.cart = sessionStorage.getItem("cart");
+    this.setStorageDetail();
   }
   isSignedIn(): boolean {
     return !(this.role === null || this.id === null || this.password === null);
   }
 
   updateData(){
-    this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
-    this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
-    this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
-    this.cart = sessionStorage.getItem("cart");
-    //TODO Update header
+    this.setStorageDetail();
   }
 
   deleteAll(){
@@ -134,5 +127,12 @@ export class userDataService {
   deleteCartNotSignedIn(){
     sessionStorage.removeItem('cart');
     this.cart = null;
+  }
+
+  setStorageDetail(){
+    this.role = localStorage.getItem("role") ?? sessionStorage.getItem("role");
+    this.id = localStorage.getItem("id") ?? sessionStorage.getItem("id");
+    this.password = localStorage.getItem("password") ?? sessionStorage.getItem("password");
+    this.cart = sessionStorage.getItem("cart");
   }
 }

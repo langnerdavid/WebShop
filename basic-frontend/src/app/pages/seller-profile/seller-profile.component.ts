@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {Article} from "../../core/types/echo.type";
 import {ApiService} from "../../core/services/api.service";
-import {userDataService} from "../../core/services/userData.service";
 import {ActivatedRoute} from "@angular/router";
 import {Message} from "primeng/api";
 
