@@ -8,6 +8,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
+
 .product-image {
   flex: 1;
   max-width: 100px;
@@ -35,6 +36,7 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
+  max-width: 150px;
 }
 
 .product-price {
@@ -60,4 +62,11 @@
 
 .product-description {
   margin-top: 8px;
+}
+
+.product-details,
+.product-price-add {
+  height: 150px;
+  overflow: hidden;
+  flex: 1;
 }

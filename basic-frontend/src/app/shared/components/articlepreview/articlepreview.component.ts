@@ -68,6 +68,9 @@ export class ArticlepreviewComponent implements OnChanges{
 
   protected readonly event = event;
 
+  truncate(value: string, limit: number): string {
+    return value.length > limit ? value.substring(0, limit) + '...' : value;
+  }
 }
 
 

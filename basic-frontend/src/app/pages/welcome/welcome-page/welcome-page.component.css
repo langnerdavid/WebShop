@@ -9,15 +9,21 @@
   margin-bottom: 20px;
 }
 
-@media (min-width: 768px) {
-  .article-row {
-    flex: 0 0 calc(50% - 20px);
+.articles-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+@media (min-width: 850px) {
+  .articles-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 992px) {
-  .article-row {
-    flex: 0 0 calc(33.3333% - 20px);
+@media (min-width: 1150px) {
+  .articles-container {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
