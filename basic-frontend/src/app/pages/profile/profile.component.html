@@ -101,7 +101,7 @@
             <tr>
               <td>{{ article.name }}</td>
               <td>{{ article.quantity }}</td>
-              <td>{{ article.price }}</td>
+              <td>{{ article.price }} €</td>
               <td>
                 <p-button icon="pi pi-pencil" [routerLink]="['/editArticle', article.productId]" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
               </td>
@@ -123,7 +123,7 @@
             <tr>
               <td>{{ article.name }}</td>
               <td>{{ article.quantity }}</td>
-              <td>{{ article.price }}</td>
+              <td>{{ article.price }} €</td>
               <td>
                 <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
               </td>
@@ -145,7 +145,7 @@
             <tr>
               <td>{{ article.name }}</td>
               <td>{{ article.quantity }}</td>
-              <td>{{ article.price }}</td>
+              <td>{{ article.price }} €</td>
               <td>
                 <p-button icon="pi pi-pencil" [routerLink]="['/newarticle']" [rounded]="true" severity="secondary" [outlined]="true"></p-button>
               </td>
@@ -174,7 +174,7 @@
             <tr>
               <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
-              <td>{{ order.total }}</td>
+              <td>{{ order.total }} €</td>
               <td>
                 <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmPayed(order.orderId)"></p-button>
               </td>
@@ -205,7 +205,7 @@
             <tr>
               <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
-              <td>{{ order.total }}</td>
+              <td>{{ order.total }} €</td>
               <td>
                 <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmShipped(order.orderId)"></p-button>
               </td>
@@ -234,7 +234,7 @@
           <tr>
             <td>{{ order.buyer }}</td>
             <td>{{ order.productCount }}</td>
-            <td>{{ order.total }}</td>
+            <td>{{ order.total }} €</td>
             <td>
               <p-button icon="pi pi-check" [rounded]="true" severity="success" [outlined]="true" (click)="confirmDelivered(order.orderId)"></p-button>
             </td>
@@ -260,7 +260,7 @@
             <tr>
               <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
-              <td>{{ order.total }}</td>
+              <td>{{ order.total }} €</td>
               <td>
                 <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
               </td>
@@ -282,7 +282,7 @@
             <tr>
               <td>{{ order.buyer }}</td>
               <td>{{ order.productCount }}</td>
-              <td>{{ order.total }}</td>
+              <td>{{ order.total }} €</td>
               <td>
                 <p-button icon="pi pi-info-circle" [rounded]="true" [outlined]="true" (click)="orderDetail(order.orderId)"></p-button>
               </td>
