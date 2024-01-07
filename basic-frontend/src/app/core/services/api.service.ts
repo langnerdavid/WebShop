@@ -129,14 +129,14 @@ export class ApiService {
   }
 
   ////////////////////////////////////////// ALL ORDER API-REQUESTS /////////////////////////////////////////////////////////
-  async getAllOrders(): Promise<Order[]> {
+  async getAllOrders(): Promise<string> {
     const response = await fetch(`${this.ORDER_URL}`);
     return response.json();
   }
 
-  async getOneOrder(orderId: string): Promise<Order[]> {
+  async getOneOrder(orderId: string): Promise<string> {
     const response = await fetch(`${this.ORDER_URL}/${orderId}`);
-    return response.json();
+    return handleResponse(response);
   }
 
   async postOrder(buyerId: string, password: string, order: { order: OrderPost }): Promise<string> {

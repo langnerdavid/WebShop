@@ -9,7 +9,6 @@ const validStatusValues = ["placed","payed", "shipped", "delivered", "canceled"]
 
 router.post('/', validateOrder, authorizeOrder, async (req, res) => {
     const order = req.body.order;
-
     try {
         const data = await createOrder(order);
         if (data.error) {
