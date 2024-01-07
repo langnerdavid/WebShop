@@ -1,7 +1,3 @@
-export interface CreateEchoInput {
-  message: string;
-}
-
 export type OrderStatus = "placed" | "payed" | "shipped" | "canceled" | "delivered";
 
 export interface Echo {
@@ -90,11 +86,6 @@ export interface Cart {
 }
 export interface CartPost {
   articles: {productId:string, quantity:number}[]
-}
-export interface CartPatch {
-  articles?: {productId:string, quantity:number}[],
-  buyer?: string,
-  totalAmount?: number
 }
 
 export interface Order {

@@ -122,17 +122,6 @@ export class OrderDetailedComponent {
     });
   }
 
-  async updateOrderStatus(orderStatus: OrderStatus) {
-    const order: { status: OrderStatus } = {
-      status: orderStatus
-    };
-    this.apiService.patchOrder(this.orderId,<string>this.userDataService.id, <string>this.userDataService.password, {order: order}).then((data:any)=>{
-      if(data.error){
-        this.messages = [{ severity: 'error', summary: 'Error', detail: data.errorText}];
-      }
-    });
-  }
-
   confirmStatusChange(newStatus: OrderStatus){
     this.confirmationService.confirm({
       message: 'Do you really want to confirm that the order' + newStatus,

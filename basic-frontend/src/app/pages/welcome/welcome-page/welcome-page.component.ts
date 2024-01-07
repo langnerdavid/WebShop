@@ -14,12 +14,6 @@ export class WelcomePageComponent implements OnInit {
   @Input() contains?: string; // URL Query Param
 
   private apiService = inject(ApiService);
-  private destroyRef = inject(DestroyRef);
-
-  createInput = '';
-  filterInput = new BehaviorSubject<string>('');
-
-  echos = new BehaviorSubject<Echo[]>([]);
 
   articles: Article[] =[];
   messages: Message[]=[];

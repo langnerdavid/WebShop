@@ -11,7 +11,6 @@ import { updateCartSignedIn} from "../../shared.code";
   styleUrls: ['./articlepreview.component.css']
 })
 export class ArticlepreviewComponent implements OnChanges{
-  isBuyer = this.userDataService.isBuyer();
   isSeller = this.userDataService.isSeller();
   @Input()
   articleInfo: Article | undefined;

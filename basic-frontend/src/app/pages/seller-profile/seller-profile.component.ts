@@ -18,7 +18,7 @@ export class SellerProfileComponent {
   articles: Article[] =[];
   sellerResult = false;
   messages: Message[]=[];
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private userDataService: userDataService) {
+  constructor(private route: ActivatedRoute, private apiService: ApiService) {
   }
   ngOnInit(){
     let sellerId='';

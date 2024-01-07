@@ -10,7 +10,6 @@ import {userDataService} from "../../core/services/userData.service";
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent {
-  isBuyer = this.userDataService.isBuyer();
   isSeller = this.userDataService.isSeller();
   productName = 'Mustername';
   productDescription = 'Musterbeschreibung';

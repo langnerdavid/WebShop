@@ -14,7 +14,6 @@ export class HeaderComponent {
 
   searchText: string | undefined;
   signedIn = false;
-  isBuyer = false;
   isSeller = true;
   shoppingCartNumber = this.userDataService.shoppingCartNumber$;
 
