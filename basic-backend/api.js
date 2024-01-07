@@ -15,7 +15,6 @@ router.use(cors());
 router.use(express.json());
 router.use(logRequest);
 
-router.use('/echo', echoController);
 router.use('/buyer', buyerController);
 router.use('/seller', sellerController);
 router.use('/article', articleController);

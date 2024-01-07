@@ -1,7 +1,5 @@
 import express from 'express';
-import validator from 'validator';
 import {createArticle, deleteOneArticle, listOneArticle, listArticles, updateArticle} from "../services/article.js";
-import { isPasswordSecure } from "../shared/shared.js";
 import {listOneSeller} from "../services/seller.js";
 
 const router = express.Router();

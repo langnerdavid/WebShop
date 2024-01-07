@@ -1,5 +1,4 @@
-import {articleDb, buyerDb, cartDb, orderDb, sellerDb} from "./databases.js";
-import {listOneSellerLog} from "./seller.js";
+import {buyerDb, cartDb, orderDb} from "./databases.js";
 
 
 export function createBuyerLog(user){

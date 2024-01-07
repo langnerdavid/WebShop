@@ -3,9 +3,7 @@ import {
     listOneOrderLog,
     listOrdersLog, updateOrderLog
 } from "../models/order.js";
-import {listOneArticle} from "./article.js";
 import {calculateTotalAmount, isOneSeller} from "../shared/shared.js"
-import {updateSellerLog} from "../models/seller.js";
 
 export async function createOrder(order) {
     const result = await calculateTotalAmount(order);

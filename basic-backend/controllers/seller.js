@@ -1,5 +1,4 @@
 import express from 'express';
-import validator from 'validator';
 import {
     createSeller,
     deleteOneSeller,
@@ -7,9 +6,7 @@ import {
     listSellers,
     updateSeller
 } from "../services/seller.js";
-import {isPasswordSecure, validateUserInputs, validateUserPatch, validateZipCode} from "../shared/shared.js";
-import {listOneSellerByEmailLog, listOneSellerLog} from "../models/seller.js";
-import {listOneBuyerByEmail} from "../services/buyer.js";
+import {validateUserInputs, validateUserPatch} from "../shared/shared.js";
 
 const router = express.Router();
 router.post('/', validateSeller, async (req, res) => {
@@ -117,13 +114,10 @@ async function validateSeller(req, res, next) {
 
 function validateSellerPatch(req, res, next) {
     const user = req.body.user;
-    let hasError = false;
 
     if (!user.password && !user.brand && !user.address && !user.email && !user.city && !user.zipCode && !user.iban) {
         res.status(403).send('Error: At least one of the attributes (password, brand, address, email, city, zipCode) must exist.');
-        hasError = true;
     }
-
 
     // validationUserParch validates, that the patched Attributes are correct
     const validationResult = validateUserPatch(user, res);

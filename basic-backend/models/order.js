@@ -1,7 +1,5 @@
-import {orderDb, sellerDb} from "./databases.js";
-import {listOneSellerLog} from "./seller.js";
+import {orderDb} from "./databases.js";
 import {listOneArticle, updateArticle} from "../services/article.js";
-import {listOneArticleLog} from "./article.js";
 
 
 export async function createOrderLog(orderReq){

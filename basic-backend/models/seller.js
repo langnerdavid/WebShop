@@ -1,5 +1,4 @@
 import {articleDb, sellerDb} from "./databases.js";
-import {listOneSeller} from "../services/seller.js";
 
 
 export function createSellerLog(user){

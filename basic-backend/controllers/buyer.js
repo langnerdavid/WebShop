@@ -8,7 +8,6 @@ import {
     listOneBuyerByEmail
 } from "../services/buyer.js";
 import { validateUserInputs, validateUserPatch } from "../shared/shared.js";
-import {listOneSellerByEmail} from "../services/seller.js";
 
 const router = express.Router();
 
