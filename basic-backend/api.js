@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 
-import { echoController } from "./controllers/echo.js";
 import { logRequest } from "./util/logger.js";
 import {buyerController} from "./controllers/buyer.js";
 import {orderController} from "./controllers/order.js";

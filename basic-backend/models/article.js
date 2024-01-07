@@ -42,7 +42,6 @@ export function updateArticleLog(articleReq, articleId) {
                     createdAt: oldArticle.createdAt,
                     updatedAt: currentTimestamp,
                 };
-                console.log(article);
 
                 articleDb.update({ _id: articleId }, { $set: article }, {}, (err, numReplaced) => {
                     if (err) {

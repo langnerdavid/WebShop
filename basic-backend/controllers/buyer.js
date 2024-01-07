@@ -80,7 +80,6 @@ router.delete('/:Id', authorizeBuyer, async (req, res) => {
 async function validateBuyer(req, res, next) {
     const user = req.body.user;
     const checkUser = await listOneBuyerByEmail(user.email);
-    console.log(user?.firstName && user?.lastName && user?.address && user?.email && user?.password && user?.zipCode && user?.city && user?.iban);
     if (checkUser !== undefined) {
         res.status(403).send('Account with this email already exists');
     }
@@ -108,7 +107,6 @@ async function validateBuyer(req, res, next) {
 }
 
 function validateBuyerPatch(req, res, next) {
-    console.log(req.body)
     const user = req.body.user;
     let hasError = false;
 

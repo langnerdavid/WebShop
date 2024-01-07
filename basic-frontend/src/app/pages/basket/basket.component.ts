@@ -253,8 +253,9 @@ export class BasketComponent {
                     .deleteCart(<string>this.userDataService.id, <string>this.userDataService.password)
                     .then((data: any) => {
                       if (!data.error) {
-                        this.userDataService.updateCartNumberTest();
-                        this.router.navigate(['/profile']).then();
+                        this.router.navigate(['/profile']).then(()=>{
+                          this.userDataService.updateCartNumber(0);
+                        });
                       }
                     });
               } else {

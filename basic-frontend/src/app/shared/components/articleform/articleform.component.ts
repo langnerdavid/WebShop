@@ -85,6 +85,7 @@ export class ArticleformComponent {
 
   async initializeInputs(){
     this.apiService.getOneArticle(this.articleData.articleId).then((article:any)=>{
+      console.log("article to edit: ", article)
       if(!article.error){
         this.articleData.visible = article.visible;
         this.articleData.brand = article.brand;

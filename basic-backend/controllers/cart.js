@@ -104,14 +104,13 @@ async function authorizeCart(req, res, next) {
     const buyer = await listOneBuyer(username);
     if(username === buyer?._id){
         if(password === buyer?.password){
-            console.log(req.body.cart);
             req.body.cart.buyer = buyer._id;
             next();
         }else{
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 
 }

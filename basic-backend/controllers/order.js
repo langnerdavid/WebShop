@@ -79,7 +79,6 @@ function validateOrder(req, res, next) {
 
 function validateOrderPatch(req, res, next) {
     const order = req.body?.order;
-    console.log(req.body.order);
     if(validStatusValues.includes(order?.status)){
         next();
     }else {
@@ -105,7 +104,7 @@ async function authorizeOrder(req, res, next) {
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 }
 
@@ -124,7 +123,7 @@ async function authorizeSeller(req, res, next) {
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 }
 

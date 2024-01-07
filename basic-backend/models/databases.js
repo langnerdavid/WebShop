@@ -1,6 +1,5 @@
 import Datastore from '@seald-io/nedb';
 
-export const echoDb = new Datastore({ filename: './databases/echo.db', autoload: true });
 export const buyerDb = new Datastore({ filename: './databases/buyer.db', autoload: true });
 export const sellerDb = new Datastore({ filename: './databases/seller.db', autoload: true });
 export const articleDb = new Datastore({ filename: './databases/article.db', autoload: true });

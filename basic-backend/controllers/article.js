@@ -82,13 +82,12 @@ async function authorizeArticle(req, res, next) {
     const seller = await listOneSeller(sellerArticle);
     if(username === seller?._id){
         if(password === seller?.password){
-            console.log('authorized');
             next();
         }else{
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 
 }
@@ -103,14 +102,13 @@ async function authorizeArticlePost(req, res, next) {
     const seller = await listOneSeller(username);
     if(username === seller?._id){
         if(password === seller?.password){
-            console.log('authorized');
             req.body.article.seller = seller._id;
             next();
         }else{
             res.status(401).send('Wrong Password');
         }
     }else{
-        res.status(404).send('Wrong username');
+        res.status(403).send('Wrong username');
     }
 
 }

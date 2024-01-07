@@ -13,7 +13,6 @@ export async function createOrder(order) {
     }else{
         order.totalAmount = result;
         order.seller = onlyOneSeller.seller;
-        console.log('Seller der Order: ', order.seller);
         return createOrderLog(order);
     }
 }

@@ -7,7 +7,6 @@ export async function createOrderLog(orderReq){
         try {
             const article = await listOneArticle(orderReq.articles[i].productId);
             if (article.stockQuantity - orderReq.articles[i].quantity >= 0) {
-                console.log({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)});
                 await updateArticle({stockQuantity: (article.stockQuantity - orderReq.articles[i].quantity)}, orderReq.articles[i].productId);
             } else {
                 return{error: 'There was a Problem with your Order, Not enough Items left in Stock'};

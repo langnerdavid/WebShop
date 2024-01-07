@@ -66,7 +66,6 @@ export function validateUserPatch(user, res) {
 
 export async function calculateTotalAmount(order) {
     let totalAmount = 0;
-    console.log(order.articles[0].productId);
     for (let i = 0; i < order.articles.length; i++) {
         const article = await listOneArticle(order.articles[i].productId);
         if (article?.price) {
